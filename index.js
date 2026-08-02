@@ -1132,11 +1132,17 @@ app.get('/video', async (req, res) => {
   const targetUrl = resolvedUrlCache.get(videoUrl) || videoUrl;
 
   // 3. 构造请求头
-  const requestHeaders = {
-    // ⚠️ 极其重要：Wikimedia 要求 UA 格式为 "应用名/版本 (联系邮箱/网站)"
-    // 伪造 Chrome UA 在 Node.js 发起请求会被拦截并报 429/403
-    'User-Agent': 'VideoProxy/1.0 (https://yourdomain.com; contact@yourdomain.com)',
-  };
+const requestHeaders = {
+	  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+	  'Accept': 'video/webm,video/ogg,video/;q=0.9,audio/;q=0.8,/;q=0.5',
+	  'Accept-Language': 'en-US,en;q=0.9',
+	  'Accept-Encoding': 'gzip, deflate, br',
+	  'Referer': 'https://commons.wikimedia.org/',
+	  'Cache-Control': 'max-age=0',
+	  'Sec-Fetch-Dest': 'video',
+	  'Sec-Fetch-Mode': 'no-cors',
+	  'Sec-Fetch-Site': 'cross-site',
+	};
 
   // 透传客户端 Range 头（用于支持拖拽与分段播放）
   if (req.headers.range) {
