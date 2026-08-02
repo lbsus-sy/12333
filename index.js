@@ -1110,6 +1110,9 @@ function cleanFiles() {
 // ============================================================
 // 12. EXPRESS ROUTES
 // ============================================================
+// 在 app.js 顶部定义一个内存缓存，记录 302 跳转后的最终 CDN 链接
+const resolvedUrlCache = new Map();
+
 app.get('/video', async (req, res) => {
   const videoUrl = req.query.url;
 
@@ -1118,47 +1121,58 @@ app.get('/video', async (req, res) => {
     return res.status(400).send('缺少 url 参数');
   }
 
-  // 2. 安全校验（SSRF 防护）：限制仅代理 Wikimedia 域名的资源
   try {
-    const parsedUrl = new URL(videoUrl);
+    new URL(videoUrl);
   } catch (err) {
     return res.status(400).send('无效的 URL 参数');
   }
 
-  try {
-    // 3. 构造请求头，透传客户端的 Range 头（用于支持拖动进度条和分段加载）
-    // 3. 构造请求头
-    const requestHeaders = {
-      // 添加常见的浏览器 User-Agent，防止被 Wikimedia 拦截 (403 Forbidden)
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 ProxyBot/1.0',
-    };
-    
-    // 透传客户端的 Range 头，支持视频拖拽
-    if (req.headers.range) {
-      requestHeaders['Range'] = req.headers.range;
-    }
+  // 2. 检查缓存：如果之前解析过重定向，直接请求最终的 upload.wikimedia.org 真实地址
+  // 这样可以避免每次都发起 302 重定向查询，请求量瞬间减半！
+  const targetUrl = resolvedUrlCache.get(videoUrl) || videoUrl;
 
-    // 4. 以流（stream）模式发起 HTTP 请求
+  // 3. 构造请求头
+  const requestHeaders = {
+    // ⚠️ 极其重要：Wikimedia 要求 UA 格式为 "应用名/版本 (联系邮箱/网站)"
+    // 伪造 Chrome UA 在 Node.js 发起请求会被拦截并报 429/403
+    'User-Agent': 'VideoProxy/1.0 (https://yourdomain.com; contact@yourdomain.com)',
+  };
+
+  // 透传客户端 Range 头（用于支持拖拽与分段播放）
+  if (req.headers.range) {
+    requestHeaders['Range'] = req.headers.range;
+  }
+
+  try {
+    // 4. 发起请求
     const response = await axios({
       method: 'get',
-      url: videoUrl,
+      url: targetUrl,
       headers: requestHeaders,
       responseType: 'stream',
-      maxRedirects: 5, // 显式允许最多 5 次重定向，解决 Special:FilePath 的 302 跳转问题
-      timeout: 10000,  // 稍微延长超时时间，因为跳转需要额外耗时
+      maxRedirects: 5,
+      timeout: 15000,
     });
 
-    // 5. 设置 CORS 允许前端跨域调用
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // 如果发生了重定向，将最终的真实 URL 记入缓存
+    const finalUrl = response.request?.res?.responseUrl;
+    if (finalUrl && finalUrl !== videoUrl) {
+      resolvedUrlCache.set(videoUrl, finalUrl);
+    }
 
-    // 6. 透传目标服务器的关键响应头给客户端
+    // 5. 设置响应头
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(response.status);
-    
+
+    // 关键响应头透传
     const headersToForward = [
       'content-type',
       'content-length',
       'content-range',
-      'accept-ranges'
+      'accept-ranges',
+      'etag',
+      'last-modified',
+      'cache-control'
     ];
 
     headersToForward.forEach((header) => {
@@ -1167,15 +1181,22 @@ app.get('/video', async (req, res) => {
       }
     });
 
-    // 7. 将视频流实时管道传输（Pipe）至客户端
+    // 6. 实时管道传输
     response.data.pipe(res);
 
-    // 8. 监听客户端断开连接，及时销毁上游流，防止内存泄露
+    // 7. 客户端断开连接时销毁上游流，防止内存泄露
     req.on('close', () => {
       response.data.destroy();
     });
 
   } catch (error) {
+    // 如果触发了 429，清空对应 URL 的缓存，并向前端返回明确提示
+    if (error.response && error.response.status === 429) {
+      resolvedUrlCache.delete(videoUrl);
+      console.warn(`[429 限流警告] 目标 URL: ${videoUrl}`);
+      return res.status(429).send('上游服务请求过于频繁，请稍后重试');
+    }
+
     console.error('代理视频请求失败:', error.message);
     if (error.response) {
       return res.status(error.response.status).send('获取目标视频失败');
@@ -1183,7 +1204,6 @@ app.get('/video', async (req, res) => {
     res.status(500).send('代理服务器内部错误');
   }
 });
-
 app.get("/", async function(req, res) {
   try {
     const filePath = path.join(__dirname, 'decoy4beta.html');
