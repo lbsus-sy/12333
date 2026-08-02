@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时代先锋 · 领航新征程——新时代中国特色社会主义思想学习专题网</title>
+<meta name="description" content="学习宣传贯彻新时代中国特色社会主义思想，汇聚光辉历程、重要影像、原声音频、金句摘录、研学测试与时代成就，共筑中国梦。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23c8102e'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23ffde00'%3E★%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          gold: {
+            light: '#fbe396',
+            DEFAULT: '#d4af37',
+            dark: '#8c7123',
+            cream: '#fbf3e2'
+          },
+          cpc: {
+            red: '#a30f16',
+            darkred: '#420606',
+            brightred: '#d91438'
+          }
+        },
+        fontFamily: {
+          serif: ['Noto Serif SC', 'serif'],
+          sans: ['Noto Sans SC', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  :root {
+    --red-deep: #420606;
+    --red-dark: #6e0c0f;
+    --red: #a30f16;
+    --red-bright: #d91438;
+    --gold-dark: #8c7123;
+    --gold: #d4af37;
+    --gold-light: #fbe396;
+    --gold-cream: #fbf3e2;
+    --dark-bg: #0d0202;
+    --card-bg: rgba(35, 10, 10, 0.65);
+    --glass-border: rgba(212, 175, 55, 0.3);
+    --glow-gold: rgba(212, 175, 55, 0.5);
+    --glow-red: rgba(217, 20, 56, 0.5);
+    --base-font-size: 16px;
+  }
+
+  html {
+    font-size: var(--base-font-size);
+    scroll-behavior: smooth;
+    background-color: var(--dark-bg);
+    color: var(--gold-cream);
+  }
+
+  body {
+    font-family: "Noto Sans SC", "Noto Serif SC", serif;
+    background: var(--dark-bg);
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .font-serif-title {
+    font-family: "Noto Serif SC", serif;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: #2b0b0b;
+  }
+
+  /* 丝滑滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0d0202;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold-light), var(--red), var(--gold-dark));
+    border-radius: 999px;
+    box-shadow: 0 0 10px var(--glow-gold);
+  }
+
+  /* 动态跟随光标 */
+  #cursor-dot, #cursor-ring {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 99999;
+    transition: transform 0.08s ease-out, opacity 0.3s ease, background 0.3s ease;
+  }
+  #cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gold-light);
+    box-shadow: 0 0 12px var(--gold-light);
+  }
+  #cursor-ring {
+    width: 38px;
+    height: 38px;
+    border: 1.5px solid var(--gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    transition: width 0.25s cubic-bezier(0.2,0.8,0.2,1), height 0.25s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s, background 0.3s;
+  }
+  body.hovering #cursor-ring {
+    width: 58px;
+    height: 58px;
+    border-color: var(--gold-light);
+    background: rgba(212, 175, 55, 0.12);
+    backdrop-filter: blur(2px);
+  }
+
+  /* 顶部阅读进度指示条 */
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red-bright), var(--gold-light), #ffffff);
+    z-index: 10001;
+    box-shadow: 0 0 12px var(--gold-light);
+    transition: width 0.1s linear;
+  }
+
+  /* 预加载帷幕动画 */
+  #preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 90000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #5c0a0a 0%, #1a0303 70%, #080101 100%);
+    transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.2s ease;
+  }
+  #preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .curtain {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 50.5%;
+    background: linear-gradient(140deg, #700c0c, #3d0505 80%, #150202);
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+    transition: transform 1.3s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 2;
+  }
+  .curtain.left { left: 0; border-right: 1px solid var(--gold); }
+  .curtain.right { right: 0; border-left: 1px solid var(--gold); }
+  #preloader.hide .curtain.left { transform: translateX(-102%); }
+  #preloader.hide .curtain.right { transform: translateX(102%); }
+
+  .preload-star {
+    width: 90px;
+    height: 90px;
+    color: var(--gold-light);
+    animation: starPulse3D 2.2s infinite ease-in-out;
+    filter: drop-shadow(0 0 25px rgba(251, 227, 150, 0.9));
+  }
+  @keyframes starPulse3D {
+    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 20px rgba(212,175,55,0.6)); }
+    50% { transform: scale(1.2) rotate(180deg); filter: drop-shadow(0 0 45px rgba(251,227,150,1)); }
+  }
+
+  .loader-bar-bg {
+    width: 260px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 20px auto 0;
+    position: relative;
+  }
+  .loader-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    box-shadow: 0 0 15px var(--gold-light);
+    transition: width 0.2s ease;
+  }
+
+  /* 背景双层 Canvas */
+  #particle-canvas, #silk-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  }
+  #silk-canvas { z-index: 1; opacity: 0.65; mix-blend-mode: screen; }
+  #particle-canvas { z-index: 2; opacity: 0.85; }
+
+  /* 黄金分割线与花纹 */
+  .gold-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark) 15%, var(--gold-light) 50%, var(--gold-dark) 85%, transparent);
+    position: relative;
+    z-index: 10;
+  }
+  .gold-line::after {
+    content: "★";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--gold-light);
+    font-size: 14px;
+    background: var(--dark-bg);
+    padding: 0 14px;
+    text-shadow: 0 0 10px var(--gold);
+  }
+
+  .divider-pattern {
+    height: 36px;
+    background-image: repeating-linear-gradient(135deg, transparent 0 12px, rgba(212, 175, 55, 0.15) 12px 14px, transparent 14px 26px);
+    position: relative;
+    z-index: 5;
+  }
+
+  /* 玻璃拟态卡片 */
+  .glass-card {
+    background: linear-gradient(145deg, rgba(45, 12, 12, 0.68), rgba(18, 5, 5, 0.78));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: -100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 230, 150, 0.08), transparent);
+    transform: rotate(45deg);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+  }
+  .glass-card:hover::before {
+    transform: rotate(45deg) translate(150%, 150%);
+  }
+  .glass-card:hover {
+    border-color: rgba(251, 227, 150, 0.75);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(212, 175, 55, 0.3);
+  }
+
+  /* 顶部导航 */
+  #navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 22px 0;
+    transition: padding 0.4s ease, background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+  }
+  #navbar.scrolled {
+    padding: 12px 0;
+    background: rgba(13, 2, 2, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(212, 175, 55, 0.35);
+  }
+  .nav-link {
+    position: relative;
+    color: var(--gold-cream);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    opacity: 0.82;
+    transition: all 0.3s ease;
+    padding: 4px 0;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 50%;
+    width: 0%; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    box-shadow: 0 0 8px var(--gold-light);
+    transition: width 0.35s ease, left 0.35s ease;
+  }
+  .nav-link:hover, .nav-link.active {
+    opacity: 1;
+    color: var(--gold-light);
+    text-shadow: 0 0 12px rgba(251, 227, 150, 0.5);
+  }
+  .nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+    left: 0;
+  }
+
+  /* Hero 视差首屏 */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #hero video {
+    position: absolute;
+    top: 50%; left: 50%;
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto;
+    transform: translate(-50%, -50%) scale(1.05);
+    object-fit: cover;
+    filter: brightness(0.48) contrast(1.1) saturate(1.2);
+    transition: transform 10s ease-out;
+  }
+  #hero:hover video {
+    transform: translate(-50%, -50%) scale(1.0);
+  }
+  #hero .hero-veil {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(13, 2, 2, 0.2) 0%, rgba(13, 2, 2, 0.75) 75%, rgba(13, 2, 2, 0.98) 100%),
+                linear-gradient(180deg, rgba(13,2,2,0.6) 0%, transparent 40%, rgba(13,2,2,0.95) 100%);
+  }
+
+  .hero-title {
+    font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    line-height: 1.25;
+    background: linear-gradient(180deg, #ffffff 0%, #fbe396 35%, #d4af37 70%, #99741e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 6px 25px rgba(212, 175, 55, 0.4));
+  }
+
+  /* 按钮特效 */
+  .btn-gold-glow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 42px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #fbe396 0%, #d4af37 50%, #a5761f 100%);
+    color: #2b0606;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4), inset 0 2px 2px rgba(255,255,255,0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+  }
+  .btn-gold-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  .btn-gold-glow:hover::before {
+    transform: translateX(100%);
+  }
+  .btn-gold-glow:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 18px 45px rgba(212, 175, 55, 0.65), 0 0 25px rgba(251, 227, 150, 0.8);
+    color: #000000;
+  }
+
+  .btn-outline-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 40px;
+    border-radius: 999px;
+    border: 2px solid var(--gold-light);
+    background: rgba(21, 4, 4, 0.4);
+    color: var(--gold-light);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    transition: all 0.35s ease;
+  }
+  .btn-outline-gold:hover {
+    background: var(--gold-light);
+    color: #2b0606;
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.45);
+  }
+
+  /* 滚动提示动画 */
+  .scroll-cue {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--gold-light);
+    opacity: 0.85;
+    transition: opacity 0.3s;
+  }
+  .scroll-cue:hover { opacity: 1; }
+  .scroll-cue .bar {
+    width: 2px;
+    height: 48px;
+    background: rgba(255,255,255,0.2);
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .scroll-cue .bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, var(--gold-light), var(--red-bright));
+    animation: scrollDrop 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  @keyframes scrollDrop {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200%); }
+  }
+
+  /* 滚动显现动画 */
+  .reveal {
+    opacity: 0;
+    transform: translateY(50px) scale(0.97);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left.in { opacity: 1; transform: translateX(0); }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-right.in { opacity: 1; transform: translateX(0); }
+
+  /* 模块标题 */
+  .section-tag {
+    display: inline-block;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(212,175,55,0.3);
+  }
+  .section-title {
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--gold-cream);
+    margin-top: 12px;
+    letter-spacing: 0.08em;
+  }
+  .section-title span {
+    color: var(--gold-light);
+    background: linear-gradient(180deg, #ffffff, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* 时间轴组件 */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, var(--gold-light) 15%, var(--gold) 50%, var(--red-bright) 85%, transparent);
+    transform: translateX(-50%);
+    box-shadow: 0 0 12px var(--glow-gold);
+  }
+  .timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 0 45px 70px;
+  }
+  .timeline-item:nth-child(odd) { left: 0; text-align: right; }
+  .timeline-item:nth-child(even) { left: 50%; text-align: left; }
+  
+  .timeline-dot {
+    position: absolute;
+    top: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gold-light) 30%, var(--gold) 70%, var(--red) 100%);
+    box-shadow: 0 0 0 8px rgba(212, 175, 55, 0.2), 0 0 25px var(--gold-light);
+    z-index: 5;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+  .timeline-item:hover .timeline-dot {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 12px rgba(212, 175, 55, 0.35), 0 0 35px var(--gold-light);
+  }
+  .timeline-item:nth-child(odd) .timeline-dot { right: -12px; }
+  .timeline-item:nth-child(even) .timeline-dot { left: -12px; }
+
+  .timeline-card { cursor: pointer; }
+  .timeline-year {
+    color: var(--gold-light);
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  }
+
+  @media(max-width: 768px) {
+    .timeline::before { left: 24px; }
+    .timeline-item, .timeline-item:nth-child(even) {
+      width: 100%;
+      left: 0;
+      text-align: left;
+      padding-left: 60px;
+      padding-right: 15px;
+    }
+    .timeline-item:nth-child(odd) { text-align: left; }
+    .timeline-item:nth-child(odd) .timeline-dot, .timeline-item:nth-child(even) .timeline-dot { left: 12px; }
+  }
+
+  /* 视频矩阵卡片 */
+  .video-card { cursor: pointer; }
+  .video-card .thumb-wrap {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000;
+    border-radius: 12px;
+  }
+  .video-card video.thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
+  }
+  .video-card:hover video.thumb {
+    transform: scale(1.08);
+    opacity: 0.98;
+  }
+  .play-badge {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
+  }
+  .play-badge .circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(21, 4, 4, 0.75);
+    border: 2px solid var(--gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 25px rgba(212,175,55,0.4);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+  }
+  .video-card:hover .play-badge .circle {
+    transform: scale(1.18);
+    background: rgba(180, 16, 42, 0.9);
+    border-color: #ffffff;
+    box-shadow: 0 0 35px rgba(217, 20, 56, 0.8);
+  }
+
+  /* 原声音频控制台 */
+  .audio-panel {
+    background: linear-gradient(165deg, rgba(42, 12, 12, 0.85), rgba(15, 3, 3, 0.92));
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  #wave-canvas {
+    width: 100%;
+    height: 140px;
+    display: block;
+    border-radius: 14px;
+    background: radial-gradient(ellipse at center, rgba(163, 15, 22, 0.28), rgba(13, 2, 2, 0.85));
+    border: 1px solid rgba(212, 175, 55, 0.25);
+  }
+  .track-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+  .track-item:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.25);
+    transform: translateX(6px);
+  }
+  .track-item.active {
+    background: linear-gradient(90deg, rgba(163, 15, 22, 0.45), rgba(212, 175, 55, 0.15));
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .track-item .idx {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    transition: all 0.3s;
+  }
+  .track-item.active .idx {
+    background: var(--gold-light);
+    color: #2b0606;
+    box-shadow: 0 0 12px var(--gold-light);
+  }
+
+  .ctrl-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light);
+    background: rgba(21, 4, 4, 0.6);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .ctrl-btn:hover {
+    background: var(--gold);
+    color: #2b0606;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(212,175,55,0.6);
+  }
+  .ctrl-btn.main {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #2b0606;
+    border: none;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+  }
+  .ctrl-btn.main:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 35px rgba(251, 227, 150, 0.85);
+  }
+
+  /* Modal 通用弹窗系统 */
+  .modal-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  .modal-wrapper.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 1, 1, 0.88);
+    backdrop-filter: blur(14px);
+  }
+  .modal-box {
+    position: relative;
+    z-index: 2;
+    width: min(960px, 95vw);
+    transform: scale(0.88) translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .modal-wrapper.open .modal-box {
+    transform: scale(1) translateY(0);
+  }
+
+  /* 研学答题选项卡 */
+  .quiz-option {
+    padding: 16px 22px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .quiz-option:hover {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: var(--gold-light);
+    transform: translateX(6px);
+  }
+  .quiz-option.correct {
+    background: rgba(20, 140, 60, 0.32) !important;
+    border-color: #2ecc71 !important;
+    color: #ffffff;
+  }
+  .quiz-option.wrong {
+    background: rgba(180, 20, 20, 0.32) !important;
+    border-color: #e74c3c !important;
+    color: #ffffff;
+  }
+
+  /* 金句 Carousel 轮播 */
+  #quote-carousel { position: relative; min-height: 280px; }
+  .quote-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .quote-slide.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* Toast 浮动提示 */
+  #toast {
+    position: fixed;
+    bottom: 35px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    z-index: 99999;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #2b0606;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px var(--gold-light);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* 返回顶部悬浮按钮 */
+  #back-top {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    z-index: 1000;
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #2b0606;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    border: none;
+  }
+  #back-top.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  #back-top:hover {
+    transform: translateY(-4px) scale(1.12);
+    box-shadow: 0 15px 40px rgba(212,175,55,0.7);
+  }
+
+  /* 移动端抽屉菜单 */
+  #mobile-menu {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 82%; max-width: 340px;
+    height: 100vh;
+    background: linear-gradient(165deg, #3d0808, #130202);
+    z-index: 1001;
+    transition: right 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+    box-shadow: -15px 0 50px rgba(0,0,0,0.85);
+    padding: 90px 32px;
+    border-left: 1px solid var(--gold);
+  }
+  #mobile-menu.open { right: 0; }
+  #menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.78);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: none;
+  }
+  #menu-overlay.open { display: block; }
+
+  /* 无障碍工具栏 */
+  #accessibility-bar {
+    position: fixed;
+    left: 20px; bottom: 30px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .access-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(21, 4, 4, 0.8);
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: all 0.3s;
+  }
+  .access-btn:hover {
+    background: var(--gold);
+    color: #2b0606;
+    transform: scale(1.1);
+  }
+</style>
+</head>
+
+<body>
+
+<!-- 自定义跟随光标 -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- 顶部阅读进度线 -->
+<div id="scroll-progress"></div>
+
+<!-- 预加载帷幕 -->
+<div id="preloader">
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+  <div class="preload-content relative z-10 text-center">
+    <svg class="preload-star" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2l2.9 6.6L22 9.3l-5.2 4.7L18.2 21 12 17.3 5.8 21l1.4-7-5.2-4.7 7.1-.7z"/>
+    </svg>
+    <div class="mt-6 text-xl font-bold tracking-[0.4em] text-[var(--gold-light)] font-serif-title">正 在 加 载 · 时 代 光 影</div>
+    <div class="loader-bar-bg">
+      <div class="loader-bar-fill" id="loader-fill"></div>
+    </div>
+    <div class="text-xs text-[#c8b48f] opacity-80 mt-3 tracking-widest" id="loader-text">0%</div>
+  </div>
+</div>
+
+<!-- 无障碍可调节控制按钮 -->
+<div id="accessibility-bar">
+  <button class="access-btn" id="font-plus-btn" title="放大字号" aria-label="Increase Font Size">A+</button>
+  <button class="access-btn" id="font-minus-btn" title="缩小字号" aria-label="Decrease Font Size">A-</button>
+</div>
+
+<!-- 背景 Canvas 图层 -->
+<canvas id="silk-canvas"></canvas>
+<canvas id="particle-canvas"></canvas>
+
+<!-- 顶部导航栏 -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3 group">
+      <div class="relative flex items-center justify-center">
+        <svg class="w-8 h-8 text-[var(--gold-light)] transition-transform duration-500 group-hover:rotate-180" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l2.9 6.6L22 9.3l-5.2 4.7L18.2 21 12 17.3 5.8 21l1.4-7-5.2-4.7 7.1-.7z"/>
+        </svg>
+        <div class="absolute inset-0 bg-[var(--gold)] blur-md opacity-40 group-hover:opacity-80 transition-opacity"></div>
+      </div>
+      <span class="font-serif-title font-bold text-xl tracking-widest text-[var(--gold-light)]">
+        时代先锋<span class="text-[var(--gold-cream)] opacity-70 text-xs ml-2.5 font-sans hidden sm:inline">· 学习专题网</span>
+      </span>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-7 text-sm tracking-widest">
+      <a href="#hero" class="nav-link active">首页</a>
+      <a href="#timeline" class="nav-link">光辉历程</a>
+      <a href="#videos" class="nav-link">影像专区</a>
+      <a href="#audio" class="nav-link">语音专区</a>
+      <a href="#quiz" class="nav-link">深化研学</a>
+      <a href="#quotes" class="nav-link">金句摘录</a>
+      <a href="#stats" class="nav-link">时代成就</a>
+      <a href="#about" class="nav-link">关于本站</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button id="search-trigger" class="p-2 text-[var(--gold-light)] hover:text-white transition" title="搜索全站" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <button id="menu-btn" class="lg:hidden text-[var(--gold-light)] p-2 focus:outline-none" aria-label="Toggle Menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- 移动端抽屉导航 -->
+<div id="menu-overlay"></div>
+<div id="mobile-menu">
+  <div class="flex flex-col gap-7 text-lg tracking-widest">
+    <a href="#hero" class="nav-link">首页</a>
+    <a href="#timeline" class="nav-link">光辉历程</a>
+    <a href="#videos" class="nav-link">影像专区</a>
+    <a href="#audio" class="nav-link">语音专区</a>
+    <a href="#quiz" class="nav-link">深化研学</a>
+    <a href="#quotes" class="nav-link">金句摘录</a>
+    <a href="#stats" class="nav-link">时代成就</a>
+    <a href="#about" class="nav-link">关于本站</a>
+  </div>
+</div>
+
+<!-- Hero 视差首屏 -->
+<section id="hero">
+  <video autoplay muted loop playsinline preload="auto">
+    <source src="https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm" type="video/webm">
+  </video>
+  <div class="hero-veil"></div>
+
+  <div class="relative z-10 text-center px-6 max-w-5xl mx-auto reveal">
+    <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[var(--glass-border)] bg-[rgba(21,4,4,0.55)] backdrop-blur-md mb-6">
+      <span class="w-2 h-2 rounded-full bg-[var(--gold-light)] animate-ping"></span>
+      <span class="text-xs tracking-[0.45em] text-[var(--gold-light)] uppercase">领 航 新 时 代 · 奋 进 新 征 程</span>
+    </div>
+
+    <h1 class="hero-title font-serif-title my-4">凝心聚力谱新篇<br>踔厉奋发向未来</h1>
+    
+    <p class="text-base sm:text-xl text-[#f2e3c6] opacity-90 max-w-3xl mx-auto leading-relaxed tracking-widest font-light mt-6">
+      深入学习贯彻习近平新时代中国特色社会主义思想 · 汇聚强国建设与民族复兴磅礴力量
+    </p>
+
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-6">
+      <a href="#videos" class="btn-gold-glow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        观看影像记录
+      </a>
+      <a href="#audio" class="btn-outline-gold">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+        聆听原声语音
+      </a>
+    </div>
+  </div>
+
+  <a href="#timeline" class="scroll-cue" aria-label="Scroll Down">
+    <span class="text-xs tracking-[0.3em] uppercase">向下探索</span>
+    <div class="bar"></div>
+  </a>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- 历程时间轴模块 -->
+<section id="timeline" class="py-28 relative bg-[#130303]/80">
+  <div class="max-w-4xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">GLORIOUS JOURNEY</span>
+    <h2 class="section-title">光辉<span>历程</span></h2>
+    <p class="mt-4 text-[#e6d5b8] opacity-80 leading-relaxed max-w-2xl mx-auto">
+      砥砺奋进，一路笃行。回顾新时代波澜壮阔的历史进程，见证民族复兴道路上的坚实足迹。（点击卡片即可查看完整详尽历史背景）
+    </p>
+  </div>
+
+  <div class="timeline max-w-5xl mx-auto mt-20 px-6" id="timeline-container">
+    <!-- Timeline dynamic rendered in JS for max flexibility -->
+  </div>
+</section>
+
+<div class="divider-pattern"></div>
+
+<!-- 视频矩阵模块 -->
+<section id="videos" class="py-28 relative bg-[#0e0202]">
+  <div class="max-w-4xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">VIDEO GALLERY</span>
+    <h2 class="section-title">影像<span>专区</span></h2>
+    <p class="mt-4 text-[#e6d5b8] opacity-80 leading-relaxed">
+      精选权威珍贵影像，支持按分类检索。点击卡片即可在本页内开启高清影院级 Modal 窗口畅览。
+    </p>
+
+    <!-- Filter Buttons -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mt-8" id="video-filters">
+      <button class="filter-btn active px-4 py-1.5 rounded-full text-xs font-bold border border-[var(--gold)] bg-[var(--gold)] text-black transition" data-filter="all">全部影像</button>
+      <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold border border-[var(--gold)]/40 text-[var(--gold-light)] bg-black/40 hover:border-[var(--gold)] transition" data-filter="重要讲话">重要讲话</button>
+      <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold border border-[var(--gold)]/40 text-[var(--gold-light)] bg-black/40 hover:border-[var(--gold)] transition" data-filter="生态文明">生态文明</button>
+      <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold border border-[var(--gold)]/40 text-[var(--gold-light)] bg-black/40 hover:border-[var(--gold)] transition" data-filter="民生关怀">民生关怀</button>
+      <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-bold border border-[var(--gold)]/40 text-[var(--gold-light)] bg-black/40 hover:border-[var(--gold)] transition" data-filter="外交活动">外交活动</button>
+    </div>
+  </div>
+
+  <div id="video-grid" class="max-w-6xl mx-auto mt-14 px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+</section>
+
+<!-- 原声语音模块 -->
+<section id="audio" class="py-28 relative bg-[#130303]/90">
+  <div class="max-w-4xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">AUDIO LOUNGE</span>
+    <h2 class="section-title">语音<span>专区</span></h2>
+    <p class="mt-4 text-[#e6d5b8] opacity-80 leading-relaxed">
+      静心聆听，感受声音里的力量与温度——集成 Web Audio API 可视化，支持 4 种 Canvas 动态声浪模式切图。
+    </p>
+  </div>
+
+  <div class="max-w-4xl mx-auto mt-16 px-6 reveal">
+    <div class="audio-panel">
+      <!-- 波形 Canvas 可视化 -->
+      <div class="relative">
+        <canvas id="wave-canvas"></canvas>
+        <div class="absolute top-3 right-3 flex items-center gap-2">
+          <button id="viz-mode-btn" class="px-3.5 py-1.5 rounded-full text-xs border border-[var(--gold)] text-[var(--gold-light)] bg-black/60 backdrop-blur hover:bg-[var(--gold)] hover:text-black transition">
+            模式: 频段柱状
+          </button>
+        </div>
+      </div>
+
+      <!-- 控制键 -->
+      <div class="flex items-center justify-center gap-8 mt-8">
+        <button class="ctrl-btn" id="prev-btn" title="上一段">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+        <button class="ctrl-btn main" id="play-btn" title="播放/暂停">
+          <svg id="play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="ctrl-btn" id="next-btn" title="下一段">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16 18h2V6h-2zM6 18l8.5-6L6 6z"/></svg>
+        </button>
+      </div>
+
+      <!-- 进度条 -->
+      <div class="flex items-center gap-4 mt-8 text-xs text-[#e6d5b8]">
+        <span id="cur-time">00:00</span>
+        <div class="h-2 bg-white/10 rounded-full flex-1 relative cursor-pointer group" id="progress-wrap">
+          <div class="h-full bg-gradient-to-r from-[var(--red-bright)] to-[var(--gold-light)] rounded-full w-0 relative" id="progress-fill">
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white shadow-[0_0_10px_var(--gold-light)] opacity-0 group-hover:opacity-100 transition"></div>
+          </div>
+        </div>
+        <span id="dur-time">00:00</span>
+      </div>
+
+      <!-- 音轨列表 -->
+      <div id="track-list" class="mt-8 flex flex-col gap-2.5 max-h-[280px] overflow-y-auto pr-2"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-pattern"></div>
+
+<!-- 深度研学互动答题模块 -->
+<section id="quiz" class="py-28 relative bg-[#0d0202]">
+  <div class="max-w-4xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">INTERACTIVE LEARNING</span>
+    <h2 class="section-title">深化研学<span>· 知识测试</span></h2>
+    <p class="mt-4 text-[#e6d5b8] opacity-80 leading-relaxed">
+      检验学习成果，温故而知新。完成互动测验，加深对新时代思想的深刻理解与精准掌握。
+    </p>
+  </div>
+
+  <div class="max-w-3xl mx-auto mt-14 px-6 reveal">
+    <div class="glass-card p-8 sm:p-10 relative">
+      <div class="flex items-center justify-between border-b border-[var(--glass-border)] pb-4 mb-6">
+        <span class="text-xs tracking-widest text-[var(--gold-light)] font-bold" id="quiz-progress">QUESTION 1 / 10</span>
+        <span class="text-xs px-3 py-1 rounded-full bg-[var(--gold)]/20 border border-[var(--gold)] text-[var(--gold-light)]" id="quiz-score-badge">当前得分: 0</span>
+      </div>
+
+      <h3 class="text-lg sm:text-xl font-bold text-[var(--gold-cream)] leading-snug mb-6" id="quiz-question">
+        加载问答题目中...
+      </h3>
+
+      <div class="flex flex-col gap-3.5" id="quiz-options"></div>
+
+      <div class="mt-8 pt-4 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 opacity-0 transition-opacity duration-500" id="quiz-explanation-box">
+        <p class="text-xs sm:text-sm text-[#e6d5b8] flex-1 leading-relaxed" id="quiz-explanation-text"></p>
+        <button id="quiz-next-btn" class="px-6 py-2.5 rounded-full bg-[var(--gold-light)] text-[#2b0606] font-bold text-xs shrink-0 hover:scale-105 transition shadow-md">下一题</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 金句摘录模块 -->
+<section id="quotes" class="py-28 relative bg-[#130303]">
+  <div class="max-w-4xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">GOLDEN WORDS</span>
+    <h2 class="section-title">金句<span>摘录</span></h2>
+    <p class="text-xs text-[var(--gold-light)] opacity-80 mt-2">（点击金句文字即可直接复制至剪贴板）</p>
+  </div>
+
+  <div class="max-w-4xl mx-auto mt-14 px-6 relative">
+    <div id="quote-carousel"></div>
+    <div class="flex justify-center gap-2.5 mt-8" id="quote-dots"></div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- 时代成就与数据看板 -->
+<section id="stats" class="py-28 relative bg-[#0e0202]">
+  <div class="max-w-4xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">ACHIEVEMENTS</span>
+    <h2 class="section-title">时代<span>成就</span></h2>
+    <p class="mt-4 text-[#e6d5b8] opacity-80 leading-relaxed">
+      数字背后，是亿万人民携手奋斗的时代答卷与无上荣光。
+    </p>
+  </div>
+
+  <div class="max-w-6xl mx-auto mt-16 px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="glass-card p-8 text-center reveal">
+      <div class="stat-num text-4xl sm:text-5xl font-black text-[var(--gold-light)] font-serif-title" data-target="9899">0</div>
+      <div class="text-sm text-[#e6d5b8] opacity-85 mt-3 leading-relaxed">现行标准农村贫困人口<br><span class="text-xs text-[var(--gold)]">全部脱贫（万人）</span></div>
+    </div>
+
+    <div class="glass-card p-8 text-center reveal">
+      <div class="stat-num text-4xl sm:text-5xl font-black text-[var(--gold-light)] font-serif-title" data-target="150">0</div>
+      <div class="text-sm text-[#e6d5b8] opacity-85 mt-3 leading-relaxed">共建"一带一路"<br><span class="text-xs text-[var(--gold)]">合作伙伴国家（个）</span></div>
+    </div>
+
+    <div class="glass-card p-8 text-center reveal">
+      <div class="stat-num text-4xl sm:text-5xl font-black text-[var(--gold-light)] font-serif-title" data-target="126">0</div>
+      <div class="text-sm text-[#e6d5b8] opacity-85 mt-3 leading-relaxed">国内生产总值突破<br><span class="text-xs text-[var(--gold)]">126万亿元人民币</span></div>
+    </div>
+
+    <div class="glass-card p-8 text-center reveal">
+      <div class="stat-num text-4xl sm:text-5xl font-black text-[var(--gold-light)] font-serif-title" data-target="100">0</div>
+      <div class="text-sm text-[#e6d5b8] opacity-85 mt-3 leading-relaxed">中国共产党<br><span class="text-xs text-[var(--gold)]">百年光辉历程（周年）</span></div>
+    </div>
+  </div>
+
+  <!-- SVG 数据可视化综合展示面板 -->
+  <div class="max-w-6xl mx-auto mt-12 px-6 reveal">
+    <div class="glass-card p-8">
+      <h3 class="text-lg font-bold text-[var(--gold-light)] font-serif-title border-b border-[var(--glass-border)] pb-3 mb-6">经济与社会发展对比图示（万亿元）</h3>
+      <div class="h-64 flex items-end justify-between gap-4 sm:gap-8 pt-8 px-4 border-b border-white/10" id="chart-bars">
+        <!-- JS 动态注入高阶柱状图 -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 关于本站 -->
+<section id="about" class="py-28 relative bg-[#090101]">
+  <div class="max-w-3xl mx-auto text-center px-6 reveal">
+    <span class="section-tag">ABOUT PLATFORM</span>
+    <h2 class="section-title">关于<span>本站</span></h2>
+    
+    <p class="mt-8 text-[#e6d5b8] opacity-85 leading-loose text-base sm:text-lg font-light">
+      本站是一个面向广大党员与网友的公益性学习专题平台，聚焦新时代党和国家事业发展的光辉历程，
+      汇集权威影像、原声语音、经典论述、深度研学与发展成就，致力于以更生动、更精美、更丝滑的交互体验传播主旋律，弘扬正能量。
+    </p>
+
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <span class="px-4 py-1.5 rounded-full text-xs border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-[var(--gold-light)]">学习强国</span>
+      <span class="px-4 py-1.5 rounded-full text-xs border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-[var(--gold-light)]">时代楷模</span>
+      <span class="px-4 py-1.5 rounded-full text-xs border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-[var(--gold-light)]">砥砺奋进</span>
+      <span class="px-4 py-1.5 rounded-full text-xs border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-[var(--gold-light)]">共筑中国梦</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-16 bg-[#050000] border-t border-[var(--glass-border)] relative">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-6 text-center">
+    <div class="flex items-center gap-3">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="text-[var(--gold-light)]">
+        <path d="M12 2l2.9 6.6L22 9.3l-5.2 4.7L18.2 21 12 17.3 5.8 21l1.4-7-5.2-4.7 7.1-.7z"/>
+      </svg>
+      <span class="font-serif-title font-bold text-lg tracking-widest text-[var(--gold-light)]">时代先锋 · 学习专题网</span>
+    </div>
+
+    <p class="text-xs text-[#c8b48f] opacity-70 max-w-xl leading-relaxed">
+      本站内容仅用于公益学习宣传，视频与音频素材来源于公开渠道，版权归原作者/机构所有。<br>
+      © 2026 时代先锋学习专题网 · 保留所有权利
+    </p>
+  </div>
+</footer>
+
+<!-- 浮动控件：返回顶部与 Toast -->
+<button id="back-top" title="返回顶部" aria-label="Back to Top">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+
+<div id="toast">金句已成功复制至剪贴板</div>
+
+<!-- 视频 Lightbox Modal 窗口 -->
+<div id="video-modal" class="modal-wrapper">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="relative bg-black rounded-2xl overflow-hidden border border-[var(--gold)]/40 shadow-[0_0_80px_rgba(0,0,0,0.9)]">
+      <button class="absolute top-4 right-4 z-20 text-white/80 hover:text-white bg-black/60 hover:bg-red-700/80 w-10 h-10 rounded-full flex items-center justify-center transition" id="modal-close">
+        ✕
+      </button>
+      <video id="modal-video" controls playsinline class="w-full max-h-[75vh] bg-black"></video>
+      <div class="p-6 bg-[#120303] border-t border-[var(--glass-border)]">
+        <h3 id="modal-title" class="text-lg font-bold text-[var(--gold-light)] font-serif-title"></h3>
+        <p id="modal-desc" class="text-xs sm:text-sm text-[#e6d5b8] mt-2 leading-relaxed opacity-90"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 时间轴 Modal 窗口 -->
+<div id="timeline-modal" class="modal-wrapper">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="glass-card p-8 sm:p-10 relative">
+      <button class="absolute top-4 right-4 text-white/70 hover:text-white text-xl" id="timeline-modal-close">✕</button>
+      <span id="tl-modal-year" class="text-3xl font-black text-[var(--gold-light)] font-serif-title"></span>
+      <h3 id="tl-modal-title" class="text-xl font-bold text-white mt-2 mb-4 border-b border-[var(--glass-border)] pb-3"></h3>
+      <p id="tl-modal-detail" class="text-base text-[#e6d5b8] leading-loose font-light"></p>
+    </div>
+  </div>
+</div>
+
+<!-- 搜索 Modal 窗口 -->
+<div id="search-modal" class="modal-wrapper">
+  <div class="modal-backdrop"></div>
+  <div class="modal-box">
+    <div class="glass-card p-8 relative">
+      <button class="absolute top-4 right-4 text-white/70 hover:text-white text-xl" id="search-modal-close">✕</button>
+      <h3 class="text-lg font-bold text-[var(--gold-light)] font-serif-title mb-4">全站检索</h3>
+      <input type="text" id="search-input" placeholder="输入关键词（如：脱贫攻坚、一带一路、生态...）" class="w-full px-5 py-3 rounded-xl bg-black/60 border border-[var(--gold)]/40 text-white placeholder-white/40 focus:outline-none focus:border-[var(--gold-light)] transition">
+      <div class="mt-6 max-h-60 overflow-y-auto flex flex-col gap-2" id="search-results"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 完整 JavaScript 逻辑 -->
+<script>
+/* ================= 庞大基础数据源集合 ================= */
+
+// 1. 15 个重大历史时间轴数据
+const TIMELINE_DATA = [
+  {
+    year: "2012",
+    title: "当选中共中央总书记",
+    summary: "开启中国特色社会主义新时代，团结带领全党全国各族人民砥砺前行。",
+    detail: "2012年11月，党的十八大胜利召开，开启了中国特色社会主义新时代。新一届中央领导集体团结带领全党全国各族人民，励精图治、砥砺前行，开启了中华民族伟大复兴的全新征程。提出了全面建成小康社会的宏伟目标。"
+  },
+  {
+    year: "2013",
+    title: "提出“中国梦”与“一带一路”倡议",
+    summary: "擘画民族复兴宏伟蓝图，倡导共商共建共享的国际合作新平台。",
+    detail: "2013年，深刻阐述“中国梦”的核心内涵，即实现中华民族伟大复兴；同年提出共建“丝绸之路经济带”和“21世纪海上丝绸之路”（一带一路）重大倡议，为全球合作共赢贡献了中国智慧与中国方案。"
+  },
+  {
+    year: "2013",
+    title: "提出“精准扶贫”重要理念",
+    summary: "在湖南十八洞村首次提出精准扶贫，拉开决战贫困大幕。",
+    detail: "2013年11月，在湖南湘西十八洞村考察时，首次提出“精准扶贫”重要理念。强调扶贫要实事求是，因地制宜，切忌套话，切忌走过场，开创了全国脱贫攻坚的新格局。"
+  },
+  {
+    year: "2014",
+    title: "全面推进依法治国",
+    summary: "党的十八届四中全会专题研究全面推进依法治国重大问题。",
+    detail: "2014年10月，党的十八届四中全会审议通过了《中共中央关于全面推进依法治国若干重大问题的决定》，明确提出建设中国特色社会主义法治体系、建设社会主义法治国家的总目标。"
+  },
+  {
+    year: "2015",
+    title: "全面从严治党纵深推进",
+    summary: "坚定不移推进党风廉政建设和反腐败斗争，凝聚风清气正的政治生态。",
+    detail: "以雷霆之势推进党风廉政建设和反腐败斗争，坚持无禁区、全覆盖、零容忍。出台中央八项规定，形成全面从严治党新常态，焕发出自我革命的强大生机活力。"
+  },
+  {
+    year: "2016",
+    title: "G20杭州峰会成功举办",
+    summary: "展现大国担当，向世界贡献构建创新、活力、联动、包容的世界经济方案。",
+    detail: "2016年9月，二十国集团（G20）领导人第十一次峰会在杭州举行。提出了构建“创新、活力、联动、包容”的世界经济倡议，在国际舞台上彰显了中国的大国胸怀与领导力。"
+  },
+  {
+    year: "2017",
+    title: "思想写入党章",
+    summary: "党的十九大将习近平新时代中国特色社会主义思想确立为党必须长期坚持的指导思想。",
+    detail: "党的十九大胜利召开，将习近平新时代中国特色社会主义思想确立为党必须长期坚持的指导思想并写入党章，实现了马克思主义中国化新的飞跃，确立了“两步走”战略安排。"
+  },
+  {
+    year: "2018",
+    title: "宪法修改与国家机构改革",
+    summary: "十三届全国人大一次会议表决通过宪法修正案，把习近平新时代中国特色社会主义思想载入宪法。",
+    detail: "2018年3月，十三届全国人大一次会议通过宪法修正案，确立了习近平新时代中国特色社会主义思想在国家政治和社会生活中的指导地位，为新时代坚持和发展中国特色社会主义提供了有力宪法保障。"
+  },
+  {
+    year: "2019",
+    title: "庆祝中华人民共和国成立70周年",
+    summary: "盛大阅兵与群众游行，极大激发了全党全国各族人民的爱国热情与民族自豪感。",
+    detail: "2019年10月1日，隆重举行庆祝中华人民共和国成立70周年大会、阅兵仪式和群众游行。习近平发表重要讲话并检阅受阅部队，汇聚起同心共筑中国梦的磅礴力量。"
+  },
+  {
+    year: "2020",
+    title: "脱贫攻坚战取得全面胜利",
+    summary: "现行标准下农村贫困人口全部脱贫，创造彪炳史册的人间奇迹。",
+    detail: "经过8年持续奋斗，现行标准下9899万农村贫困人口全部脱贫，832个贫困县全部摘帽，12.8万个贫困村全部出列，完成了消除绝对贫困的艰巨任务，创造了人类减贫史上的奇迹。"
+  },
+  {
+    year: "2021",
+    title: "中国共产党成立100周年",
+    summary: "全面建成小康社会，实现第一个百年奋斗目标，迈向全面建设社会主义现代化国家新征程。",
+    detail: "隆重庆祝中国共产党成立100周年，宣告在中华大地上全面建成了小康社会，历史性地解决了绝对贫困问题，正意气风发向着第二个百年奋斗目标迈进。"
+  },
+  {
+    year: "2022",
+    title: "党的二十大胜利召开",
+    summary: "开启全面建设社会主义现代化国家、全面推进中华民族伟大复兴的新篇章。",
+    detail: "党的二十大胜利召开，擘画了以中国式现代化全面推进中华民族伟大复兴的宏伟蓝图，制定了党和国家事业发展的战略大政方针，强调高质量发展是全面建设社会主义现代化国家的首要任务。"
+  },
+  {
+    year: "2023",
+    title: "第三届“一带一路”高峰论坛",
+    summary: "宣布中国支持高质量共建“一带一路”的八项行动，开启高质量共建新阶段。",
+    detail: "2023年10月，第三届“一带一路”国际合作高峰论坛在北京成功举办。代表150多个国家和数十个国际组织齐聚北京，标志着共建“一带一路”进入高质量发展的新阶段。"
+  },
+  {
+    year: "2024",
+    title: "党的二十届三中全会部署深化改革",
+    summary: "重点聚焦进一步全面深化改革、推进中国式现代化。",
+    detail: "2024年7月，党的二十届三中全会胜利召开，审议通过了《中共中央关于进一步全面深化改革、推进中国式现代化的决定》，明确了300多项重要改革举措，吹响了新征程改革再出发的号角。"
+  },
+  {
+    year: "2026",
+    title: "“十四五”圆满收官与新征程谋划",
+    summary: "锚定高质量发展，全面完成“十四五”规划目标任务，展望新远景。",
+    detail: "进入2026年，我国经济高质量发展取得更加扎实的成效，科技自立自强取得重大突破，全面完成“十四五”规划既定目标，正以坚实的步履向着社会主义现代化强国迈进。"
+  }
+];
+
+// 2. 8 组高清影院视频数据
+const VIDEO_DATA = [
+  {
+    title: "第二届“一带一路”国际合作高峰论坛：主旨演讲",
+    desc: "习近平出席开幕式并发表题为《齐心开创共建“一带一路”美好未来》的主旨演讲。",
+    tag: "重要讲话",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm"
+  },
+  {
+    title: "习近平的“生态寄语”",
+    desc: "遥望星空，看见青山，闻到花香——绿水青山就是金山银山的生动诠释。",
+    tag: "生态文明",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8829%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E7%9A%84%E2%80%9C%E7%94%9F%E6%80%81%E5%AF%84%E8%AF%AD%E2%80%9D%EF%BC%9A%E9%81%A5%E6%9C%9B%E6%98%9F%E7%A9%BA_%E7%9C%8B%E8%A7%81%E9%9D%92%E5%B1%B1_%E9%97%BB%E5%88%B0%E8%8A%B1%E9%A6%99.webm"
+  },
+  {
+    title: "习近平·寻味幸福",
+    desc: "Xi Jinping Pursuing the Taste of Happiness —— 民生冷暖，念兹在兹。",
+    tag: "民生关怀",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2020%E5%B9%B412%E6%9C%8830%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E2%80%A2%E5%AF%BB%E5%91%B3%E5%B9%B8%E7%A6%8F_Xi_Jinping_Pursuing_the_Taste_of_Happiness.webm"
+  },
+  {
+    title: "习近平与冰雪少年",
+    desc: "Stories of Xi Jinping and Winter Sports Teenagers —— 关心青少年体育事业发展。",
+    tag: "民生关怀",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2021%E5%B9%B41%E6%9C%8821%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%B8%8E%E5%86%B0%E9%9B%AA%E5%B0%91%E5%B9%B4_Stories_of_Xi_Jinping_and_Winter_Sports_Teenagers.webm"
+  },
+  {
+    title: "会见加拿大总理",
+    desc: "中加关系健康稳定发展符合两国共同利益与国际社会期待。",
+    tag: "外交活动",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%BC%9A%E8%A7%81%E5%8A%A0%E6%8B%BF%E5%A4%A7%E6%80%BB%E7%90%86%EF%BC%9A%E4%B8%AD%E5%8A%A0%E5%85%B3%E7%B3%BB%E5%81%A5%E5%BA%B7%E7%A8%B3%E5%AE%9A%E5%8F%91%E5%B1%95%E7%AC%A6%E5%90%88%E4%B8%A4%E5%9B%BD%E5%85%B1%E5%90%8C%E5%88%A9%E7%9B%8A.webm"
+  },
+  {
+    title: "会见英国首相",
+    desc: "只要是符合国家和人民根本利益的正确的事，领导人就应当事不避难、勇往直前。",
+    tag: "外交活动",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%BC%9A%E8%A7%81%E8%8B%B1%E5%9B%BD%E9%A6%96%E7%9B%B8%EF%BC%9A%E5%8F%AA%E8%A6%81%E6%98%AF%E7%AC%A6%E5%90%88%E5%9B%BD%E5%AE%B6%E5%92%8C%E4%BA%BA%E6%B0%91%E6%A0%B9%E6%9C%28%E7%9A%84%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BA%8B_%E9%A2%86%E5%AF%BD%E4%BA%BA%E5%B0%B1%E5%BA%94%E5%BD%93%E4%BA%8B%E4%B8%8D%E9%81%BF%E9%9A%BE_%E5%8B%87%E5%BE%80%E7%9B%B4%E5%89%8D.webm"
+  },
+  {
+    title: "高质量共建“一带一路”繁荣之路",
+    desc: "展现各参与国共同建设现代化、实现互联互通的宏伟工程图景。",
+    tag: "重要讲话",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm"
+  },
+  {
+    title: "美丽中国·绿色发展纪录切片",
+    desc: "描绘生态优先、绿色发展的新时代锦绣画卷。",
+    tag: "生态文明",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8829%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E7%9A%84%E2%80%9C%E7%94%9F%E6%80%81%E5%AF%84%E8%AF%AD%E2%80%9D%EF%BC%9A%E9%81%A5%E6%9C%9B%E6%98%9F%E7%A9%BA_%E7%9C%8B%E8%A7%81%E9%9D%92%E5%B1%B1_%E9%97%BB%E5%88%B0%E8%8A%B1%E9%A6%99.webm"
+  }
+];
+
+// 3. 10 道深度研学问答题数据
+const QUIZ_DATA = [
+  {
+    q: "党的十九大将哪一重大理论创新确立为党必须长期坚持的指导思想并写入党章？",
+    opts: ["科学发展观", "习近平新时代中国特色社会主义思想", "“三个代表”重要思想", "邓小平理论"],
+    ans: 1,
+    exp: "解析：党的十九大明确将习近平新时代中国特色社会主义思想确立为党必须长期坚持的指导思想并写入党章。"
+  },
+  {
+    q: "“绿水青山就是金山银山”的核心理念体现了哪一战略路线？",
+    opts: ["生态文明建设", "政治体制改革", "文化繁荣发展", "国防和军队现代化"],
+    ans: 0,
+    exp: "解析：这一理念是习近平生态文明思想的生动阐释与核心标志。"
+  },
+  {
+    q: "新时代中国特色社会主义事业的“两个一百年”第一个奋斗目标是什么？",
+    opts: ["全面建成小康社会", "基本实现社会主义现代化", "建成社会主义现代化强国", "实现人均GDP翻番"],
+    ans: 0,
+    exp: "解析：在庆祝中国共产党成立100周年大会上，正式宣告实现了第一个百年奋斗目标，在中华大地上全面建成了小康社会。"
+  },
+  {
+    q: "在精准扶贫战略中，首次提出“精准扶贫”重要理念的考察地点是？",
+    opts: ["贵州遵义", "湖南湘西十八洞村", "陕西延安梁家河", "江西井冈山"],
+    ans: 1,
+    exp: "解析：2013年11月，习近平总书记在湖南湘西十八洞村考察时，首次系统提出了“精准扶贫”重要理念。"
+  },
+  {
+    q: "中国式现代化的本质要求不包括以下哪一项？",
+    opts: ["坚持中国共产党领导", "坚持中国特色社会主义", "实现全体人民共同富裕", "放弃传统文化完全西化"],
+    ans: 3,
+    exp: "解析：中国式现代化是赓续古老文明的现代化，坚决不走西化老路。"
+  },
+  {
+    q: "“一带一路”倡议的核心合作原则是？",
+    opts: ["单边主义与优先发展", "共商、共建、共享", "区域封闭互惠", "援助与主导"],
+    ans: 1,
+    exp: "解析：共商、共建、共享是“一带一路”高质量发展的核心合作原则。"
+  },
+  {
+    q: "全面深化改革的总目标是？",
+    opts: ["完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化", "高速增加 GDP 总量", "全面扩大商品出口", "城市化率达到90%"],
+    ans: 0,
+    exp: "解析：党的十八届三中全会确立了全面深化改革的总目标是完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化。"
+  },
+  {
+    q: "新时代全过程人民民主的最鲜明特征是？",
+    opts: ["最广泛、最真实、最管用", "单一的选票民主", "精英政治决定", "形式主义协商"],
+    ans: 0,
+    exp: "解析：全过程人民民主是社会主义民主政治的本质属性，是最广泛、最真实、最管用的民主。"
+  },
+  {
+    q: "高质量发展是全面建设社会主义现代化国家的？",
+    opts: ["辅助手段", "首要任务", "次要目标", "阶段性过渡"],
+    ans: 1,
+    exp: "解析：党的二十大报告明确指出：“高质量发展是全面建设社会主义现代化国家的首要任务。”"
+  },
+  {
+    q: "党的自我革命战略思想回答了哪一个历史周期率问题？",
+    opts: ["跳出历史周期率", "经济衰退周期", "人口红利周期", "科技更迭周期"],
+    ans: 0,
+    exp: "解析：经过长期探索特别是新时代全面从严治党的实践，党给出了跳出历史周期率的第二个答案，这就是自我革命。"
+  }
+];
+
+// 4. 16 条时代金句数据
+const QUOTES_DATA = [
+  "空谈误国，实干兴邦。",
+  "绿水青山就是金山银山。",
+  "撸起袖子加油干。",
+  "幸福都是奋斗出来的。",
+  "打铁必须自身硬。",
+  "不忘初心，方得始终。",
+  "人民对美好生活的向往，就是我们的奋斗目标。",
+  "青年兴则国家兴，青年强则国家强。",
+  "构建人类命运共同体。",
+  "中国梦是民族的梦，也是每一个中国人的梦。",
+  "江山就是人民，人民就是江山。",
+  "以自我革命精神推进全面从严治党。",
+  "新时代的伟大成像是党和人民一道拼出来、干出来、奋斗出来的！",
+  "中国开放的大门不会关闭，只会越开越大。",
+  "路虽远，行则将至；事虽难，做则必成。",
+  "推动高质量发展是关键所在。"
+];
+
+/* ================= Custom Cursor Follower Logic ================= */
+const cursorDot = document.getElementById("cursor-dot");
+const cursorRing = document.getElementById("cursor-ring");
+let mouseX = -100, mouseY = -100;
+let ringX = -100, ringY = -100;
+
+window.addEventListener("mousemove", (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorDot.style.left = mouseX + "px";
+  cursorDot.style.top = mouseY + "px";
+});
+
+function animateCursor() {
+  ringX += (mouseX - ringX) * 0.18;
+  ringY += (mouseY - ringY) * 0.18;
+  cursorRing.style.left = ringX + "px";
+  cursorRing.style.top = ringY + "px";
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+function initHoverEffects() {
+  document.querySelectorAll("a, button, .glass-card, .timeline-dot, .track-item, .quiz-option").forEach(el => {
+    el.addEventListener("mouseenter", () => document.body.classList.add("hovering"));
+    el.addEventListener("mouseleave", () => document.body.classList.remove("hovering"));
+  });
+}
+
+/* ================= Simulated Preloader Logic ================= */
+let loadProgress = 0;
+const loaderFill = document.getElementById("loader-fill");
+const loaderText = document.getElementById("loader-text");
+
+const loadInterval = setInterval(() => {
+  loadProgress += Math.floor(Math.random() * 18) + 6;
+  if(loadProgress >= 100) {
+    loadProgress = 100;
+    clearInterval(loadInterval);
+    setTimeout(() => {
+      document.getElementById("preloader").classList.add("hide");
+    }, 350);
+  }
+  loaderFill.style.width = loadProgress + "%";
+  loaderText.textContent = loadProgress + "%";
+}, 80);
+
+/* ================= 3D Silk Ribbon Canvas ================= */
+const silkCanvas = document.getElementById("silk-canvas");
+const silkCtx = silkCanvas.getContext("2d");
+let sw, sh;
+
+function resizeSilk() {
+  sw = silkCanvas.width = window.innerWidth;
+  sh = silkCanvas.height = window.innerHeight;
+}
+resizeSilk();
+window.addEventListener("resize", resizeSilk);
+
+let silkStep = 0;
+function drawSilk() {
+  silkCtx.clearRect(0, 0, sw, sh);
+  silkStep += 0.008;
+
+  for(let i = 0; i < 5; i++) {
+    silkCtx.beginPath();
+    silkCtx.lineWidth = 1.6;
+    silkCtx.strokeStyle = `rgba(212, 175, 55, ${0.12 - i * 0.02})`;
+
+    for(let x = 0; x <= sw; x += 20) {
+      const y = Math.sin(x * 0.002 + silkStep + i) * 120 + Math.cos(x * 0.001 + silkStep) * 60 + sh * (0.3 + i * 0.12);
+      if(x === 0) silkCtx.moveTo(x, y);
+      else silkCtx.lineTo(x, y);
+    }
+    silkCtx.stroke();
+  }
+  requestAnimationFrame(drawSilk);
+}
+drawSilk();
+
+/* ================= Golden Particles Engine ================= */
+const particleCanvas = document.getElementById("particle-canvas");
+const pCtx = particleCanvas.getContext("2d");
+let pArray = [];
+
+function resizeParticles() {
+  particleCanvas.width = window.innerWidth;
+  particleCanvas.height = window.innerHeight;
+}
+resizeParticles();
+window.addEventListener("resize", resizeParticles);
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * particleCanvas.width;
+    this.y = Math.random() * particleCanvas.height;
+    this.size = Math.random() * 2.2 + 0.6;
+    this.speedY = Math.random() * 0.45 + 0.15;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.alpha = Math.random() * 0.7 + 0.2;
+    this.twinkle = Math.random() * 0.02 + 0.005;
+  }
+  update() {
+    this.y -= this.speedY;
+    this.x += this.speedX;
+    this.alpha += (Math.random() - 0.5) * this.twinkle;
+    if(this.alpha < 0.1) this.alpha = 0.1;
+    if(this.alpha > 0.9) this.alpha = 0.9;
+
+    if(this.y < -10 || this.x < -10 || this.x > particleCanvas.width + 10) {
+      this.reset();
+      this.y = particleCanvas.height + 10;
+    }
+  }
+  draw() {
+    pCtx.beginPath();
+    pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    pCtx.fillStyle = `rgba(251, 227, 150, ${this.alpha})`;
+    pCtx.shadowColor = "rgba(212, 175, 55, 0.8)";
+    pCtx.shadowBlur = 8;
+    pCtx.fill();
+  }
+}
+
+for(let i = 0; i < 90; i++) pArray.push(new Particle());
+
+function renderParticles() {
+  pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+  pArray.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(renderParticles);
+}
+renderParticles();
+
+/* ================= Render Timeline Items ================= */
+const timelineContainer = document.getElementById("timeline-container");
+TIMELINE_DATA.forEach((item, idx) => {
+  const isOdd = idx % 2 === 0;
+  const div = document.createElement("div");
+  div.className = `timeline-item ${isOdd ? 'reveal-left' : 'reveal-right'}`;
+  div.innerHTML = `
+    <div class="timeline-dot" title="点击查看详情"></div>
+    <div class="glass-card p-6 timeline-card" data-idx="${idx}">
+      <div class="timeline-year">${item.year}</div>
+      <h3 class="font-bold text-lg mt-1 text-[var(--gold-cream)] font-serif-title">${item.title}</h3>
+      <p class="text-sm text-[#d8c6a8] mt-2 leading-relaxed opacity-90">${item.summary}</p>
+    </div>
+  `;
+  timelineContainer.appendChild(div);
+});
+
+/* ================= 3D Parallax Tilt Effect ================= */
+function initTiltEffect() {
+  document.querySelectorAll(".glass-card").forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -7;
+      const rotateY = ((x - centerX) / centerX) * 7;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    });
+  });
+}
+initTiltEffect();
+
+/* ================= Navigation & Scroll Controls ================= */
+const navbar = document.getElementById("navbar");
+const scrollProgress = document.getElementById("scroll-progress");
+
+window.addEventListener("scroll", () => {
+  const winScroll = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  scrollProgress.style.width = scrolled + "%";
+
+  navbar.classList.toggle("scrolled", winScroll > 50);
+  document.getElementById("back-top").classList.toggle("show", winScroll > 450);
+
+  // Nav item active highlight
+  const sections = document.querySelectorAll("section, #hero");
+  let currentSec = "hero";
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 150;
+    if(winScroll >= top) currentSec = sec.id;
+  });
+  document.querySelectorAll(".nav-link").forEach(a => {
+    a.classList.toggle("active", a.getAttribute("href") === "#" + currentSec);
+  });
+});
+
+/* Mobile Navigation */
+const menuBtn = document.getElementById("menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+const menuOverlay = document.getElementById("menu-overlay");
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove("open");
+  menuOverlay.classList.remove("open");
+}
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.add("open");
+  menuOverlay.classList.add("open");
+});
+menuOverlay.addEventListener("click", closeMobileMenu);
+document.querySelectorAll("#mobile-menu a").forEach(a => a.addEventListener("click", closeMobileMenu));
+
+/* Back to Top Click */
+document.getElementById("back-top").addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* Font Accessibility Scaler */
+let currentFontSize = 16;
+document.getElementById("font-plus-btn").addEventListener("click", () => {
+  if(currentFontSize < 20) {
+    currentFontSize += 1;
+    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
+  }
+});
+document.getElementById("font-minus-btn").addEventListener("click", () => {
+  if(currentFontSize > 13) {
+    currentFontSize -= 1;
+    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
+  }
+});
+
+/* ================= Scroll Reveal Observer ================= */
+const revealEls = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add("in");
+    }
+  });
+}, { threshold: 0.12 });
+
+revealEls.forEach(el => observer.observe(el));
+
+/* ================= Video Matrix & Filtering ================= */
+const videoGrid = document.getElementById("video-grid");
+
+function renderVideos(filter = "all") {
+  videoGrid.innerHTML = "";
+  const filtered = filter === "all" ? VIDEO_DATA : VIDEO_DATA.filter(v => v.tag === filter);
+
+  filtered.forEach((item, idx) => {
+    const card = document.createElement("div");
+    card.className = "glass-card p-4 video-card reveal";
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        <video class="thumb" muted preload="metadata" src="${item.src}#t=1"></video>
+        <div class="play-badge">
+          <div class="circle">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#fbe396"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 px-2">
+        <span class="px-3 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-widest bg-[var(--gold)]/20 border border-[var(--gold)]/40 text-[var(--gold-light)]">${item.tag}</span>
+        <h4 class="font-bold text-base mt-2 text-[var(--gold-cream)] line-clamp-1 font-serif-title">${item.title}</h4>
+        <p class="text-xs text-[#d8c6a8] mt-1 line-clamp-2 opacity-80 leading-relaxed">${item.desc}</p>
+      </div>
+    `;
+    card.addEventListener("click", () => openVideoModal(item));
+    videoGrid.appendChild(card);
+    observer.observe(card);
+  });
+  initTiltEffect();
+  initHoverEffects();
+}
+renderVideos("all");
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => {
+      b.classList.remove("active", "bg-[var(--gold)]", "text-black");
+      b.classList.add("bg-black/40", "text-[var(--gold-light)]");
+    });
+    btn.classList.add("active", "bg-[var(--gold)]", "text-black");
+    btn.classList.remove("bg-black/40", "text-[var(--gold-light)]");
+    renderVideos(btn.dataset.filter);
+  });
+});
+
+const videoModal = document.getElementById("video-modal");
+const modalVideo = document.getElementById("modal-video");
+const modalTitle = document.getElementById("modal-title");
+const modalDesc = document.getElementById("modal-desc");
+
+function openVideoModal(item) {
+  modalVideo.src = item.src;
+  modalTitle.textContent = item.title;
+  modalDesc.textContent = item.desc;
+  videoModal.classList.add("open");
+  modalVideo.play().catch(()=>{});
+}
+function closeVideoModal() {
+  videoModal.classList.remove("open");
+  modalVideo.pause();
+  modalVideo.removeAttribute("src");
+  modalVideo.load();
+}
+document.getElementById("modal-close").addEventListener("click", closeVideoModal);
+videoModal.querySelector(".modal-backdrop").addEventListener("click", closeVideoModal);
+
+/* ================= Timeline Modal ================= */
+const timelineModal = document.getElementById("timeline-modal");
+document.querySelectorAll(".timeline-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const idx = parseInt(card.dataset.idx, 10);
+    const data = TIMELINE_DATA[idx];
+    document.getElementById("tl-modal-year").textContent = data.year;
+    document.getElementById("tl-modal-title").textContent = data.title;
+    document.getElementById("tl-modal-detail").textContent = data.detail;
+    timelineModal.classList.add("open");
+  });
+});
+
+function closeTlModal() { timelineModal.classList.remove("open"); }
+document.getElementById("timeline-modal-close").addEventListener("click", closeTlModal);
+timelineModal.querySelector(".modal-backdrop").addEventListener("click", closeTlModal);
+
+/* ================= Audio Player & Multi-mode Visualizer ================= */
+const audio = new Audio();
+audio.crossOrigin = "anonymous";
+let currentTrack = 0;
+let isPlaying = false;
+
+const trackList = document.getElementById("track-list");
+VIDEO_DATA.forEach((item, idx) => {
+  const row = document.createElement("div");
+  row.className = "track-item" + (idx === 0 ? " active" : "");
+  row.innerHTML = `
+    <div class="idx">${idx + 1}</div>
+    <div class="flex-1">
+      <div class="text-sm font-bold text-[var(--gold-cream)] font-serif-title">${item.title}</div>
+      <div class="text-xs text-[#c8b48f] opacity-75 mt-0.5 line-clamp-1">${item.desc}</div>
+    </div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M8 5v14l11-7z"/></svg>
+  `;
+  row.addEventListener("click", () => loadTrack(idx, true));
+  trackList.appendChild(row);
+});
+
+function loadTrack(index, autoPlay) {
+  currentTrack = (index + VIDEO_DATA.length) % VIDEO_DATA.length;
+  audio.src = VIDEO_DATA[currentTrack].src;
+  document.querySelectorAll(".track-item").forEach((el, i) => el.classList.toggle("active", i === currentTrack));
+  if(autoPlay) {
+    audio.play().then(() => { isPlaying = true; updatePlayIcon(); }).catch(()=>{});
+  }
+}
+loadTrack(0, false);
+
+const playBtn = document.getElementById("play-btn");
+const playIcon = document.getElementById("play-icon");
+
+function updatePlayIcon() {
+  playIcon.innerHTML = isPlaying
+    ? '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+}
+
+playBtn.addEventListener("click", () => {
+  initAudioCtx();
+  if(isPlaying) { audio.pause(); isPlaying = false; }
+  else { audio.play().then(() => { isPlaying = true; }).catch(()=>{}); }
+  updatePlayIcon();
+});
+
+document.getElementById("prev-btn").addEventListener("click", () => loadTrack(currentTrack - 1, true));
+document.getElementById("next-btn").addEventListener("click", () => loadTrack(currentTrack + 1, true));
+
+audio.addEventListener("timeupdate", () => {
+  document.getElementById("cur-time").textContent = formatTime(audio.currentTime);
+  document.getElementById("dur-time").textContent = formatTime(audio.duration);
+  const pct = (audio.currentTime / (audio.duration || 1)) * 100;
+  document.getElementById("progress-fill").style.width = pct + "%";
+});
+
+function formatTime(sec) {
+  if(!isFinite(sec)) return "00:00";
+  const m = Math.floor(sec / 60).toString().padStart(2, "0");
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+const progressWrap = document.getElementById("progress-wrap");
+progressWrap.addEventListener("click", e => {
+  const rect = progressWrap.getBoundingClientRect();
+  const pos = (e.clientX - rect.left) / rect.width;
+  if(isFinite(audio.duration)) audio.currentTime = pos * audio.duration;
+});
+
+/* Web Audio Engine with 4 Visual Modes */
+let audioCtx, analyser, sourceNode, dataArray;
+let vizMode = 0; // 0: Bars, 1: Waveform, 2: Radial, 3: Particles
+const vizModes = ["模式: 频段柱状", "模式: 实时波形", "模式: 环形放射", "模式: 能量爆发"];
+
+document.getElementById("viz-mode-btn").addEventListener("click", () => {
+  vizMode = (vizMode + 1) % vizModes.length;
+  document.getElementById("viz-mode-btn").textContent = vizModes[vizMode];
+});
+
+function initAudioCtx() {
+  if(audioCtx) {
+    if(audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return;
+  }
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 128;
+  sourceNode = audioCtx.createMediaElementSource(audio);
+  sourceNode.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  dataArray = new Uint8Array(analyser.frequencyBinCount);
+}
+
+const waveCanvas = document.getElementById("wave-canvas");
+const waveCtx = waveCanvas.getContext("2d");
+
+function resizeWave() {
+  waveCanvas.width = waveCanvas.clientWidth * window.devicePixelRatio;
+  waveCanvas.height = waveCanvas.clientHeight * window.devicePixelRatio;
+}
+resizeWave();
+window.addEventListener("resize", resizeWave);
+
+function renderWave() {
+  requestAnimationFrame(renderWave);
+  const w = waveCanvas.width;
+  const h = waveCanvas.height;
+  waveCtx.clearRect(0, 0, w, h);
+
+  if(analyser && isPlaying) {
+    if(vizMode === 1) analyser.getByteTimeDomainData(dataArray);
+    else analyser.getByteFrequencyData(dataArray);
+  }
+
+  if(vizMode === 0) { // Frequency Bars
+    const bars = dataArray ? dataArray.length : 32;
+    const gap = 4 * window.devicePixelRatio;
+    const barW = (w - gap * (bars - 1)) / bars;
+
+    for(let i = 0; i < bars; i++) {
+      const val = dataArray ? dataArray[i] : (Math.sin(Date.now() / 250 + i) * 20 + 30);
+      const barH = Math.max(6, (val / 255) * h * 0.85);
+      const x = i * (barW + gap);
+      const y = h - barH;
+
+      const grad = waveCtx.createLinearGradient(0, y, 0, h);
+      grad.addColorStop(0, "#fbe396");
+      grad.addColorStop(1, "#d91438");
+      waveCtx.fillStyle = grad;
+      waveCtx.fillRect(x, y, barW, barH);
+    }
+  } else if(vizMode === 1) { // Waveform
+    waveCtx.lineWidth = 3 * window.devicePixelRatio;
+    waveCtx.strokeStyle = "#fbe396";
+    waveCtx.beginPath();
+
+    const sliceW = w / (dataArray ? dataArray.length : 64);
+    let x = 0;
+
+    for(let i = 0; i < (dataArray ? dataArray.length : 64); i++) {
+      const v = dataArray ? (dataArray[i] / 128.0) : 1;
+      const y = (v * h) / 2;
+      if(i === 0) waveCtx.moveTo(x, y);
+      else waveCtx.lineTo(x, y);
+      x += sliceW;
+    }
+    waveCtx.stroke();
+  } else if(vizMode === 2) { // Radial Circular
+    const cx = w / 2, cy = h / 2;
+    const radius = Math.min(w, h) * 0.25;
+    const count = dataArray ? dataArray.length : 32;
+
+    for(let i = 0; i < count; i++) {
+      const val = dataArray ? dataArray[i] : 40;
+      const angle = (i / count) * Math.PI * 2;
+      const len = radius + (val / 255) * radius * 0.8;
+      const x1 = cx + Math.cos(angle) * radius;
+      const y1 = cy + Math.sin(angle) * radius;
+      const x2 = cx + Math.cos(angle) * len;
+      const y2 = cy + Math.sin(angle) * len;
+
+      waveCtx.strokeStyle = "#fbe396";
+      waveCtx.lineWidth = 2 * window.devicePixelRatio;
+      waveCtx.beginPath();
+      waveCtx.moveTo(x1, y1);
+      waveCtx.lineTo(x2, y2);
+      waveCtx.stroke();
+    }
+  } else { // Particles Explosion
+    const count = dataArray ? dataArray.length : 32;
+    for(let i = 0; i < count; i++) {
+      const val = dataArray ? dataArray[i] : 30;
+      const x = (i / count) * w;
+      const y = h / 2 + Math.sin(Date.now() / 200 + i) * (val / 255) * (h / 2);
+      const r = (val / 255) * 12 * window.devicePixelRatio + 2;
+
+      waveCtx.fillStyle = "rgba(251, 227, 150, 0.8)";
+      waveCtx.beginPath();
+      waveCtx.arc(x, y, r, 0, Math.PI * 2);
+      waveCtx.fill();
+    }
+  }
+}
+renderWave();
+
+/* ================= Quiz Logic ================= */
+let currentQuizIdx = 0;
+let userScore = 0;
+
+const qText = document.getElementById("quiz-question");
+const qOpts = document.getElementById("quiz-options");
+const qProgress = document.getElementById("quiz-progress");
+const qScoreBadge = document.getElementById("quiz-score-badge");
+const expBox = document.getElementById("quiz-explanation-box");
+const expText = document.getElementById("quiz-explanation-text");
+const nextQuizBtn = document.getElementById("quiz-next-btn");
+
+function loadQuizItem(index) {
+  expBox.style.opacity = "0";
+  qOpts.innerHTML = "";
+  const item = QUIZ_DATA[index];
+  qText.textContent = item.q;
+  qProgress.textContent = `QUESTION ${index + 1} / ${QUIZ_DATA.length}`;
+
+  item.opts.forEach((opt, idx) => {
+    const btn = document.createElement("div");
+    btn.className = "quiz-option";
+    btn.innerHTML = `<span class="w-6 h-6 rounded-full border border-[var(--gold)] flex items-center justify-center text-xs font-bold">${String.fromCharCode(65 + idx)}</span><span class="flex-1 text-sm text-[var(--gold-cream)]">${opt}</span>`;
+    
+    btn.addEventListener("click", () => {
+      const allOptions = qOpts.querySelectorAll(".quiz-option");
+      allOptions.forEach(o => o.style.pointerEvents = "none");
+      
+      if(idx === item.ans) {
+        btn.classList.add("correct");
+        userScore += 10;
+        qScoreBadge.textContent = `当前得分: ${userScore}`;
+      } else {
+        btn.classList.add("wrong");
+        allOptions[item.ans].classList.add("correct");
+      }
+      
+      expText.textContent = item.exp;
+      expBox.style.opacity = "1";
+    });
+    
+    qOpts.appendChild(btn);
+  });
+}
+
+loadQuizItem(0);
+
+nextQuizBtn.addEventListener("click", () => {
+  currentQuizIdx = (currentQuizIdx + 1) % QUIZ_DATA.length;
+  loadQuizItem(currentQuizIdx);
+});
+
+/* ================= Quote Carousel ================= */
+const quoteCarousel = document.getElementById("quote-carousel");
+const quoteDots = document.getElementById("quote-dots");
+
+QUOTES_DATA.forEach((quote, idx) => {
+  const slide = document.createElement("div");
+  slide.className = `quote-slide ${idx === 0 ? 'active' : ''}`;
+  slide.innerHTML = `
+    <div class="text-3xl sm:text-4xl text-[var(--gold-light)] font-serif-title font-bold leading-relaxed px-4 cursor-pointer" onclick="copyQuote('${quote}')">
+      “ ${quote} ”
+    </div>
+  `;
+  quoteCarousel.appendChild(slide);
+
+  const dot = document.createElement("div");
+  dot.className = `w-3 h-3 rounded-full border border-[var(--gold)] cursor-pointer transition ${idx === 0 ? 'bg-[var(--gold-light)] scale-125' : 'bg-transparent'}`;
+  dot.addEventListener("click", () => setQuoteSlide(idx));
+  quoteDots.appendChild(dot);
+});
+
+let currentQuoteIdx = 0;
+function setQuoteSlide(index) {
+  currentQuoteIdx = index;
+  document.querySelectorAll(".quote-slide").forEach((s, i) => s.classList.toggle("active", i === index));
+  document.querySelectorAll("#quote-dots div").forEach((d, i) => {
+    d.classList.toggle("bg-[var(--gold-light)]", i === index);
+    d.classList.toggle("scale-125", i === index);
+  });
+}
+
+setInterval(() => {
+  currentQuoteIdx = (currentQuoteIdx + 1) % QUOTES_DATA.length;
+  setQuoteSlide(currentQuoteIdx);
+}, 5000);
+
+function copyQuote(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2200);
+  });
+}
+
+/* ================= Chart Renderer ================= */
+const chartBars = document.getElementById("chart-bars");
+const chartData = [
+  { year: "2012年", val: "53.9万亿", h: "35%" },
+  { year: "2016年", val: "74.6万亿", h: "52%" },
+  { year: "2020年", val: "101.3万亿", h: "75%" },
+  { year: "2024年", val: "126.0万亿", h: "92%" },
+  { year: "2026年", val: "新高突破", h: "100%" }
+];
+
+chartData.forEach(d => {
+  const col = document.createElement("div");
+  col.className = "flex-1 flex flex-col items-center h-full justify-end group";
+  col.innerHTML = `
+    <span class="text-[10px] sm:text-xs text-[var(--gold-light)] mb-2 opacity-0 group-hover:opacity-100 transition">${d.val}</span>
+    <div class="w-full max-w-[48px] bg-gradient-to-t from-[var(--red)] to-[var(--gold)] rounded-t-lg transition-all duration-700 group-hover:brightness-125" style="height: ${d.h}"></div>
+    <span class="text-xs text-[#e6d5b8] mt-3 font-bold">${d.year}</span>
+  `;
+  chartBars.appendChild(col);
+});
+
+/* ================= Search Modal ================= */
+const searchTrigger = document.getElementById("search-trigger");
+const searchModal = document.getElementById("search-modal");
+const searchInput = document.getElementById("search-input");
+const searchResults = document.getElementById("search-results");
+
+searchTrigger.addEventListener("click", () => searchModal.classList.add("open"));
+document.getElementById("search-modal-close").addEventListener("click", () => searchModal.classList.remove("open"));
+
+searchInput.addEventListener("input", (e) => {
+  const query = e.target.value.trim().toLowerCase();
+  searchResults.innerHTML = "";
+  if(!query) return;
+
+  const matches = TIMELINE_DATA.filter(t => t.title.toLowerCase().includes(query) || t.detail.toLowerCase().includes(query));
+  matches.forEach(m => {
+    const item = document.createElement("div");
+    item.className = "p-3 rounded-lg bg-white/5 border border-[var(--gold)]/20 hover:border-[var(--gold)] transition cursor-pointer";
+    item.innerHTML = `<div class="text-xs font-bold text-[var(--gold-light)]">${m.year} - ${m.title}</div><div class="text-xs text-[#c8b48f] mt-1 line-clamp-1">${m.summary}</div>`;
+    item.addEventListener("click", () => {
+      searchModal.classList.remove("open");
+      document.getElementById("tl-modal-year").textContent = m.year;
+      document.getElementById("tl-modal-title").textContent = m.title;
+      document.getElementById("tl-modal-detail").textContent = m.detail;
+      timelineModal.classList.add("open");
+    });
+    searchResults.appendChild(item);
+  });
+});
+
+/* =========================================================================
+   【绝对追加部分】：内陆音视频代理无缝路由 & AUDIO 讲话原声修复增强引擎
+   ========================================================================= */
+(function initMainlandChinaMediaProxy() {
+  console.log("启动内地媒体代理无缝路由系统...");
+
+  // 1. 自动化 URL 转换器（指向后端 /video 接口）
+  function proxyUrl(rawUrl) {
+    if (!rawUrl) return rawUrl;
+    // 若属于维基百科媒体源，则包装为后端代理 URL
+    if (rawUrl.includes("wikimedia.org") || rawUrl.includes("wikipedia.org")) {
+      return `/video?url=${encodeURIComponent(rawUrl)}`;
+    }
+    return rawUrl;
+  }
+
+  // 2. 批量替换 VIDEO_DATA 中的维基源
+  VIDEO_DATA.forEach(item => {
+    if (item.src) {
+      item.src = proxyUrl(item.src);
+    }
+  });
+
+  // 3. 动态修复页面现有的 <video> / <source> 节点
+  document.querySelectorAll("video source, video").forEach(el => {
+    if (el.src && (el.src.includes("wikimedia.org") || el.src.includes("wikipedia.org"))) {
+      el.src = proxyUrl(el.src);
+      if (el.tagName.toLowerCase() === "source" && el.parentElement) {
+        el.parentElement.load();
+      }
+    }
+  });
+
+  // 4. 重构并加固 audio 对象与交互逻辑，确保内陆畅听讲话原声
+  if (typeof audio !== 'undefined') {
+    audio.src = VIDEO_DATA[0].src;
+    
+    // 给全局按键添加安全音轨加载与 AudioContext 解锁
+    const oldPlayBtnHandler = playBtn.onclick;
+    playBtn.addEventListener("click", function () {
+      initAudioCtx();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      if (!audio.src || audio.src === "" || audio.src.includes("commons.wikimedia.org")) {
+        loadTrack(currentTrack, true);
+      }
+    });
+  }
+
+  // 5. 重新刷新一次视频矩阵，确保缩略图和弹窗全部改用代理源
+  renderVideos("all");
+})();
+</script>
+</body>
+</html>
