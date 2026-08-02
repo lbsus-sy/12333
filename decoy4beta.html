@@ -1012,7 +1012,7 @@
 <!-- Hero 视差首屏 -->
 <section id="hero">
   <video autoplay muted loop playsinline preload="auto">
-    <source src="https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm" type="video/webm">
+    <source src="/video?url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FSpecial%3AFilePath%2F2019%25E5%25B9%25B44%25E6%259C%258826%25E6%2597%25A5_%25E7%25AC%25AC%25E4%25BA%258C%25E5%25B1%25A3%25E2%2580%259C%25E4%25B8%2580%25E5%25B8%25A6%25E4%25B8%2580%25E8%25B7%25AF%25E2%2580%259D%25E5%259B%25BD%25E9%2599%2585%25E5%2590%2588%25E4%25BD%259C%25E9%25AB%2598%25E5%25B3%25B0%25E8%25AE%25BA%25E5%259D%25BD%25E5%25BC%2580%25E5%25B9%2595_%25E4%25B9%25A0%25E8%25BF%2591%25E5%25B9%25B3%25E5%258F%2591%25E8%25A1%25A8%25E4%25B8%25BB%25E6%2597%25A8%25E6%25BC%2594%25E8%25AE%25B2.webm" type="video/webm">
   </video>
   <div class="hero-veil"></div>
 
@@ -1441,6 +1441,11 @@
 <script>
 /* ================= 全量庞大基础数据源集合 ================= */
 
+// 辅助代理转换函数
+function getProxyUrl(url) {
+  return '/video?url=' + encodeURIComponent(url);
+}
+
 // 1. 16 个重大历史时间轴数据
 const TIMELINE_DATA = [
   {
@@ -1507,7 +1512,7 @@ const TIMELINE_DATA = [
     year: "2021",
     title: "中国共产党成立100周年",
     summary: "全面建成小康社会，实现第一个百年奋斗目标，迈向全面建设社会主义现代化国家新征程。",
-    detail: "隆重庆祝中国共产党成立100周年，宣告在中华大地上全面建成了小康社会，历史性地解决了绝对贫困问题，正意气风发向着第二个百年奋斗目标迈进。"
+    detail: "隆重启祝中国共产党成立100周年，宣告在中华大地上全面建成了小康社会，历史性地解决了绝对贫困问题，正意气风发向着第二个百年奋斗目标迈进。"
   },
   {
     year: "2022",
@@ -1541,55 +1546,55 @@ const TIMELINE_DATA = [
   }
 ];
 
-// 2. 8 组高清视频数据
+// 2. 8 组高清视频数据（通过 /video 代理转发）
 const VIDEO_DATA = [
   {
     title: "第二届“一带一路”国际合作高峰论坛：主旨演讲",
     desc: "习近平出席开幕式并发表题为《齐心开创共建“一带一路”美好未来》的主旨演讲。",
     tag: "重要讲话",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm")
   },
   {
     title: "习近平的“生态寄语”",
     desc: "遥望星空，看见青山，闻到花香——绿水青山就是金山银山的生动诠释。",
     tag: "生态文明",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8829%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E7%9A%84%E2%80%9C%E7%94%9F%E6%80%81%E5%AF%84%E8%AF%AD%E2%80%9D%EF%BC%9A%E9%81%A5%E6%9C%9B%E6%98%9F%E7%A9%BA_%E7%9C%8B%E8%A7%81%E9%9D%92%E5%B1%B1_%E9%97%BB%E5%88%B0%E8%8A%B1%E9%A6%99.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8829%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E7%9A%84%E2%80%9C%E7%94%9F%E6%80%81%E5%AF%84%E8%AF%AD%E2%80%9D%EF%BC%9A%E9%81%A5%E6%9C%9B%E6%98%9F%E7%A9%BA_%E7%9C%8B%E8%A7%81%E9%9D%92%E5%B1%B1_%E9%97%BB%E5%88%B0%E8%8A%B1%E9%A6%99.webm")
   },
   {
     title: "习近平·寻味幸福",
     desc: "Xi Jinping Pursuing the Taste of Happiness —— 民生冷暖，念兹在兹。",
     tag: "民生关怀",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2020%E5%B9%B412%E6%9C%8830%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E2%80%A2%E5%AF%BB%E5%91%B3%E5%B9%B8%E7%A6%8F_Xi_Jinping_Pursuing_the_Taste_of_Happiness.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/2020%E5%B9%B412%E6%9C%8830%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E2%80%A2%E5%AF%BB%E5%91%B3%E5%B9%B8%E7%A6%8F_Xi_Jinping_Pursuing_the_Taste_of_Happiness.webm")
   },
   {
     title: "习近平与冰雪少年",
     desc: "Stories of Xi Jinping and Winter Sports Teenagers —— 关心青少年体育事业发展。",
     tag: "民生关怀",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2021%E5%B9%B41%E6%9C%8821%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%B8%8E%E5%86%B0%E9%9B%AA%E5%B0%91%E5%B9%B4_Stories_of_Xi_Jinping_and_Winter_Sports_Teenagers.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/2021%E5%B9%B41%E6%9C%8821%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%B8%8E%E5%86%B0%E9%9B%AA%E5%B0%91%E5%B9%B4_Stories_of_Xi_Jinping_and_Winter_Sports_Teenagers.webm")
   },
   {
     title: "会见加拿大总理",
     desc: "中加关系健康稳定发展符合两国共同利益与国际社会期待。",
     tag: "外交活动",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%BC%9A%E8%A7%81%E5%8A%A0%E6%8B%BF%E5%A4%A7%E6%80%BB%E7%90%86%EF%BC%9A%E4%B8%AD%E5%8A%A0%E5%85%B3%E7%B3%BB%E5%81%A5%E5%BA%B7%E7%A8%B3%E5%AE%9A%E5%8F%91%E5%B1%95%E7%AC%A6%E5%90%88%E4%B8%A4%E5%9B%BD%E5%85%B1%E5%90%8C%E5%88%A9%E7%9B%8A.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%BC%81%E8%A7%81%E5%8A%A0%E6%8B%BF%E5%A4%A7%E6%80%BB%E7%90%86%EF%BC%9A%E4%B8%AD%E5%8A%A0%E5%85%B3%E7%B3%BB%E5%81%A5%E5%BA%B7%E7%A8%B3%E5%AE%9A%E5%8F%91%E5%B1%95%E7%AC%A6%E5%90%88%E4%B8%A4%E5%9B%BD%E5%85%B1%E5%90%8C%E5%88%A9%E7%9B%8A.webm")
   },
   {
     title: "会见英国首相",
     desc: "只要是符合国家和人民根本利益的正确的事，领导人就应当事不避难、勇往直前。",
     tag: "外交活动",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%BC%9A%E8%A7%81%E8%8B%B1%E5%9B%BD%E9%A6%96%E7%9B%B8%EF%BC%9A%E5%8F%AA%E8%A6%81%E6%98%AF%E7%AC%A6%E5%90%88%E5%9B%BD%E5%AE%B6%E5%92%8C%E4%BA%BA%E6%B0%91%E6%A0%B9%E6%9C%28%E7%9A%84%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BA%8B_%E9%A2%86%E5%AF%BD%E4%BA%BA%E5%B0%B1%E5%BA%94%E5%BD%93%E4%BA%8B%E4%B8%8D%E9%81%BF%E9%9A%BE_%E5%8B%87%E5%BE%80%E7%9B%B4%E5%89%8D.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/%E4%B9%A0%E8%BF%91%E5%B9%B3%E4%BC%81%E8%A7%81%E8%8B%B1%E5%9B%BD%E9%A6%96%E7%9B%B8%EF%BC%9A%E5%8F%AA%E8%A6%81%E6%98%AF%E7%AC%A6%E5%90%88%E5%9B%BD%E5%AE%B6%E5%92%8C%E4%BA%BA%E6%B0%91%E6%A0%B9%E6%9C%28%E7%9A%84%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BA%8B_%E9%A2%86%E5%AF%BD%E4%BA%BA%E5%B0%B1%E5%BA%94%E5%BD%93%E4%BA%8B%E4%B8%8D%E9%81%BF%E9%9A%BE_%E5%8B%87%E5%BE%80%E7%9B%B4%E5%89%8D.webm")
   },
   {
     title: "高质量共建“一带一路”繁荣之路",
     desc: "展现各参与国共同建设现代化、实现互联互通的宏伟工程图景。",
     tag: "重要讲话",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8826%E6%97%A5_%E7%AC%AC%E4%BA%8C%E5%B1%8A%E2%80%9C%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF%E2%80%9D%E5%9B%BD%E9%99%85%E5%90%88%E4%BD%9C%E9%AB%98%E5%B3%B0%E8%AE%BA%E5%9D%9B%E5%BC%80%E5%B9%95_%E4%B9%A0%E8%BF%91%E5%B9%B3%E5%8F%91%E8%A1%A8%E4%B8%BB%E6%97%A8%E6%BC%94%E8%AE%B2.webm")
   },
   {
     title: "美丽中国·绿色发展纪录切片",
     desc: "描绘生态优先、绿色发展的新时代锦绣画卷。",
     tag: "生态文明",
-    src: "https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8829%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E7%9A%84%E2%80%9C%E7%94%9F%E6%80%81%E5%AF%84%E8%AF%AD%E2%80%9D%EF%BC%9A%E9%81%A5%E6%9C%9B%E6%98%9F%E7%A9%BA_%E7%9C%8B%E8%A7%81%E9%9D%92%E5%B1%B1_%E9%97%BB%E5%88%B0%E8%8A%B1%E9%A6%99.webm"
+    src: getProxyUrl("https://commons.wikimedia.org/wiki/Special:FilePath/2019%E5%B9%B44%E6%9C%8829%E6%97%A5_%E4%B9%A0%E8%BF%91%E5%B9%B3%E7%9A%84%E2%80%9C%E7%94%9F%E6%80%81%E5%AF%84%E8%AF%AD%E2%80%9D%EF%BC%9A%E9%81%A5%E6%9C%9B%E6%98%9F%E7%A9%BA_%E7%9C%8B%E8%A7%81%E9%9D%92%E5%B1%B1_%E9%97%BB%E5%88%B0%E8%8A%B1%E9%A6%99.webm")
   }
 ];
 
@@ -1999,381 +2004,295 @@ function closeMobileMenu() {
   menuOverlay.classList.remove("open");
 }
 menuBtn.addEventListener("click", () => {
-  mobileMenu.classList.add("open");
-  menuOverlay.classList.add("open");
+  mobileMenu.classList.toggle("open");
+  menuOverlay.classList.toggle("open");
 });
 menuOverlay.addEventListener("click", closeMobileMenu);
 document.querySelectorAll("#mobile-menu a").forEach(a => a.addEventListener("click", closeMobileMenu));
 
-/* 返回顶部 */
-document.getElementById("back-top").addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-/* 字号缩放 */
-let currentFontSize = 16;
-document.getElementById("font-plus-btn").addEventListener("click", () => {
-  if(currentFontSize < 20) {
-    currentFontSize += 1;
-    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
-  }
-});
-document.getElementById("font-minus-btn").addEventListener("click", () => {
-  if(currentFontSize > 13) {
-    currentFontSize -= 1;
-    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
-  }
-});
-
-/* 滚动显现监听 */
-const revealEls = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      entry.target.classList.add("in");
-    }
-  });
-}, { threshold: 0.12 });
-
-revealEls.forEach(el => observer.observe(el));
-
-/* ================= 视频矩阵渲染与筛选 ================= */
+/* ================= 视频矩阵渲染与 Filter 控制 ================= */
 const videoGrid = document.getElementById("video-grid");
-
-function renderVideos(filter = "all") {
-  videoGrid.innerHTML = "";
-  const filtered = filter === "all" ? VIDEO_DATA : VIDEO_DATA.filter(v => v.tag === filter);
-
-  filtered.forEach((item, idx) => {
-    const card = document.createElement("div");
-    card.className = "glass-card p-4 video-card reveal";
-    card.innerHTML = `
-      <div class="thumb-wrap">
-        <video class="thumb" muted preload="metadata" src="${item.src}#t=1"></video>
-        <div class="play-badge">
-          <div class="circle">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="#fbe396"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="mt-4 px-2">
-        <span class="px-3 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-widest bg-[var(--gold)]/20 border border-[var(--gold)]/40 text-[var(--gold-light)]">${item.tag}</span>
-        <h4 class="font-bold text-base mt-2 text-[var(--gold-cream)] line-clamp-1 font-serif-title">${item.title}</h4>
-        <p class="text-xs text-[#d8c6a8] mt-1 line-clamp-2 opacity-80 leading-relaxed">${item.desc}</p>
-      </div>
-    `;
-    card.addEventListener("click", () => openVideoModal(item));
-    videoGrid.appendChild(card);
-    observer.observe(card);
-  });
-  initTiltEffect();
-  initHoverEffects();
-}
-renderVideos("all");
-
-document.querySelectorAll(".filter-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b => {
-      b.classList.remove("active", "bg-[var(--gold)]", "text-black");
-      b.classList.add("bg-black/40", "text-[var(--gold-light)]");
-    });
-    btn.classList.add("active", "bg-[var(--gold)]", "text-black");
-    btn.classList.remove("bg-black/40", "text-[var(--gold-light)]");
-    renderVideos(btn.dataset.filter);
-  });
-});
-
 const videoModal = document.getElementById("video-modal");
 const modalVideo = document.getElementById("modal-video");
 const modalTitle = document.getElementById("modal-title");
 const modalDesc = document.getElementById("modal-desc");
+const modalClose = document.getElementById("modal-close");
 
-function openVideoModal(item) {
-  modalVideo.src = item.src;
-  modalTitle.textContent = item.title;
-  modalDesc.textContent = item.desc;
-  videoModal.classList.add("open");
-  modalVideo.play().catch(()=>{});
-}
-function closeVideoModal() {
-  videoModal.classList.remove("open");
-  modalVideo.pause();
-  modalVideo.removeAttribute("src");
-  modalVideo.load();
-}
-document.getElementById("modal-close").addEventListener("click", closeVideoModal);
-videoModal.querySelector(".modal-backdrop").addEventListener("click", closeVideoModal);
+function renderVideos(filterTag = "all") {
+  videoGrid.innerHTML = "";
+  const filtered = filterTag === "all" ? VIDEO_DATA : VIDEO_DATA.filter(v => v.tag === filterTag);
 
-/* ================= 时间轴 Modal 弹窗 ================= */
-const timelineModal = document.getElementById("timeline-modal");
-document.querySelectorAll(".timeline-card").forEach(card => {
-  card.addEventListener("click", () => {
-    const idx = parseInt(card.dataset.idx, 10);
-    const data = TIMELINE_DATA[idx];
-    document.getElementById("tl-modal-year").textContent = data.year;
-    document.getElementById("tl-modal-title").textContent = data.title;
-    document.getElementById("tl-modal-detail").textContent = data.detail;
-    timelineModal.classList.add("open");
+  filtered.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "glass-card p-4 video-card reveal";
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        <video class="thumb" preload="metadata">
+          <source src="${item.src}" type="video/webm">
+        </video>
+        <div class="play-badge">
+          <div class="circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-white ml-1"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold bg-black/60 border border-[var(--gold)]/40 text-[var(--gold-light)] backdrop-blur">${item.tag}</span>
+      </div>
+      <div class="mt-4 px-1">
+        <h3 class="font-bold text-base text-[var(--gold-cream)] font-serif-title line-clamp-1">${item.title}</h3>
+        <p class="text-xs text-[#d8c6a8] mt-1.5 line-clamp-2 opacity-80 leading-relaxed">${item.desc}</p>
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      modalVideo.src = item.src;
+      modalTitle.textContent = item.title;
+      modalDesc.textContent = item.desc;
+      videoModal.classList.add("open");
+      modalVideo.play().catch(() => {});
+    });
+
+    videoGrid.appendChild(card);
+  });
+  initTiltEffect();
+  initHoverEffects();
+  initScrollReveal();
+}
+renderVideos();
+
+// 筛选按钮切换
+document.querySelectorAll("#video-filters .filter-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    document.querySelectorAll("#video-filters .filter-btn").forEach(b => {
+      b.classList.remove("active", "bg-[var(--gold)]", "text-black");
+      b.classList.add("bg-black/40", "text-[var(--gold-light)]");
+    });
+    this.classList.add("active", "bg-[var(--gold)]", "text-black");
+    this.classList.remove("bg-black/40", "text-[var(--gold-light)]");
+    renderVideos(this.dataset.filter);
   });
 });
 
-function closeTlModal() { timelineModal.classList.remove("open"); }
-document.getElementById("timeline-modal-close").addEventListener("click", closeTlModal);
-timelineModal.querySelector(".modal-backdrop").addEventListener("click", closeTlModal);
+function closeVideoModal() {
+  videoModal.classList.remove("open");
+  modalVideo.pause();
+  modalVideo.src = "";
+}
+modalClose.addEventListener("click", closeVideoModal);
+videoModal.querySelector(".modal-backdrop").addEventListener("click", closeVideoModal);
 
-/* =================【重磅修复】音频双驱动控制台与声学合成引擎 ================= */
-class ReliableAudioEngine {
-  constructor() {
-    this.audio = new Audio();
-    this.audio.crossOrigin = "anonymous";
-    this.isPlaying = false;
-    this.currentTrack = 0;
-    this.mode = "media"; // "media" 或 "synth"
-    this.audioCtx = null;
-    this.synthOsc = null;
-    this.synthGain = null;
+/* ================= 原声音频可视化与合成双引擎 ================= */
+const trackList = document.getElementById("track-list");
+const currentTrackTitle = document.getElementById("current-track-title");
+const currentTrackDesc = document.getElementById("current-track-desc");
+const playBtn = document.getElementById("play-btn");
+const playIcon = document.getElementById("play-icon");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const curTimeEl = document.getElementById("cur-time");
+const durTimeEl = document.getElementById("dur-time");
+const progressWrap = document.getElementById("progress-wrap");
+const progressFill = document.getElementById("progress-fill");
+const synthToggleBtn = document.getElementById("synth-toggle-btn");
 
-    this.initElements();
-    this.initEvents();
-  }
+let currentTrackIdx = 0;
+let isPlaying = false;
+let isSynthMode = false;
+let audioElement = new Audio();
+let audioCtx, analyser, dataArray, synthOscillator;
 
-  initElements() {
-    this.playBtn = document.getElementById("play-btn");
-    this.playIcon = document.getElementById("play-icon");
-    this.prevBtn = document.getElementById("prev-btn");
-    this.nextBtn = document.getElementById("next-btn");
-    this.trackListEl = document.getElementById("track-list");
-    this.titleEl = document.getElementById("current-track-title");
-    this.descEl = document.getElementById("current-track-desc");
-    this.curTimeEl = document.getElementById("cur-time");
-    this.durTimeEl = document.getElementById("dur-time");
-    this.progressFill = document.getElementById("progress-fill");
-    this.progressWrap = document.getElementById("progress-wrap");
-    this.synthToggleBtn = document.getElementById("synth-toggle-btn");
+// 格式化时间
+function formatTime(s) {
+  if (isNaN(s)) return "00:00";
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m < 10 ? '0' + m : m}:${sec < 10 ? '0' + sec : sec}`;
+}
 
-    this.renderTrackList();
-  }
+// 渲染音轨列表
+VIDEO_DATA.forEach((item, idx) => {
+  const div = document.createElement("div");
+  div.className = `track-item ${idx === 0 ? 'active' : ''}`;
+  div.innerHTML = `
+    <div class="idx">${idx + 1}</div>
+    <div class="flex-1 min-w-0">
+      <h4 class="font-bold text-sm text-[var(--gold-cream)] truncate font-serif-title">${item.title}</h4>
+      <p class="text-xs text-[#d8c6a8] opacity-70 truncate mt-0.5">${item.desc}</p>
+    </div>
+  `;
+  div.addEventListener("click", () => loadTrack(idx, true));
+  trackList.appendChild(div);
+});
 
-  renderTrackList() {
-    this.trackListEl.innerHTML = "";
-    VIDEO_DATA.forEach((item, idx) => {
-      const row = document.createElement("div");
-      row.className = "track-item" + (idx === 0 ? " active" : "");
-      row.innerHTML = `
-        <div class="idx">${idx + 1}</div>
-        <div class="flex-1">
-          <div class="text-sm font-bold text-[var(--gold-cream)] font-serif-title">${item.title}</div>
-          <div class="text-xs text-[#c8b48f] opacity-75 mt-0.5 line-clamp-1">${item.desc}</div>
-        </div>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M8 5v14l11-7z"/></svg>
-      `;
-      row.addEventListener("click", () => this.loadAndPlay(idx));
-      this.trackListEl.appendChild(row);
-    });
-  }
+function loadTrack(idx, autoPlay = false) {
+  currentTrackIdx = idx;
+  const item = VIDEO_DATA[idx];
+  currentTrackTitle.textContent = item.title;
+  currentTrackDesc.textContent = item.desc;
 
-  initEvents() {
-    this.playBtn.addEventListener("click", () => this.togglePlay());
-    this.prevBtn.addEventListener("click", () => this.prevTrack());
-    this.nextBtn.addEventListener("click", () => this.nextTrack());
+  document.querySelectorAll(".track-item").forEach((el, i) => {
+    el.classList.toggle("active", i === idx);
+  });
 
-    this.audio.addEventListener("timeupdate", () => {
-      if (this.mode === "media" && this.audio.duration) {
-        const pct = (this.audio.currentTime / this.audio.duration) * 100;
-        this.progressFill.style.width = pct + "%";
-        this.curTimeEl.textContent = this.formatTime(this.audio.currentTime);
-        this.durTimeEl.textContent = this.formatTime(this.audio.duration);
-      }
-    });
+  audioElement.src = item.src;
+  audioElement.load();
 
-    this.audio.addEventListener("ended", () => this.nextTrack());
-
-    this.progressWrap.addEventListener("click", (e) => {
-      if (this.mode === "media" && this.audio.duration) {
-        const rect = this.progressWrap.getBoundingClientRect();
-        const pos = (e.clientX - rect.left) / rect.width;
-        this.audio.currentTime = pos * this.audio.duration;
-      }
-    });
-
-    this.synthToggleBtn.addEventListener("click", () => {
-      if (this.mode === "media") {
-        this.mode = "synth";
-        this.synthToggleBtn.textContent = "音频模式: 声学合成器 (无损保证)";
-        showToast("已切换至浏览器 Web Audio API 声学合成器模式");
-      } else {
-        this.mode = "media";
-        this.synthToggleBtn.textContent = "音频模式: 媒体原声";
-        showToast("已切换至媒体原声模式");
-      }
-      if (this.isPlaying) {
-        this.stopCurrent();
-        this.playCurrent();
-      }
-    });
-  }
-
-  formatTime(sec) {
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60);
-    return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-  }
-
-  loadAndPlay(index) {
-    this.currentTrack = (index + VIDEO_DATA.length) % VIDEO_DATA.length;
-    const track = VIDEO_DATA[this.currentTrack];
-    this.titleEl.textContent = track.title;
-    this.descEl.textContent = track.desc;
-
-    document.querySelectorAll(".track-item").forEach((el, i) => {
-      el.classList.toggle("active", i === this.currentTrack);
-    });
-
-    this.audio.src = track.src;
-    this.playCurrent();
-  }
-
-  togglePlay() {
-    if (this.isPlaying) {
-      this.pauseCurrent();
-    } else {
-      this.playCurrent();
-    }
-  }
-
-  playCurrent() {
-    if (this.mode === "media") {
-      this.audio.play().then(() => {
-        this.isPlaying = true;
-        this.updateIcon();
-      }).catch(err => {
-        console.warn("媒体播放拦截，自动降级至 Web Audio 声学合成模式:", err);
-        showToast("媒体源受限，已自动切换至 Web Audio 实时声学合成引擎！");
-        this.mode = "synth";
-        this.synthToggleBtn.textContent = "音频模式: 声学合成器 (无损保证)";
-        this.playSynth();
-      });
-    } else {
-      this.playSynth();
-    }
-  }
-
-  pauseCurrent() {
-    if (this.mode === "media") {
-      this.audio.pause();
-    } else {
-      this.stopSynth();
-    }
-    this.isPlaying = false;
-    this.updateIcon();
-  }
-
-  stopCurrent() {
-    this.audio.pause();
-    this.stopSynth();
-    this.isPlaying = false;
-    this.updateIcon();
-  }
-
-  playSynth() {
-    if (!this.audioCtx) {
-      this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume();
-    }
-
-    this.stopSynth();
-
-    // 构建交响和弦合成器
-    this.synthGain = this.audioCtx.createGain();
-    this.synthGain.gain.setValueAtTime(0.15, this.audioCtx.currentTime);
-
-    const freqs = [261.63, 329.63, 392.00, 523.25]; // C major 庄严和弦
-    this.synthOscs = freqs.map(f => {
-      const osc = this.audioCtx.createOscillator();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(f, this.audioCtx.currentTime);
-      osc.connect(this.synthGain);
-      osc.start();
-      return osc;
-    });
-
-    this.synthGain.connect(this.audioCtx.destination);
-    this.isPlaying = true;
-    this.updateIcon();
-    this.animateSynthProgress();
-  }
-
-  stopSynth() {
-    if (this.synthOscs) {
-      this.synthOscs.forEach(osc => { try { osc.stop(); } catch(e){} });
-      this.synthOscs = null;
-    }
-  }
-
-  animateSynthProgress() {
-    if (this.mode === "synth" && this.isPlaying) {
-      const time = Date.now() / 1000;
-      const pct = (Math.sin(time) + 1) * 50;
-      this.progressFill.style.width = pct + "%";
-      this.curTimeEl.textContent = "LIVE";
-      this.durTimeEl.textContent = "SYNTH";
-      requestAnimationFrame(() => this.animateSynthProgress());
-    }
-  }
-
-  prevTrack() { this.loadAndPlay(this.currentTrack - 1); }
-  nextTrack() { this.loadAndPlay(this.currentTrack + 1); }
-
-  updateIcon() {
-    this.playIcon.innerHTML = this.isPlaying
-      ? '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'
-      : '<path d="M8 5v14l11-7z"/>';
+  if (autoPlay) {
+    playTrack();
+  } else {
+    pauseTrack();
   }
 }
 
-const audioEngine = new ReliableAudioEngine();
+function playTrack() {
+  if (isSynthMode) {
+    playSynthTone();
+  } else {
+    audioElement.play().then(() => {
+      isPlaying = true;
+      playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+      initAudioContext();
+    }).catch(err => {
+      console.warn("音频播放被拦截或故障，自动降级切换至声学合成模式");
+      isSynthMode = true;
+      synthToggleBtn.textContent = "音频模式: 声学合成器";
+      playSynthTone();
+    });
+  }
+}
 
-/* 声浪 Wave Canvas 可视化动画 */
+function pauseTrack() {
+  isPlaying = false;
+  audioElement.pause();
+  if (synthOscillator) {
+    try { synthOscillator.stop(); } catch(e){}
+    synthOscillator = null;
+  }
+  playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
+}
+
+playBtn.addEventListener("click", () => {
+  if (isPlaying) pauseTrack();
+  else playTrack();
+});
+
+prevBtn.addEventListener("click", () => {
+  currentTrackIdx = (currentTrackIdx - 1 + VIDEO_DATA.length) % VIDEO_DATA.length;
+  loadTrack(currentTrackIdx, true);
+});
+
+nextBtn.addEventListener("click", () => {
+  currentTrackIdx = (currentTrackIdx + 1) % VIDEO_DATA.length;
+  loadTrack(currentTrackIdx, true);
+});
+
+audioElement.addEventListener("timeupdate", () => {
+  if (!isSynthMode) {
+    const cur = audioElement.currentTime;
+    const dur = audioElement.duration || 1;
+    curTimeEl.textContent = formatTime(cur);
+    durTimeEl.textContent = formatTime(dur);
+    progressFill.style.width = (cur / dur * 100) + "%";
+  }
+});
+
+audioElement.addEventListener("ended", () => {
+  nextBtn.click();
+});
+
+progressWrap.addEventListener("click", (e) => {
+  if (!isSynthMode && audioElement.duration) {
+    const rect = progressWrap.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    audioElement.currentTime = pos * audioElement.duration;
+  }
+});
+
+// 声学合成引擎降级方案
+function playSynthTone() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  
+  if (synthOscillator) synthOscillator.stop();
+  synthOscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  synthOscillator.type = 'sine';
+  synthOscillator.frequency.setValueAtTime(220 + (currentTrackIdx * 40), audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+  synthOscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  synthOscillator.start();
+
+  isPlaying = true;
+  playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+}
+
+synthToggleBtn.addEventListener("click", () => {
+  isSynthMode = !isSynthMode;
+  synthToggleBtn.textContent = isSynthMode ? "音频模式: 声学合成器" : "音频模式: 媒体原声";
+  if (isPlaying) {
+    pauseTrack();
+    playTrack();
+  }
+});
+
+/* Web Audio 动态声浪 Canvas 渲染 */
 const waveCanvas = document.getElementById("wave-canvas");
 const waveCtx = waveCanvas.getContext("2d");
-let wStep = 0;
 
-function drawWaveform() {
-  waveCanvas.width = waveCanvas.offsetWidth;
-  waveCanvas.height = waveCanvas.offsetHeight;
-  const w = waveCanvas.width;
-  const h = waveCanvas.height;
-
-  waveCtx.clearRect(0, 0, w, h);
-  wStep += 0.05;
-
-  const isPlaying = audioEngine.isPlaying;
-  const bars = 48;
-  const barWidth = w / bars;
-
-  for (let i = 0; i < bars; i++) {
-    const amplitude = isPlaying ? Math.sin(wStep + i * 0.2) * 35 + 45 : 8;
-    const barH = (amplitude / 100) * (h * 0.7);
-
-    const x = i * barWidth;
-    const y = (h - barH) / 2;
-
-    const grad = waveCtx.createLinearGradient(0, y, 0, y + barH);
-    grad.addColorStop(0, '#fbe396');
-    grad.addColorStop(0.5, '#d4af37');
-    grad.addColorStop(1, '#a30f16');
-
-    waveCtx.fillStyle = grad;
-    waveCtx.fillRect(x + 2, y, barWidth - 4, barH);
+function initAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    const source = audioCtx.createMediaElementSource(audioElement);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    analyser.fftSize = 64;
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
   }
-
-  requestAnimationFrame(drawWaveform);
 }
-drawWaveform();
 
-/* ================= 理论词典渲染与检索 ================= */
+function drawWave() {
+  requestAnimationFrame(drawWave);
+  waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+
+  const w = waveCanvas.width = waveCanvas.offsetWidth;
+  const h = waveCanvas.height = waveCanvas.offsetHeight;
+
+  if (analyser && isPlaying && !isSynthMode) {
+    analyser.getByteFrequencyData(dataArray);
+    const barWidth = (w / dataArray.length) * 1.5;
+    let x = 0;
+
+    for (let i = 0; i < dataArray.length; i++) {
+      const barHeight = (dataArray[i] / 255) * h * 0.8;
+      const gradient = waveCtx.createLinearGradient(0, h, 0, h - barHeight);
+      gradient.addColorStop(0, 'rgba(163, 15, 22, 0.8)');
+      gradient.addColorStop(1, 'rgba(251, 227, 150, 0.9)');
+
+      waveCtx.fillStyle = gradient;
+      waveCtx.fillRect(x, h - barHeight, barWidth - 3, barHeight);
+      x += barWidth;
+    }
+  } else {
+    // 默认虚幻模拟波形
+    const time = Date.now() * 0.003;
+    waveCtx.beginPath();
+    waveCtx.lineWidth = 2;
+    waveCtx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+    for (let x = 0; x < w; x += 5) {
+      const y = Math.sin(x * 0.02 + time) * (isPlaying ? 25 : 8) + h / 2;
+      if (x === 0) waveCtx.moveTo(x, y);
+      else waveCtx.lineTo(x, y);
+    }
+    waveCtx.stroke();
+  }
+}
+drawWave();
+loadTrack(0);
+
+/* ================= 理论词典渲染与搜索 ================= */
 const glossaryGrid = document.getElementById("glossary-grid");
 const glossarySearch = document.getElementById("glossary-search");
 
@@ -2387,320 +2306,387 @@ function renderGlossary(filterText = "") {
     const card = document.createElement("div");
     card.className = "glass-card p-6 reveal";
     card.innerHTML = `
-      <span class="px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-[var(--gold)]/20 border border-[var(--gold)]/40 text-[var(--gold-light)]">${item.category}</span>
-      <h3 class="font-bold text-lg mt-3 text-[var(--gold-cream)] font-serif-title">${item.term}</h3>
-      <p class="text-xs text-[#d8c6a8] mt-2.5 leading-relaxed opacity-90 font-light">${item.desc}</p>
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs px-3 py-1 rounded-full bg-[var(--gold)]/15 border border-[var(--gold)]/40 text-[var(--gold-light)]">${item.category}</span>
+        <span class="text-xs text-[var(--gold-dark)] font-mono">DEFINITION</span>
+      </div>
+      <h3 class="font-bold text-lg text-[var(--gold-cream)] font-serif-title mb-2">${item.term}</h3>
+      <p class="text-xs text-[#d8c6a8] opacity-85 leading-relaxed">${item.desc}</p>
     `;
     glossaryGrid.appendChild(card);
-    observer.observe(card);
   });
   initTiltEffect();
   initHoverEffects();
+  initScrollReveal();
 }
 renderGlossary();
 glossarySearch.addEventListener("input", (e) => renderGlossary(e.target.value.trim()));
 
-/* ================= 记忆卡片 (Flashcards) 渲染逻辑 ================= */
+/* ================= 记忆卡片 (Flashcards) 渲染 ================= */
 const flashcardGrid = document.getElementById("flashcard-grid");
 FLASHCARD_DATA.forEach(item => {
   const card = document.createElement("div");
-  card.className = "flashcard-inner reveal cursor-pointer";
+  card.className = "flashcard-inner reveal";
   card.innerHTML = `
     <div class="flashcard-flipper">
-      <div class="flashcard-front glass-card">
-        <span class="text-xs text-[var(--gold)] font-bold mb-2 uppercase tracking-widest">点击翻转卡片</span>
-        <h4 class="text-xl font-bold text-[var(--gold-light)] font-serif-title">${item.q}</h4>
+      <div class="flashcard-front">
+        <span class="text-xs text-[var(--gold)] tracking-widest uppercase mb-2">点击翻转背诵</span>
+        <h3 class="text-xl font-bold text-[var(--gold-light)] font-serif-title">${item.q}</h3>
       </div>
-      <div class="flashcard-back glass-card bg-gradient-to-br from-[#420606] to-[#120303]">
-        <p class="text-sm text-[var(--gold-cream)] leading-relaxed font-light">${item.a}</p>
+      <div class="flashcard-back">
+        <span class="text-xs text-[var(--gold-light)] tracking-widest uppercase mb-2">理论解析</span>
+        <p class="text-xs sm:text-sm text-[#fbe396] leading-relaxed">${item.a}</p>
       </div>
     </div>
   `;
   card.addEventListener("click", () => card.classList.toggle("flipped"));
   flashcardGrid.appendChild(card);
-  observer.observe(card);
 });
 
-/* ================= 互动答题引擎 ================= */
-let quizCurrentIdx = 0;
+/* ================= 深度研学问答逻辑 ================= */
+let currentQuizIdx = 0;
 let quizScore = 0;
-
-const quizQuestionEl = document.getElementById("quiz-question");
-const quizOptionsEl = document.getElementById("quiz-options");
-const quizProgressEl = document.getElementById("quiz-progress");
+const quizQuestion = document.getElementById("quiz-question");
+const quizOptions = document.getElementById("quiz-options");
+const quizProgress = document.getElementById("quiz-progress");
 const quizScoreBadge = document.getElementById("quiz-score-badge");
-const quizExpBox = document.getElementById("quiz-explanation-box");
-const quizExpText = document.getElementById("quiz-explanation-text");
+const quizExplanationBox = document.getElementById("quiz-explanation-box");
+const quizExplanationText = document.getElementById("quiz-explanation-text");
 const quizNextBtn = document.getElementById("quiz-next-btn");
 
-function loadQuiz() {
-  quizExpBox.style.opacity = "0";
-  quizExpBox.style.pointerEvents = "none";
-  const data = QUIZ_DATA[quizCurrentIdx];
+function loadQuizItem(idx) {
+  const data = QUIZ_DATA[idx];
+  quizProgress.textContent = `QUESTION ${idx + 1} / ${QUIZ_DATA.length}`;
+  quizQuestion.textContent = data.q;
+  quizOptions.innerHTML = "";
+  quizExplanationBox.classList.add("opacity-0");
 
-  quizProgressEl.textContent = `QUESTION ${quizCurrentIdx + 1} / ${QUIZ_DATA.length}`;
-  quizScoreBadge.textContent = `当前得分: ${quizScore}`;
-  quizQuestionEl.textContent = `${quizCurrentIdx + 1}. ${data.q}`;
-  quizOptionsEl.innerHTML = "";
-
-  data.opts.forEach((opt, idx) => {
+  data.opts.forEach((opt, optIdx) => {
     const btn = document.createElement("div");
     btn.className = "quiz-option";
     btn.innerHTML = `
-      <span class="w-7 h-7 rounded-full border border-[var(--gold)]/50 flex items-center justify-center text-xs font-bold text-[var(--gold-light)] shrink-0">${String.fromCharCode(65 + idx)}</span>
-      <span class="text-sm text-[#e6d5b8]">${opt}</span>
+      <span class="w-7 h-7 rounded-full border border-[var(--gold)]/50 flex items-center justify-center text-xs font-bold text-[var(--gold-light)] shrink-0">${String.fromCharCode(65 + optIdx)}</span>
+      <span class="text-xs sm:text-sm text-[var(--gold-cream)] font-medium">${opt}</span>
     `;
-    btn.addEventListener("click", () => handleQuizAns(idx, btn));
-    quizOptionsEl.appendChild(btn);
+
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("disabled")) return;
+      document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
+
+      if (optIdx === data.ans) {
+        btn.classList.add("correct");
+        quizScore += 10;
+        quizScoreBadge.textContent = `当前得分: ${quizScore}`;
+      } else {
+        btn.classList.add("wrong");
+        document.querySelectorAll(".quiz-option")[data.ans].classList.add("correct");
+      }
+
+      quizExplanationText.textContent = data.exp;
+      quizExplanationBox.classList.remove("opacity-0");
+    });
+
+    quizOptions.appendChild(btn);
   });
-  initHoverEffects();
-}
-
-function handleQuizAns(selectedIdx, btnEl) {
-  const data = QUIZ_DATA[quizCurrentIdx];
-  const allOpts = quizOptionsEl.querySelectorAll(".quiz-option");
-  allOpts.forEach(b => b.style.pointerEvents = "none");
-
-  if(selectedIdx === data.ans) {
-    btnEl.classList.add("correct");
-    quizScore += 10;
-    quizScoreBadge.textContent = `当前得分: ${quizScore}`;
-  } else {
-    btnEl.classList.add("wrong");
-    allOpts[data.ans].classList.add("correct");
-  }
-
-  quizExpText.textContent = data.exp;
-  quizExpBox.style.opacity = "1";
-  quizExpBox.style.pointerEvents = "auto";
 }
 
 quizNextBtn.addEventListener("click", () => {
-  quizCurrentIdx = (quizCurrentIdx + 1) % QUIZ_DATA.length;
-  loadQuiz();
+  currentQuizIdx++;
+  if (currentQuizIdx < QUIZ_DATA.length) {
+    loadQuizItem(currentQuizIdx);
+  } else {
+    quizQuestion.textContent = `🎉 恭喜完成全部测试！最终得分: ${quizScore} 分`;
+    quizOptions.innerHTML = "";
+    quizExplanationBox.classList.add("opacity-0");
+  }
 });
-loadQuiz();
+loadQuizItem(0);
 
-/* ================= 金句摘录轮播 ================= */
+/* ================= 金句 Carousel 轮播与一键复制 ================= */
 const quoteCarousel = document.getElementById("quote-carousel");
 const quoteDots = document.getElementById("quote-dots");
-let quoteCurrent = 0;
+let currentQuoteIdx = 0;
 
-QUOTES_DATA.forEach((q, idx) => {
+QUOTES_DATA.forEach((quote, idx) => {
   const slide = document.createElement("div");
   slide.className = `quote-slide ${idx === 0 ? 'active' : ''}`;
   slide.innerHTML = `
-    <blockquote class="text-xl sm:text-3xl font-serif-title font-bold text-[var(--gold-cream)] leading-relaxed cursor-pointer hover:text-[var(--gold-light)] transition px-6" title="点击复制金句">
-      “ ${q} ”
-    </blockquote>
+    <span class="text-4xl text-[var(--gold-light)] opacity-40 font-serif font-black">“</span>
+    <p class="text-xl sm:text-2xl font-bold text-[var(--gold-cream)] font-serif-title max-w-2xl px-6 cursor-pointer hover:text-[var(--gold-light)] transition leading-relaxed">${quote}</p>
+    <span class="text-xs text-[var(--gold)] opacity-70 mt-4 tracking-widest">—— 新时代领航金句</span>
   `;
-  slide.querySelector("blockquote").addEventListener("click", () => {
-    navigator.clipboard.writeText(q);
-    showToast("金句已复制至剪贴板！");
+  
+  slide.querySelector("p").addEventListener("click", () => {
+    navigator.clipboard.writeText(quote).then(() => showToast("金句已成功复制至剪贴板"));
   });
+
   quoteCarousel.appendChild(slide);
 
   const dot = document.createElement("button");
-  dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === 0 ? 'bg-[var(--gold-light)] w-8' : 'bg-white/20'}`;
-  dot.addEventListener("click", () => setQuote(idx));
+  dot.className = `w-2.5 h-2.5 rounded-full border border-[var(--gold)] transition ${idx === 0 ? 'bg-[var(--gold-light)] w-8' : 'bg-transparent'}`;
+  dot.addEventListener("click", () => switchQuote(idx));
   quoteDots.appendChild(dot);
 });
 
-function setQuote(idx) {
-  quoteCurrent = idx;
+function switchQuote(idx) {
+  currentQuoteIdx = idx;
   document.querySelectorAll(".quote-slide").forEach((s, i) => s.classList.toggle("active", i === idx));
   document.querySelectorAll("#quote-dots button").forEach((d, i) => {
-    d.className = `w-2.5 h-2.5 rounded-full transition-all ${i === idx ? 'bg-[var(--gold-light)] w-8' : 'bg-white/20'}`;
+    d.className = `w-2.5 h-2.5 rounded-full border border-[var(--gold)] transition ${i === idx ? 'bg-[var(--gold-light)] w-8' : 'bg-transparent'}`;
   });
 }
 
 setInterval(() => {
-  quoteCurrent = (quoteCurrent + 1) % QUOTES_DATA.length;
-  setQuote(quoteCurrent);
+  currentQuoteIdx = (currentQuoteIdx + 1) % QUOTES_DATA.length;
+  switchQuote(currentQuoteIdx);
 }, 5500);
 
-/* Toast 提示 */
 function showToast(msg) {
   const toast = document.getElementById("toast");
   toast.textContent = msg;
   toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2800);
+  setTimeout(() => toast.classList.remove("show"), 2500);
 }
 
-/* ================= 荣誉证书渲染引擎 (Canvas API) ================= */
+/* ================= 打卡荣誉证书 HTML5 Canvas 渲染 ================= */
 const certCanvas = document.getElementById("cert-canvas");
 const certCtx = certCanvas.getContext("2d");
+const certNameInput = document.getElementById("cert-name-input");
+const genCertBtn = document.getElementById("gen-cert-btn");
+const downloadCertBtn = document.getElementById("download-cert-btn");
 
 function renderCertificate(name) {
   const w = certCanvas.width;
   const h = certCanvas.height;
 
   // 背景
-  const grad = certCtx.createRadialGradient(w/2, h/2, 50, w/2, h/2, w/2);
-  grad.addColorStop(0, '#2d0a0a');
-  grad.addColorStop(1, '#0e0202');
-  certCtx.fillStyle = grad;
+  certCtx.fillStyle = "#150404";
   certCtx.fillRect(0, 0, w, h);
 
-  // 双重金边
-  certCtx.strokeStyle = '#d4af37';
-  certCtx.lineWidth = 6;
+  // 金色边框
+  certCtx.strokeStyle = "#d4af37";
+  certCtx.lineWidth = 8;
   certCtx.strokeRect(20, 20, w - 40, h - 40);
+
+  certCtx.strokeStyle = "#fbe396";
   certCtx.lineWidth = 2;
-  certCtx.strokeRect(30, 30, w - 60, h - 60);
+  certCtx.strokeRect(28, 28, w - 56, h - 56);
+
+  // 印花星号
+  certCtx.fillStyle = "#fbe396";
+  certCtx.font = "32px serif";
+  certCtx.textAlign = "center";
+  certCtx.fillText("★", w / 2, 75);
 
   // 标题
-  certCtx.fillStyle = '#fbe396';
-  certCtx.font = 'bold 32px "Noto Serif SC", serif';
-  certCtx.textAlign = 'center';
-  certCtx.fillText('新时代思想研学荣誉证书', w / 2, 90);
+  certCtx.fillStyle = "#ffffff";
+  certCtx.font = "bold 28px 'Noto Serif SC', serif";
+  certCtx.fillText("新时代思想研学荣誉证书", w / 2, 125);
 
-  certCtx.fillStyle = '#d4af37';
-  certCtx.font = '14px sans-serif';
-  certCtx.fillText('HONORARY CERTIFICATE OF STUDY', w / 2, 115);
+  certCtx.fillStyle = "#d4af37";
+  certCtx.font = "14px sans-serif";
+  certCtx.fillText("STUDY CERTIFICATE OF HONOR", w / 2, 150);
 
-  // 颁发给
-  certCtx.fillStyle = '#ffffff';
-  certCtx.font = 'bold 24px "Noto Serif SC", serif';
-  certCtx.fillText(name, w / 2, 185);
+  // 授予学员
+  certCtx.fillStyle = "#fbe396";
+  certCtx.font = "bold 26px 'Noto Serif SC', serif";
+  certCtx.fillText(name, w / 2, 220);
 
   // 正文
-  certCtx.fillStyle = '#e6d5b8';
-  certCtx.font = '15px sans-serif';
-  certCtx.fillText('在“时代先锋 · 领航新征程”专题网中完成全套理论学习与研学测试，', w / 2, 240);
-  certCtx.fillText('深刻领会新时代中国特色社会主义思想，成绩优异，特发此证！', w / 2, 270);
+  certCtx.fillStyle = "#e6d5b8";
+  certCtx.font = "15px 'Noto Sans SC', sans-serif";
+  certCtx.fillText("恭喜您在【时代先锋·学习专题网】完成新时代中国特色社会主义思想专题研学", w / 2, 275);
+  certCtx.fillText("深刻领会理论精髓，积极投身强国建设与民族复兴伟业，特发此证，以资鼓励！", w / 2, 310);
 
-  // 印章徽标
-  certCtx.beginPath();
-  certCtx.arc(w / 2, 370, 42, 0, Math.PI * 2);
-  certCtx.strokeStyle = '#d91438';
+  // 盖章印记模拟
+  certCtx.save();
+  certCtx.translate(w / 2 + 200, h / 2 + 100);
+  certCtx.rotate(-0.15);
+  certCtx.strokeStyle = "rgba(217, 20, 56, 0.85)";
   certCtx.lineWidth = 3;
+  certCtx.beginPath();
+  certCtx.arc(0, 0, 48, 0, Math.PI * 2);
   certCtx.stroke();
-  certCtx.fillStyle = '#d91438';
-  certCtx.font = 'bold 16px serif';
-  certCtx.fillText('时代先锋', w / 2, 375);
+  certCtx.fillStyle = "rgba(217, 20, 56, 0.85)";
+  certCtx.font = "bold 12px serif";
+  certCtx.fillText("时代先锋研学委员会", 0, -5);
+  certCtx.fillText("2026年专用章", 0, 15);
+  certCtx.restore();
 
-  // 日期
-  const today = new Date();
-  const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
-  certCtx.fillStyle = '#c8b48f';
-  certCtx.font = '13px sans-serif';
-  certCtx.fillText(`颁发日期：${dateStr}`, w / 2, 460);
+  // 落款日期
+  certCtx.fillStyle = "#d4af37";
+  certCtx.font = "13px sans-serif";
+  certCtx.fillText("颁发日期：2026 年 8 月", w / 2 - 200, 440);
+  certCtx.fillText("证书编号：XP-2026-" + Math.floor(100000 + Math.random() * 900000), w / 2 + 180, 440);
 }
 
-document.getElementById("gen-cert-btn").addEventListener("click", () => {
-  const name = document.getElementById("cert-name-input").value.trim() || "时代先锋学员";
+genCertBtn.addEventListener("click", () => {
+  const name = certNameInput.value.trim() || "时代先锋学员";
   renderCertificate(name);
   showToast("证书生成成功！");
 });
-renderCertificate("时代先锋学员");
 
-document.getElementById("download-cert-btn").addEventListener("click", () => {
+downloadCertBtn.addEventListener("click", () => {
   const link = document.createElement("a");
-  link.download = "新时代研学荣誉证书.png";
+  link.download = "研学荣誉证书.png";
   link.href = certCanvas.toDataURL("image/png");
   link.click();
 });
+renderCertificate("时代先锋学员");
 
-/* ================= 时代成就数据对比图表 (SVG/HTML Bars) ================= */
+/* ================= 时代成就柱状图 JS 注入 ================= */
 const chartBars = document.getElementById("chart-bars");
-const chartData = [
-  { year: "2012", gdp: 53.9 },
-  { year: "2015", gdp: 68.8 },
-  { year: "2018", gdp: 91.9 },
-  { year: "2021", gdp: 114.9 },
-  { year: "2024", gdp: 126.0 },
-  { year: "2026", gdp: 135.5 }
+const CHART_DATA = [
+  { year: "2020", val: 101.6, label: "101.6万亿" },
+  { year: "2021", val: 114.9, label: "114.9万亿" },
+  { year: "2022", val: 121.0, label: "121.0万亿" },
+  { year: "2023", val: 126.0, label: "126.0万亿" },
+  { year: "2024", val: 131.5, label: "131.5万亿" },
+  { year: "2025", val: 138.0, label: "138.0万亿" },
+  { year: "2026", val: 145.0, label: "145.0万亿" }
 ];
 
-chartData.forEach(item => {
-  const max = 140;
-  const heightPct = (item.gdp / max) * 100;
-
-  const bar = document.createElement("div");
-  bar.className = "flex-1 flex flex-col items-center gap-2 group cursor-pointer";
-  bar.innerHTML = `
-    <span class="text-xs text-[var(--gold-light)] font-bold opacity-0 group-hover:opacity-100 transition">${item.gdp}万亿</span>
-    <div class="w-full max-w-[40px] bg-gradient-to-t from-[var(--red)] to-[var(--gold-light)] rounded-t-lg transition-all duration-700 group-hover:brightness-125" style="height: ${heightPct}%"></div>
-    <span class="text-xs text-[#c8b48f] font-bold mt-1">${item.year}</span>
+CHART_DATA.forEach(item => {
+  const heightPercent = (item.val / 160) * 100;
+  const col = document.createElement("div");
+  col.className = "flex-1 flex flex-col items-center justify-end h-full gap-2";
+  col.innerHTML = `
+    <span class="text-[10px] sm:text-xs text-[var(--gold-light)] font-mono font-bold">${item.label}</span>
+    <div style="height: ${heightPercent}%;" class="w-full max-w-[32px] rounded-t-md transition-all duration-1000"></div>
+    <span class="text-xs text-[#d8c6a8]">${item.year}</span>
   `;
-  chartBars.appendChild(bar);
+  chartBars.appendChild(col);
 });
 
-// 数字渐增计数动画
-document.querySelectorAll(".stat-num").forEach(el => {
-  const target = parseInt(el.dataset.target, 10);
-  let count = 0;
-  const step = Math.ceil(target / 40);
-  const timer = setInterval(() => {
-    count += step;
-    if(count >= target) {
-      count = target;
-      clearInterval(timer);
-    }
-    el.textContent = count.toLocaleString();
-  }, 40);
-});
-
-/* ================= FAQ 常见问答手风琴 ================= */
+/* ================= FAQ 手风琴逻辑 ================= */
 const faqAccordion = document.getElementById("faq-accordion");
 FAQ_DATA.forEach((item, idx) => {
-  const acc = document.createElement("div");
-  acc.className = "glass-card overflow-hidden";
-  acc.innerHTML = `
-    <button class="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-[var(--gold-cream)] font-serif-title text-base hover:text-[var(--gold-light)] transition">
-      <span>${idx + 1}. ${item.q}</span>
-      <span class="icon text-xl transition-transform duration-300">+</span>
-    </button>
-    <div class="content max-h-0 overflow-hidden transition-all duration-400 px-5 text-xs sm:text-sm text-[#e6d5b8] leading-relaxed opacity-90 font-light">
-      <div class="pb-5 border-t border-[var(--glass-border)]/40 pt-3">${item.a}</div>
+  const box = document.createElement("div");
+  box.className = "glass-card p-6 cursor-pointer";
+  box.innerHTML = `
+    <div class="flex items-center justify-between gap-4">
+      <h3 class="font-bold text-base text-[var(--gold-cream)] font-serif-title flex items-center gap-3">
+        <span class="text-xs px-2.5 py-0.5 rounded bg-[var(--gold)]/20 text-[var(--gold-light)]">Q${idx + 1}</span>
+        ${item.q}
+      </h3>
+      <span class="text-[var(--gold-light)] text-xl font-bold toggle-icon">+</span>
+    </div>
+    <div class="faq-ans hidden mt-4 pt-4 border-t border-[var(--glass-border)] text-xs sm:text-sm text-[#d8c6a8] leading-relaxed">
+      ${item.a}
     </div>
   `;
-  const btn = acc.querySelector("button");
-  const content = acc.querySelector(".content");
-  const icon = acc.querySelector(".icon");
 
-  btn.addEventListener("click", () => {
-    const isOpen = content.style.maxHeight !== "0px" && content.style.maxHeight !== "";
-    document.querySelectorAll("#faq-accordion .content").forEach(c => c.style.maxHeight = "0px");
-    document.querySelectorAll("#faq-accordion .icon").forEach(i => i.textContent = "+");
-
-    if(!isOpen) {
-      content.style.maxHeight = content.scrollHeight + "px";
-      icon.textContent = "−";
-    }
+  box.addEventListener("click", () => {
+    const ans = box.querySelector(".faq-ans");
+    const icon = box.querySelector(".toggle-icon");
+    const isHidden = ans.classList.contains("hidden");
+    ans.classList.toggle("hidden", !isHidden);
+    icon.textContent = isHidden ? "−" : "+";
   });
-  faqAccordion.appendChild(acc);
+
+  faqAccordion.appendChild(box);
 });
 
-/* ================= 全站检索 Modal ================= */
+/* ================= 全站搜索 Modal 窗口逻辑 ================= */
 const searchTrigger = document.getElementById("search-trigger");
 const searchModal = document.getElementById("search-modal");
+const searchModalClose = document.getElementById("search-modal-close");
 const searchInput = document.getElementById("search-input");
 const searchResults = document.getElementById("search-results");
 
 searchTrigger.addEventListener("click", () => searchModal.classList.add("open"));
-document.getElementById("search-modal-close").addEventListener("click", () => searchModal.classList.remove("open"));
+searchModalClose.addEventListener("click", () => searchModal.classList.remove("open"));
 searchModal.querySelector(".modal-backdrop").addEventListener("click", () => searchModal.classList.remove("open"));
 
 searchInput.addEventListener("input", (e) => {
-  const q = e.target.value.trim().toLowerCase();
+  const query = e.target.value.trim().toLowerCase();
   searchResults.innerHTML = "";
-  if(!q) return;
+  if (!query) return;
 
-  const hits = [];
-  TIMELINE_DATA.forEach(t => { if(t.title.includes(q) || t.summary.includes(q)) hits.push({ type: '历程', title: t.title, desc: t.summary }); });
-  GLOSSARY_DATA.forEach(g => { if(g.term.includes(q) || g.desc.includes(q)) hits.push({ type: '词典', title: g.term, desc: g.desc }); });
+  const results = [];
+  TIMELINE_DATA.forEach(item => {
+    if (item.title.toLowerCase().includes(query) || item.detail.toLowerCase().includes(query)) {
+      results.push({ type: "光辉历程", title: item.title, desc: item.summary });
+    }
+  });
+  GLOSSARY_DATA.forEach(item => {
+    if (item.term.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query)) {
+      results.push({ type: "理论词典", title: item.term, desc: item.desc });
+    }
+  });
 
-  hits.forEach(h => {
+  results.forEach(res => {
     const div = document.createElement("div");
-    div.className = "p-3 rounded-lg bg-white/5 border border-white/10 hover:border-[var(--gold)] cursor-pointer transition";
+    div.className = "p-3 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer border border-white/10 transition";
     div.innerHTML = `
-      <div class="text-xs text-[var(--gold-light)] font-bold">[${h.type}] ${h.title}</div>
-      <div class="text-xs text-[#c8b48f] mt-1 line-clamp-1">${h.desc}</div>
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] px-2 py-0.5 rounded bg-[var(--gold)]/20 text-[var(--gold-light)]">${res.type}</span>
+        <h4 class="font-bold text-sm text-[var(--gold-cream)]">${res.title}</h4>
+      </div>
+      <p class="text-xs text-[#d8c6a8] opacity-80 mt-1 line-clamp-1">${res.desc}</p>
     `;
     searchResults.appendChild(div);
   });
+});
+
+/* ================= 无障碍字号调节 ================= */
+let currentFontSize = 16;
+document.getElementById("font-plus-btn").addEventListener("click", () => {
+  if (currentFontSize < 22) {
+    currentFontSize += 1.5;
+    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
+  }
+});
+document.getElementById("font-minus-btn").addEventListener("click", () => {
+  if (currentFontSize > 13) {
+    currentFontSize -= 1.5;
+    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
+  }
+});
+
+/* ================= 滚动显现 Reveal Observer ================= */
+function initScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach(el => observer.observe(el));
+}
+
+// 统计数字累加动画
+function initCounterAnimation() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = +entry.target.dataset.target;
+        let count = 0;
+        const step = Math.ceil(target / 60);
+        const timer = setInterval(() => {
+          count += step;
+          if (count >= target) {
+            count = target;
+            clearInterval(timer);
+          }
+          entry.target.textContent = count.toLocaleString();
+        }, 25);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll(".stat-num").forEach(num => observer.observe(num));
+}
+
+/* ================= 初始化启动 ================= */
+window.addEventListener("DOMContentLoaded", () => {
+  initHoverEffects();
+  initTiltEffect();
+  initScrollReveal();
+  initCounterAnimation();
 });
 </script>
 </body>
