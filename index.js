@@ -1118,34 +1118,47 @@ app.get('/video', async (req, res) => {
     return res.status(400).send('缺少 url 参数');
   }
 
-
   try {
-    // 3. 构造请求头，透传客户端的 Range 头（用于支持拖动进度条和分段加载）
-    const requestHeaders = {};
+    // 2. 构造请求头
+    // 关键点：维基百科强制要求有效的 User-Agent，否则直接返回 403 拒绝访问！
+    const requestHeaders = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 PatriotMediaProxy/1.0',
+      'Accept': '*/*',
+      'Referer': 'https://commons.wikimedia.org/'
+    };
+
+    // 透传客户端的 Range 头（用于支持音视频拖动进度条和分段加载）
     if (req.headers.range) {
       requestHeaders['Range'] = req.headers.range;
     }
 
-    // 4. 以流（stream）模式发起 HTTP 请求
+    // 3. 以流（stream）模式发起 HTTP 请求
     const response = await axios({
       method: 'get',
       url: videoUrl,
       headers: requestHeaders,
       responseType: 'stream',
-      timeout: 15000,
+      timeout: 25000,
+      maxRedirects: 5, // 自动跟随 Wikipedia 的 302/307 重定向
     });
 
-    // 5. 设置 CORS 允许前端跨域调用
+    // 4. 设置 CORS 允许前端跨域调用及 Web Audio API 读取
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Range');
+    res.setHeader('Access-Control-Expose-Headers', 'Content-Length, Content-Range, Accept-Ranges');
 
-    // 6. 透传目标服务器的关键响应头给客户端
+    // 5. 透传目标服务器的状态码（如 200 或 206 Partial Content）
     res.status(response.status);
-    
+
+    // 6. 透传关键响应头给客户端
     const headersToForward = [
       'content-type',
       'content-length',
       'content-range',
-      'accept-ranges'
+      'accept-ranges',
+      'last-modified',
+      'etag'
     ];
 
     headersToForward.forEach((header) => {
@@ -1154,7 +1167,7 @@ app.get('/video', async (req, res) => {
       }
     });
 
-    // 7. 将视频流实时管道传输（Pipe）至客户端
+    // 7. 将音视频流实时管道传输（Pipe）至客户端
     response.data.pipe(res);
 
     // 8. 监听客户端断开连接，及时销毁上游流，防止内存泄露
@@ -1163,9 +1176,9 @@ app.get('/video', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('代理视频请求失败:', error.message);
+    console.error('代理音视频请求失败:', error.message);
     if (error.response) {
-      return res.status(error.response.status).send('获取目标视频失败');
+      return res.status(error.response.status).send('获取目标媒体失败');
     }
     res.status(500).send('代理服务器内部错误');
   }
