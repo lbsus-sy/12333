@@ -1118,15 +1118,6 @@ app.get('/video', async (req, res) => {
     return res.status(400).send('缺少 url 参数');
   }
 
-  // 2. 安全校验（SSRF 防护）：限制仅代理 Wikimedia 域名的资源
-  try {
-    const parsedUrl = new URL(videoUrl);
-    if (!parsedUrl.hostname.endsWith('wikimedia.org')) {
-      return res.status(403).send('仅支持代理 Wikimedia 来源的视频资源');
-    }
-  } catch (err) {
-    return res.status(400).send('无效的 URL 参数');
-  }
 
   try {
     // 3. 构造请求头，透传客户端的 Range 头（用于支持拖动进度条和分段加载）
