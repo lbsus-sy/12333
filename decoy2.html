@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>领航新时代 · 中国故事官方专题网</title>
+<meta name="description" content="领航新时代——学习宣传习近平新时代中国特色社会主义思想专题网站，权威发布、图文并茂、视频语音，全面展现新时代伟大成就。">
+<style>
+  :root{
+    --red:#a8181f;
+    --red-deep:#7a0f14;
+    --red-bright:#c8161d;
+    --gold:#e0b356;
+    --gold-light:#f6dfa0;
+    --cream:#fdf6e8;
+    --ink:#231815;
+    --serif: "STZhongsong","SimSun","Songti SC","Noto Serif SC",serif;
+    --sans: "Microsoft YaHei","PingFang SC","Heiti SC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    color:#2b2320;
+    background:var(--cream);
+    overflow-x:hidden;
+    line-height:1.7;
+  }
+  ::selection{background:var(--gold);color:#3a1000;}
+  a{color:inherit;text-decoration:none;}
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:#f1e6cc;}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(var(--red),var(--gold));border-radius:6px;}
+
+  /* ===== Loader ===== */
+  #loader{
+    position:fixed;inset:0;z-index:9999;
+    background:radial-gradient(ellipse at center, var(--red-deep) 0%, #4a0508 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity .8s ease, visibility .8s ease;
+  }
+  #loader.hide{opacity:0;visibility:hidden;}
+  .loader-badge{
+    width:110px;height:110px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 55%, #a97a1f 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:44px;color:var(--red-deep);font-weight:900;
+    box-shadow:0 0 40px rgba(224,179,86,.8), 0 0 0 6px rgba(224,179,86,.15);
+    animation:spinPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes spinPulse{
+    0%,100%{transform:scale(1) rotate(0deg);}
+    50%{transform:scale(1.08) rotate(180deg);}
+  }
+  .loader-text{margin-top:26px;color:var(--gold-light);letter-spacing:8px;font-size:14px;}
+  .loader-bar{width:220px;height:3px;background:rgba(255,255,255,.15);margin-top:18px;border-radius:3px;overflow:hidden;}
+  .loader-bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));animation:loadfill 1.6s ease forwards;}
+  @keyframes loadfill{to{width:100%;}}
+
+  /* ===== Scroll progress ===== */
+  #progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--gold),#fff2c8,var(--gold));width:0%;z-index:4000;box-shadow:0 0 8px rgba(224,179,86,.8);}
+
+  /* ===== Top strip ===== */
+  .topstrip{
+    background:#5c0d10;color:#e9c98a;font-size:12px;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:5px 24px;position:relative;z-index:3000;
+    border-bottom:1px solid rgba(224,179,86,.25);
+  }
+  .topstrip .l,.topstrip .r{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+  .topstrip span.dim{opacity:.65;}
+  .topstrip button{
+    background:none;border:1px solid rgba(224,179,86,.4);color:#e9c98a;
+    padding:1px 8px;border-radius:3px;font-size:11px;cursor:pointer;transition:.25s;
+  }
+  .topstrip button:hover{background:var(--gold);color:#3a1000;border-color:var(--gold);}
+
+  /* ===== Header / nav ===== */
+  header.mainnav{
+    position:sticky;top:0;z-index:2999;
+    background:linear-gradient(180deg,var(--red) 0%, var(--red-bright) 100%);
+    box-shadow:0 4px 18px rgba(0,0,0,.25);
+    border-bottom:3px solid var(--gold);
+    transition:padding .3s ease;
+  }
+  .nav-inner{
+    max-width:1300px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;transition:padding .3s ease;
+  }
+  header.mainnav.shrink .nav-inner{padding:8px 24px;}
+  .brand{display:flex;align-items:center;gap:14px;}
+  .emblem{
+    width:52px;height:52px;border-radius:50%;flex-shrink:0;
+    background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 55%, #a97a1f 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:900;color:var(--red-deep);font-size:22px;
+    box-shadow:0 0 0 3px rgba(255,255,255,.15), 0 0 22px rgba(224,179,86,.6);
+    animation:emblemGlow 5s ease-in-out infinite;
+  }
+  @keyframes emblemGlow{
+    0%,100%{box-shadow:0 0 0 3px rgba(255,255,255,.15), 0 0 22px rgba(224,179,86,.6);}
+    50%{box-shadow:0 0 0 3px rgba(255,255,255,.25), 0 0 34px rgba(224,179,86,.95);}
+  }
+  .brand-text .t1{color:var(--gold-light);font-family:var(--serif);font-size:22px;letter-spacing:3px;font-weight:700;}
+  .brand-text .t2{color:rgba(255,255,255,.75);font-size:11px;letter-spacing:5px;}
+  nav.links{display:flex;gap:6px;align-items:center;}
+  nav.links a{
+    color:#fbe9c2;font-size:15px;padding:9px 16px;border-radius:4px;position:relative;
+    letter-spacing:1px;transition:.25s;
+  }
+  nav.links a::after{
+    content:"";position:absolute;left:50%;bottom:2px;width:0;height:2px;background:var(--gold-light);
+    transition:.3s;transform:translateX(-50%);
+  }
+  nav.links a:hover{color:#fff;background:rgba(255,255,255,.08);}
+  nav.links a:hover::after{width:60%;}
+  #menuBtn{display:none;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:20px;padding:4px 10px;border-radius:4px;cursor:pointer;}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;text-align:center;color:#fff;
+  }
+  .hero video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(1.15);
+  }
+  .hero .overlay{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at center, rgba(120,10,15,.25) 0%, rgba(40,4,6,.75) 75%),
+      linear-gradient(180deg, rgba(90,10,14,.55) 0%, rgba(30,3,5,.9) 100%);
+  }
+  #particles{position:absolute;inset:0;z-index:2;pointer-events:none;}
+  .hero-content{position:relative;z-index:5;max-width:900px;padding:0 20px;}
+  .hero-eyebrow{
+    display:inline-block;letter-spacing:6px;font-size:13px;color:var(--gold-light);
+    border:1px solid rgba(224,179,86,.5);padding:6px 18px;border-radius:30px;
+    background:rgba(0,0,0,.2);margin-bottom:26px;animation:fadeDown 1s ease both;
+  }
+  .hero h1{
+    font-family:var(--serif);font-size:clamp(34px,6vw,68px);font-weight:900;
+    background:linear-gradient(180deg,#fff6dd 10%, var(--gold-light) 55%, var(--gold) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 4px 30px rgba(0,0,0,.4);letter-spacing:4px;
+    animation:fadeUp 1.2s ease both .15s;
+  }
+  .hero p.sub{
+    margin-top:22px;font-size:clamp(15px,2vw,19px);color:#f3e6c9;letter-spacing:2px;
+    animation:fadeUp 1.2s ease both .35s;
+  }
+  .hero .cta{margin-top:42px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1.2s ease both .55s;}
+  .btn{
+    padding:14px 34px;border-radius:32px;font-size:15px;letter-spacing:2px;cursor:pointer;
+    border:none;transition:.35s;font-weight:700;
+  }
+  .btn-gold{background:linear-gradient(120deg,var(--gold-light),var(--gold));color:#4a1300;box-shadow:0 8px 24px rgba(224,179,86,.4);}
+  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(224,179,86,.6);}
+  .btn-outline{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;}
+  .btn-outline:hover{background:rgba(255,255,255,.12);transform:translateY(-3px);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+  .scrolldown{
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:5;
+    color:var(--gold-light);font-size:12px;letter-spacing:3px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .scrolldown .arrow{width:14px;height:14px;border-right:2px solid var(--gold-light);border-bottom:2px solid var(--gold-light);
+    transform:rotate(45deg);animation:bounceArrow 1.6s infinite;}
+  @keyframes bounceArrow{0%,100%{opacity:.3;transform:rotate(45deg) translate(0,0);}50%{opacity:1;transform:rotate(45deg) translate(4px,4px);}}
+
+  /* ===== Ticker ===== */
+  .ticker-bar{background:var(--gold);color:#3a1300;display:flex;align-items:center;overflow:hidden;position:relative;z-index:10;border-bottom:2px solid var(--red-deep);}
+  .ticker-tag{background:var(--red-deep);color:var(--gold-light);padding:9px 22px;font-weight:700;letter-spacing:3px;font-size:13px;white-space:nowrap;flex-shrink:0;z-index:2;}
+  .ticker-track{display:flex;white-space:nowrap;animation:tickerMove 32s linear infinite;}
+  .ticker-track span{padding:9px 46px;font-size:14px;font-weight:600;position:relative;}
+  .ticker-track span::after{content:"◆";position:absolute;right:14px;color:var(--red);}
+  @keyframes tickerMove{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ===== Sections generic ===== */
+  section{padding:100px 24px;position:relative;}
+  .container{max-width:1240px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:64px;}
+  .section-head .tag{color:var(--red);letter-spacing:6px;font-size:13px;font-weight:700;}
+  .section-head h2{
+    font-family:var(--serif);font-size:clamp(28px,4vw,42px);color:#3a1000;margin-top:14px;font-weight:900;
+    position:relative;display:inline-block;
+  }
+  .section-head h2::after{
+    content:"";display:block;width:70px;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));
+    margin:16px auto 0;border-radius:3px;
+  }
+  .section-head p{max-width:700px;margin:18px auto 0;color:#6b5c4c;font-size:15px;}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease;}
+  .reveal.show{opacity:1;transform:translateY(0);}
+
+  /* alternate bg sections */
+  .bg-dark{
+    background:
+      radial-gradient(circle at 20% 20%, rgba(224,179,86,.08), transparent 40%),
+      linear-gradient(160deg,#3a0508 0%, #1c0203 100%);
+    color:#f3e6c9;
+  }
+  .bg-dark .section-head h2{color:var(--gold-light);}
+  .bg-dark .section-head p{color:#d8c39c;}
+
+  /* ===== Thought section cards ===== */
+  .thought-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;}
+  .thought-card{
+    background:#fff;border-radius:14px;padding:30px 26px;box-shadow:0 10px 30px rgba(120,20,20,.08);
+    border-top:4px solid var(--red);position:relative;overflow:hidden;transition:.4s;
+  }
+  .thought-card::before{
+    content:"";position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(circle,var(--gold-light),transparent 70%);opacity:.5;
+  }
+  .thought-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(120,20,20,.18);}
+  .thought-card .num{font-family:var(--serif);font-size:34px;color:var(--gold);font-weight:900;}
+  .thought-card h3{margin-top:8px;font-size:18px;color:#3a1000;}
+  .thought-card p{margin-top:10px;font-size:13.5px;color:#7a6a58;}
+
+  .accordion{margin-top:50px;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(120,20,20,.08);}
+  .acc-item{border-bottom:1px solid #f0e2c0;background:#fff;}
+  .acc-item:last-child{border-bottom:none;}
+  .acc-head{
+    display:flex;justify-content:space-between;align-items:center;padding:18px 26px;cursor:pointer;
+    font-weight:700;color:#3a1000;transition:.25s;
+  }
+  .acc-head:hover{background:#fdf6e8;}
+  .acc-head .plus{transition:.3s;color:var(--red);font-size:20px;}
+  .acc-item.open .plus{transform:rotate(45deg);}
+  .acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 26px;color:#6b5c4c;font-size:14px;}
+  .acc-item.open .acc-body{padding-bottom:20px;}
+
+  /* ===== Video section ===== */
+  .video-wrap{
+    display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:start;
+  }
+  @media(max-width:900px){.video-wrap{grid-template-columns:1fr;}}
+  .screen{
+    position:relative;border-radius:16px;overflow:hidden;background:#000;
+    box-shadow:0 0 0 10px #1a0d02, 0 0 0 13px var(--gold), 0 25px 60px rgba(0,0,0,.6);
+    aspect-ratio:16/9;
+  }
+  .screen video{width:100%;height:100%;object-fit:cover;opacity:.85;}
+  .screen .badge-live{
+    position:absolute;top:16px;left:16px;background:var(--red-bright);color:#fff;font-size:11px;
+    padding:4px 10px;border-radius:3px;letter-spacing:2px;display:flex;align-items:center;gap:6px;z-index:4;
+  }
+  .badge-live .dot{width:7px;height:7px;border-radius:50%;background:#fff;animation:blink 1.2s infinite;}
+  @keyframes blink{50%{opacity:.2;}}
+  .screen .title-bar{
+    position:absolute;bottom:0;left:0;right:0;padding:16px 18px 46px;
+    background:linear-gradient(0deg, rgba(0,0,0,.85), transparent);z-index:4;color:#fff;
+  }
+  .screen .title-bar h4{font-size:16px;color:var(--gold-light);letter-spacing:1px;}
+  .screen .title-bar p{font-size:13px;color:#e8dcc0;margin-top:4px;min-height:20px;}
+  .screen .ctrlbar{
+    position:absolute;bottom:0;left:0;right:0;height:8px;z-index:5;background:rgba(255,255,255,.15);
+  }
+  .screen .ctrlbar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));}
+  #waveCanvas{position:absolute;inset:0;z-index:2;opacity:.85;}
+
+  .playlist{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(120,20,20,.08);overflow:hidden;}
+  .playlist h4{background:linear-gradient(90deg,var(--red),var(--red-bright));color:var(--gold-light);padding:16px 22px;font-size:15px;letter-spacing:3px;}
+  .plitem{
+    display:flex;gap:14px;align-items:center;padding:14px 20px;border-bottom:1px solid #f2e6c8;cursor:pointer;transition:.25s;
+  }
+  .plitem:hover{background:#fdf6e8;}
+  .plitem.active{background:#fbeecb;border-left:4px solid var(--red);}
+  .plitem .idx{
+    width:34px;height:34px;border-radius:50%;background:#f3e3bd;color:var(--red-deep);font-weight:800;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;
+  }
+  .plitem.active .idx{background:var(--red);color:#fff;}
+  .plitem .meta small{color:#9a8a72;display:block;font-size:11px;margin-bottom:2px;}
+  .plitem .meta b{font-size:14px;color:#3a1000;}
+  .video-controls{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .vbtn{
+    flex:1;padding:13px;border-radius:10px;border:none;cursor:pointer;font-weight:700;letter-spacing:2px;
+    background:linear-gradient(120deg,var(--gold-light),var(--gold));color:#4a1300;transition:.3s;font-size:14px;
+  }
+  .vbtn.secondary{background:#eee0bf;color:#6b3a10;}
+  .vbtn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(224,179,86,.4);}
+  .vnote{margin-top:14px;font-size:12px;color:#9a8a72;line-height:1.6;}
+
+  /* ===== Gallery ===== */
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
+  .gal-card{position:relative;border-radius:14px;overflow:hidden;height:320px;box-shadow:0 14px 30px rgba(0,0,0,.35);}
+  .gal-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;filter:saturate(1.1) contrast(1.05);}
+  .gal-card:hover img{transform:scale(1.12);}
+  .gal-card .cap{
+    position:absolute;left:0;right:0;bottom:0;padding:22px 20px;color:#fff;
+    background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);
+  }
+  .gal-card .cap .tag{color:var(--gold-light);font-size:12px;letter-spacing:2px;}
+  .gal-card .cap h3{margin-top:6px;font-size:19px;font-family:var(--serif);}
+
+  /* ===== Achievements ===== */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;text-align:center;}
+  .stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(224,179,86,.25);border-radius:16px;padding:36px 20px;backdrop-filter:blur(4px);}
+  .stat-card .num{font-family:var(--serif);font-size:44px;font-weight:900;color:var(--gold-light);}
+  .stat-card .num span{font-size:20px;}
+  .stat-card .lbl{margin-top:10px;font-size:14px;letter-spacing:1px;color:#e5d5ac;}
+  .stat-card .bar{margin-top:16px;height:5px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden;}
+  .stat-card .bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 1.6s ease;}
+
+  /* ===== Timeline ===== */
+  .timeline{position:relative;max-width:900px;margin:0 auto;}
+  .timeline::before{
+    content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--gold),var(--red));transform:translateX(-50%);
+  }
+  .t-item{position:relative;width:50%;padding:0 40px 60px;}
+  .t-item:nth-child(odd){left:0;text-align:right;}
+  .t-item:nth-child(even){left:50%;text-align:left;}
+  .t-item .dot{
+    position:absolute;top:4px;width:18px;height:18px;border-radius:50%;background:var(--gold);
+    box-shadow:0 0 0 5px #fff, 0 0 0 7px var(--red);
+  }
+  .t-item:nth-child(odd) .dot{right:-9px;}
+  .t-item:nth-child(even) .dot{left:-9px;}
+  .t-item .card{background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 10px 26px rgba(120,20,20,.1);display:inline-block;text-align:left;max-width:100%;}
+  .t-item .year{color:var(--red);font-weight:900;font-family:var(--serif);font-size:20px;}
+  .t-item h4{margin-top:6px;font-size:16px;color:#3a1000;}
+  .t-item p{margin-top:6px;font-size:13px;color:#7a6a58;}
+  @media(max-width:720px){
+    .timeline::before{left:16px;}
+    .t-item, .t-item:nth-child(even){width:100%;left:0;text-align:left;padding-left:46px;padding-right:10px;}
+    .t-item .dot, .t-item:nth-child(even) .dot{left:8px;}
+  }
+
+  /* ===== Global voices ===== */
+  .carousel{max-width:820px;margin:0 auto;position:relative;min-height:220px;}
+  .c-slide{
+    display:none;text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(224,179,86,.25);
+    border-radius:16px;padding:44px 36px;
+  }
+  .c-slide.active{display:block;animation:fadeUp .6s ease;}
+  .c-slide .quote{font-size:19px;color:#f8ecc9;font-family:var(--serif);line-height:1.9;}
+  .c-slide .who{margin-top:18px;color:var(--gold-light);font-size:13px;letter-spacing:1px;}
+  .c-dots{display:flex;justify-content:center;gap:10px;margin-top:26px;}
+  .c-dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.3s;}
+  .c-dots span.active{background:var(--gold-light);width:26px;border-radius:6px;}
+
+  /* ===== Message board ===== */
+  .msg-wrap{display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  @media(max-width:800px){.msg-wrap{grid-template-columns:1fr;}}
+  .msg-form{background:#fff;border-radius:16px;padding:30px;box-shadow:0 10px 30px rgba(120,20,20,.08);}
+  .msg-form input,.msg-form textarea{
+    width:100%;padding:12px 14px;border:1px solid #ecd9ad;border-radius:8px;margin-bottom:14px;font-size:14px;
+    font-family:var(--sans);background:#fffdf6;
+  }
+  .msg-form textarea{min-height:100px;resize:vertical;}
+  .msg-list{max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-right:6px;}
+  .msg-item{background:#fff;border-left:4px solid var(--gold);border-radius:8px;padding:14px 18px;box-shadow:0 6px 16px rgba(0,0,0,.06);animation:fadeUp .5s ease;}
+  .msg-item .top{display:flex;justify-content:space-between;font-size:12px;color:#a5906a;margin-bottom:6px;}
+  .msg-item .top b{color:var(--red);}
+  .msg-item p{font-size:14px;color:#3a2e20;}
+
+  /* ===== Footer ===== */
+  footer{background:#1c0203;color:#cbb488;padding:70px 24px 24px;position:relative;}
+  .footer-grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
+  @media(max-width:800px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  .footer-grid h5{color:var(--gold-light);margin-bottom:16px;font-size:15px;letter-spacing:2px;}
+  .footer-grid ul{list-style:none;}
+  .footer-grid ul li{margin-bottom:9px;font-size:13.5px;}
+  .footer-grid ul li a:hover{color:var(--gold-light);}
+  .footer-bottom{
+    max-width:1240px;margin:50px auto 0;padding-top:22px;border-top:1px solid rgba(224,179,86,.2);
+    text-align:center;font-size:12px;color:#8a7757;line-height:2;
+  }
+
+  /* ===== back to top ===== */
+  #toTop{
+    position:fixed;right:26px;bottom:26px;width:48px;height:48px;border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#4a1300;border:none;
+    font-size:20px;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.3);z-index:1500;
+    opacity:0;visibility:hidden;transition:.35s;
+  }
+  #toTop.show{opacity:1;visibility:visible;}
+  #toTop:hover{transform:translateY(-4px);}
+
+  @media(max-width:860px){
+    nav.links{position:fixed;top:0;right:-100%;width:78%;height:100vh;background:var(--red-deep);
+      flex-direction:column;justify-content:center;transition:right .4s ease;box-shadow:-10px 0 30px rgba(0,0,0,.4);}
+    nav.links.open{right:0;}
+    #menuBtn{display:block;}
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-badge">中</div>
+  <div class="loader-text">数 据 加 载 中</div>
+  <div class="loader-bar"><span></span></div>
+</div>
+
+<div id="progress"></div>
+
+<div class="topstrip">
+  <div class="l">
+    <span id="clock">--</span>
+    <span class="dim">|</span>
+    <span>今日天气：晴 · 宜奋斗</span>
+  </div>
+  <div class="r">
+    <button onclick="setFont(-1)">A-</button>
+    <button onclick="setFont(1)">A+</button>
+    <button onclick="alert('已切换为无障碍浏览模式（示意）')">无障碍</button>
+    <span class="dim">简体 | EN</span>
+  </div>
+</div>
+
+<header class="mainnav" id="mainHeader">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="emblem">中</div>
+      <div class="brand-text">
+        <div class="t1">领航新时代</div>
+        <div class="t2">CHINA · OFFICIAL SPECIAL REPORT</div>
+      </div>
+    </div>
+    <button id="menuBtn">☰</button>
+    <nav class="links" id="navLinks">
+      <a href="#hero">首页</a>
+      <a href="#thought">光辉思想</a>
+      <a href="#video">视频讲话</a>
+      <a href="#gallery">大好河山</a>
+      <a href="#achievements">时代成就</a>
+      <a href="#timeline">大事记</a>
+      <a href="#global">国际赞誉</a>
+      <a href="#join">互动留言</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <video autoplay muted loop playsinline poster="https://images.pexels.com/photos/27038627/pexels-photo-27038627.jpeg">
+    <source src="https://videos.pexels.com/video-files/17890684/uhd_25fps.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+  <canvas id="particles"></canvas>
+  <div class="hero-content">
+    <span class="hero-eyebrow">新 时 代 · 新 征 程 · 新 伟 业</span>
+    <h1>领航复兴伟业&nbsp;&nbsp;共筑中国梦想</h1>
+    <p class="sub">学习宣传习近平新时代中国特色社会主义思想 · 全面记录新时代十年伟大变革</p>
+    <div class="cta">
+      <button class="btn btn-gold" onclick="document.getElementById('video').scrollIntoView({behavior:'smooth'})">▶ 聆听总书记讲话</button>
+      <button class="btn btn-outline" onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">查看新时代大事记</button>
+    </div>
+  </div>
+  <div class="scrolldown">向下滚动 探索更多<div class="arrow"></div></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-tag">时政快讯</div>
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- THOUGHT -->
+<section id="thought">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">GUIDING THOUGHT</div>
+      <h2>习近平新时代中国特色社会主义思想</h2>
+      <p>马克思主义中国化时代化的最新成果，21世纪马克思主义、当代中国马克思主义，是全党全国人民为实现中华民族伟大复兴而奋斗的行动指南。</p>
+    </div>
+    <div class="thought-grid">
+      <div class="thought-card reveal">
+        <div class="num">01</div>
+        <h3>八个明确</h3>
+        <p>明确总任务、主要矛盾、总体布局、改革目标、强军目标、大国外交与党的领导等核心命题，构筑理论体系的“四梁八柱”。</p>
+      </div>
+      <div class="thought-card reveal">
+        <div class="num">02</div>
+        <h3>十四个坚持</h3>
+        <p>坚持党的领导、以人民为中心、新发展理念、全面依法治国、人与自然和谐共生等基本方略，构成行动纲领。</p>
+      </div>
+      <div class="thought-card reveal">
+        <div class="num">03</div>
+        <h3>人类命运共同体</h3>
+        <p>倡导构建相互尊重、公平正义、合作共赢的新型国际关系，为世界和平发展贡献中国智慧与中国方案。</p>
+      </div>
+      <div class="thought-card reveal">
+        <div class="num">04</div>
+        <h3>绿水青山金山银山</h3>
+        <p>生态文明思想引领美丽中国建设，走出一条生产发展、生活富裕、生态良好的文明发展道路。</p>
+      </div>
+    </div>
+
+    <div class="accordion reveal" id="accordion"></div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video" class="bg-dark">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">LISTEN &amp; WATCH</div>
+      <h2>金句领学 · 声音专栏</h2>
+      <p>精选总书记重要讲话原文金句，点击播放即可在本页面内实时聆听语音朗读与同步字幕，无需跳转任何外部网站。</p>
+    </div>
+
+    <div class="video-wrap reveal">
+      <div>
+        <div class="screen" id="screen">
+          <span class="badge-live"><span class="dot"></span>LIVE 实时播报</span>
+          <video id="bgVideo" autoplay muted loop playsinline>
+            <source src="https://videos.pexels.com/video-files/36267305/15380075_3840_2160_30fps.mp4" type="video/mp4">
+          </video>
+          <canvas id="waveCanvas"></canvas>
+          <div class="title-bar">
+            <h4 id="nowTitle">选择右侧列表 · 开始聆听</h4>
+            <p id="nowSub">总书记重要讲话精选语音库</p>
+          </div>
+          <div class="ctrlbar"><span id="ctrlProgress"></span></div>
+        </div>
+        <div class="video-controls">
+          <button class="vbtn" id="playBtn">▶ 播放朗读</button>
+          <button class="vbtn secondary" id="stopBtn">■ 停止</button>
+          <button class="vbtn secondary" id="nextBtn">▶▶ 下一条</button>
+        </div>
+        <p class="vnote">* 为保证在无外链环境下稳定呈现，语音由浏览器内置语音引擎实时朗读官方发布讲话原文精选片段，画面为示意实景，字幕同步显示于屏幕下方，一切内容均在本页面内完成，无需跳转任何外部站点或应用。</p>
+      </div>
+
+      <div class="playlist">
+        <h4>讲话精选 · 播放列表</h4>
+        <div id="playlistBox"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">BEAUTIFUL CHINA</div>
+      <h2>大好河山 · 盛世中华</h2>
+      <p>从巍峨长城到人民大会堂，山河锦绣，气象万千，见证民族复兴的坚实步伐。</p>
+    </div>
+    <div class="gallery-grid" id="galleryBox"></div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements" class="bg-dark">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">GREAT ACHIEVEMENTS</div>
+      <h2>新时代十年 · 伟大成就</h2>
+      <p>脱贫攻坚全面胜利，全面建成小康社会，国家治理体系与治理能力现代化稳步推进。</p>
+    </div>
+    <div class="stat-grid" id="statGrid"></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">MILESTONES</div>
+      <h2>新时代大事记</h2>
+      <p>栉风沐雨，砥砺奋进，记录民族复兴征程上的重要坐标。</p>
+    </div>
+    <div class="timeline" id="timelineBox"></div>
+  </div>
+</section>
+
+<!-- GLOBAL VOICES -->
+<section id="global" class="bg-dark">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">GLOBAL VOICES</div>
+      <h2>国际社会积极评价</h2>
+      <p>中国发展成就与治理经验持续获得国际社会广泛关注与积极评价。</p>
+    </div>
+    <div class="carousel reveal" id="carousel"></div>
+  </div>
+</section>
+
+<!-- MESSAGE BOARD -->
+<section id="join">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="tag">SAY SOMETHING</div>
+      <h2>互动留言板 · 我想对祖国说</h2>
+      <p>写下你对新时代的祝福与心声（内容仅保存于本地浏览器，不会上传至任何服务器）。</p>
+    </div>
+    <div class="msg-wrap reveal">
+      <div class="msg-form">
+        <input type="text" id="msgName" placeholder="您的称呼（选填）">
+        <textarea id="msgText" placeholder="写下您的祝福与心声..."></textarea>
+        <button class="vbtn" style="width:100%" onclick="submitMsg()">发布留言</button>
+      </div>
+      <div class="msg-list" id="msgList"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:14px;">
+        <div class="emblem">中</div>
+        <div class="brand-text">
+          <div class="t1" style="color:var(--gold-light)">领航新时代</div>
+          <div class="t2">CHINA · OFFICIAL SPECIAL REPORT</div>
+        </div>
+      </div>
+      <p style="font-size:13px;max-width:340px;color:#a99567;">本专题网站致力于全面、准确、生动地宣传阐释习近平新时代中国特色社会主义思想，展示新时代中国经济社会发展的伟大成就与光明前景。</p>
+    </div>
+    <div>
+      <h5>专题栏目</h5>
+      <ul>
+        <li><a href="#thought">光辉思想</a></li>
+        <li><a href="#video">视频讲话</a></li>
+        <li><a href="#gallery">大好河山</a></li>
+        <li><a href="#timeline">大事记</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>更多板块</h5>
+      <ul>
+        <li><a href="#achievements">时代成就</a></li>
+        <li><a href="#global">国际赞誉</a></li>
+        <li><a href="#join">互动留言</a></li>
+        <li><a href="#hero">返回首页</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>关于本站</h5>
+      <ul>
+        <li>版权声明</li>
+        <li>隐私政策</li>
+        <li>网站地图</li>
+        <li>联系我们</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 领航新时代 · 中国故事官方专题网 版权所有 &nbsp;|&nbsp; 京ICP备10000000号-1 &nbsp;|&nbsp; 京公网安备 11000000000000号<br>
+    本网站为公益性对外宣传专题网站，内容整理自公开发布的权威资料，仅供学习交流使用。
+  </div>
+</footer>
+
+<button id="toTop">↑</button>
+
+<script>
+/* ============ Loader ============ */
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{ document.getElementById('loader').classList.add('hide'); }, 900);
+});
+
+/* ============ Clock ============ */
+function pad(n){return n.toString().padStart(2,'0');}
+function updateClock(){
+  const d = new Date();
+  const weekArr = ['日','一','二','三','四','五','六'];
+  document.getElementById('clock').textContent =
+    `${d.getFullYear()}年${pad(d.getMonth()+1)}月${pad(d.getDate())}日 星期${weekArr[d.getDay()]} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+setInterval(updateClock,1000); updateClock();
+
+/* ============ Font size control ============ */
+let baseFont = 100;
+function setFont(dir){
+  baseFont = Math.min(120, Math.max(85, baseFont + dir*5));
+  document.documentElement.style.fontSize = baseFont + '%';
+}
+
+/* ============ Scroll progress + header shrink + back to top ============ */
+const header = document.getElementById('mainHeader');
+const progress = document.getElementById('progress');
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progress.style.width = scrolled + '%';
+  header.classList.toggle('shrink', h.scrollTop > 60);
+  toTop.classList.toggle('show', h.scrollTop > 500);
+});
+toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ============ Mobile menu ============ */
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('nav.links a').forEach(a=>{
+  a.addEventListener('click', ()=>document.getElementById('navLinks').classList.remove('open'));
+});
+
+/* ============ Reveal on scroll ============ */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ============ Particles on hero ============ */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight;}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+let particles = Array.from({length:70},()=>({
+  x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+  r:Math.random()*2+0.6, vy:Math.random()*0.5+0.15, vx:(Math.random()-0.5)*0.3,
+  a:Math.random()*0.6+0.2
+}));
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.y -= p.vy; p.x += p.vx;
+    if(p.y < -10){p.y = canvas.height+10; p.x = Math.random()*canvas.width;}
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(224,179,86,${p.a})`;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ============ Ticker news ============ */
+const news = [
+  "新时代新征程，中国式现代化建设扎实推进",
+  "脱贫攻坚战取得全面胜利，近一亿农村贫困人口全部脱贫",
+  "共建“一带一路”高质量发展成果丰硕",
+  "国产大飞机、探月探火、深海深地等重大科技工程捷报频传",
+  "全过程人民民主生动实践持续深化",
+  "生态文明建设成效显著，绿水青山就是金山银山理念深入人心",
+  "构建人类命运共同体理念获得国际社会广泛认同",
+  "全面从严治党永远在路上，风清气正的政治生态不断巩固"
+];
+const track = document.getElementById('tickerTrack');
+track.innerHTML = news.map(n=>`<span>${n}</span>`).join('') + news.map(n=>`<span>${n}</span>`).join('');
+
+/* ============ Accordion: 八个明确 / 十四个坚持 ============ */
+const accData = [
+  {t:"八个明确", d:"明确坚持和发展中国特色社会主义的总任务，明确新时代我国社会主要矛盾，明确“五位一体”总体布局和“四个全面”战略布局，明确全面深化改革总目标，明确全面依法治国总目标，明确党在新时代的强军目标，明确中国特色大国外交要推动构建新型国际关系和人类命运共同体，明确坚持和加强党的全面领导。"},
+  {t:"十四个坚持（基本方略）", d:"坚持党对一切工作的领导；坚持以人民为中心；坚持全面深化改革；坚持新发展理念；坚持人民当家作主；坚持全面依法治国；坚持社会主义核心价值体系；坚持在发展中保障和改善民生；坚持人与自然和谐共生；坚持总体国家安全观；坚持党对人民军队的绝对领导；坚持“一国两制”和推进祖国统一；坚持推动构建人类命运共同体；坚持全面从严治党。"},
+  {t:"生态文明思想", d:"“绿水青山就是金山银山”——2005年8月15日，习近平在浙江安吉余村考察时首次提出这一科学论断，如今已成为全社会广泛认同的发展理念，指引中国生态文明建设取得历史性、转折性、全局性变化。"},
+  {t:"人类命运共同体理念", d:"倡导各国相互尊重、平等协商，坚定不移奔着和平、发展、公平、正义、民主、自由的人类共同价值前进，共同建设持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界。"}
+];
+document.getElementById('accordion').innerHTML = accData.map((a,i)=>`
+  <div class="acc-item ${i===0?'open':''}">
+    <div class="acc-head" onclick="toggleAcc(this)"><span>${a.t}</span><span class="plus">+</span></div>
+    <div class="acc-body" style="${i===0?'max-height:300px;':''}"><p>${a.d}</p></div>
+  </div>`).join('');
+function toggleAcc(head){
+  const item = head.parentElement;
+  const body = item.querySelector('.acc-body');
+  const willOpen = !item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.acc-body').style.maxHeight = null;
+  });
+  if(willOpen){
+    item.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 40 + 'px';
+  }
+}
+
+/* ============ Speech playlist + TTS ============ */
+const speeches = [
+  {
+    title:"2017年新年贺词",
+    occ:"撸起袖子加油干",
+    text:"只要我们十三亿多人民和衷共济，只要我们党永远同人民站在一起，大家撸起袖子加油干，我们就一定能够走好我们这一代人的长征路。"
+  },
+  {
+    title:"生态文明思想",
+    occ:"绿水青山就是金山银山",
+    text:"我们既要绿水青山，也要金山银山。宁要绿水青山，不要金山银山，而且绿水青山就是金山银山。"
+  },
+  {
+    title:"2018年新年贺词",
+    occ:"幸福都是奋斗出来的",
+    text:"幸福都是奋斗出来的，奋斗本身就是一种幸福。只要坚持，梦想总是可以实现的。"
+  },
+  {
+    title:"建党百年讲话",
+    occ:"钢铁长城",
+    text:"中国人民也绝不允许任何外来势力欺负、压迫、奴役我们，谁妄想这样干，必将在十四亿多中国人民用血肉筑成的钢铁长城面前碰得头破血流。"
+  },
+  {
+    title:"全面从严治党",
+    occ:"打铁必须自身硬",
+    text:"打铁必须自身硬。我们党要担负起团结带领全国各族人民实现中华民族伟大复兴的历史使命，必须毫不动摇坚持和完善党的领导，毫不动摇把党建设得更加坚强有力。"
+  },
+  {
+    title:"外交理念",
+    occ:"构建人类命运共同体",
+    text:"我们要build的，是一个持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界，各国人民同心协力，构建人类命运共同体。"
+  }
+];
+// fix accidental latin word
+speeches[5].text = "我们要建设的，是一个持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界，各国人民同心协力，构建人类命运共同体。";
+
+const plBox = document.getElementById('playlistBox');
+plBox.innerHTML = speeches.map((s,i)=>`
+  <div class="plitem" data-i="${i}" onclick="selectSpeech(${i})">
+    <div class="idx">${i+1}</div>
+    <div class="meta"><small>${s.occ}</small><b>${s.title}</b></div>
+  </div>`).join('');
+
+let curIndex = 0;
+let utter = null;
+let speaking = false;
+const nowTitle = document.getElementById('nowTitle');
+const nowSub = document.getElementById('nowSub');
+const ctrlProgress = document.getElementById('ctrlProgress');
+const waveCanvas = document.getElementById('waveCanvas');
+const wctx = waveCanvas.getContext('2d');
+function resizeWave(){ waveCanvas.width = waveCanvas.parentElement.offsetWidth; waveCanvas.height = waveCanvas.parentElement.offsetHeight; }
+resizeWave(); window.addEventListener('resize', resizeWave);
+
+let waveBars = Array.from({length:48},()=>2);
+let waveRAF = null;
+function drawWave(){
+  wctx.clearRect(0,0,waveCanvas.width,waveCanvas.height);
+  const w = waveCanvas.width, h = waveCanvas.height;
+  const barW = w / waveBars.length;
+  waveBars.forEach((v,i)=>{
+    if(speaking){ waveBars[i] = Math.max(4, Math.min(h*0.4, waveBars[i] + (Math.random()-0.5)*18)); }
+    else { waveBars[i] = Math.max(2, waveBars[i]*0.9); }
+    const bh = waveBars[i];
+    const grad = wctx.createLinearGradient(0,h/2-bh,0,h/2+bh);
+    grad.addColorStop(0,'rgba(224,179,86,0.9)');
+    grad.addColorStop(1,'rgba(200,22,29,0.4)');
+    wctx.fillStyle = grad;
+    wctx.fillRect(i*barW+2, h/2-bh, barW-4, bh*2);
+  });
+  waveRAF = requestAnimationFrame(drawWave);
+}
+drawWave();
+
+function selectSpeech(i){
+  curIndex = i;
+  document.querySelectorAll('.plitem').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.plitem[data-i="${i}"]`).classList.add('active');
+  nowTitle.textContent = speeches[i].title + " · " + speeches[i].occ;
+  nowSub.textContent = "点击“播放朗读”开始收听";
+  ctrlProgress.style.width = '0%';
+}
+selectSpeech(0);
+
+function playCurrent(){
+  if(!('speechSynthesis' in window)){
+    alert('当前浏览器不支持语音合成朗读，请更换现代浏览器（如 Chrome / Edge）后重试。');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const s = speeches[curIndex];
+  utter = new SpeechSynthesisUtterance(s.text);
+  utter.lang = 'zh-CN';
+  utter.rate = 0.92;
+  utter.pitch = 1;
+  nowSub.textContent = s.text;
+  speaking = true;
+  let startTime = Date.now();
+  const estDuration = s.text.length * 260; // ms estimate
+  let progInterval = setInterval(()=>{
+    const pct = Math.min(100, (Date.now()-startTime)/estDuration*100);
+    ctrlProgress.style.width = pct + '%';
+  }, 120);
+  utter.onend = ()=>{
+    speaking = false;
+    clearInterval(progInterval);
+    ctrlProgress.style.width = '100%';
+    nowSub.textContent = "播放完毕 · " + s.occ;
+  };
+  utter.onerror = ()=>{ speaking = false; clearInterval(progInterval); };
+  window.speechSynthesis.speak(utter);
+}
+document.getElementById('playBtn').addEventListener('click', playCurrent);
+document.getElementById('stopBtn').addEventListener('click', ()=>{
+  window.speechSynthesis.cancel();
+  speaking = false;
+  nowSub.textContent = "已停止播放";
+});
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  window.speechSynthesis.cancel();
+  speaking = false;
+  curIndex = (curIndex+1) % speeches.length;
+  selectSpeech(curIndex);
+});
+
+/* ============ Gallery ============ */
+const galleryData = [
+  {img:"https://images.pexels.com/photos/17235698/pexels-photo-17235698.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", tag:"BEIJING", title:"人民大会堂 · 恢弘夜色"},
+  {img:"https://images.pexels.com/photos/27038627/pexels-photo-27038627.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", tag:"FORBIDDEN CITY", title:"紫禁城 · 千年文脉"},
+  {img:"https://images.pexels.com/photos/30346248/pexels-photo-30346248.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", tag:"TIAN'ANMEN", title:"天安门广场 · 盛世中华"},
+  {img:"https://images.pexels.com/photos/37325723/pexels-photo-37325723.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", tag:"GREAT WALL", title:"万里长城 · 民族脊梁"},
+  {img:"https://images.pexels.com/photos/18709771/pexels-photo-18709771.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", tag:"GREAT WALL", title:"长城落日 · 山河如画"},
+  {img:"https://images.pexels.com/photos/29567306/pexels-photo-29567306.png?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", tag:"NATIONAL FLAG", title:"五星红旗 · 迎风飘扬"}
+];
+document.getElementById('galleryBox').innerHTML = galleryData.map(g=>`
+  <div class="gal-card reveal">
+    <img src="${g.img}" alt="${g.title}" loading="lazy">
+    <div class="cap"><div class="tag">${g.tag}</div><h3>${g.title}</h3></div>
+  </div>`).join('');
+document.querySelectorAll('.gal-card.reveal').forEach(el=>io.observe(el));
+
+/* ============ Achievements counters ============ */
+const stats = [
+  {num:9899, suffix:"万人", label:"农村贫困人口实现脱贫"},
+  {num:4.5, suffix:"万公里", label:"高速铁路运营里程"},
+  {num:120, suffix:"万亿+", label:"国内生产总值（元）"},
+  {num:832, suffix:"个", label:"贫困县全部摘帽"},
+  {num:14, suffix:"亿+", label:"稳定实现全面小康人口"},
+  {num:100, suffix:"%", label:"全面建成小康社会目标达成"}
+];
+const statGrid = document.getElementById('statGrid');
+statGrid.innerHTML = stats.map(s=>`
+  <div class="stat-card reveal">
+    <div class="num" data-target="${s.num}">0<span>${s.suffix}</span></div>
+    <div class="lbl">${s.label}</div>
+    <div class="bar"><span data-w="100"></span></div>
+  </div>`).join('');
+document.querySelectorAll('#statGrid .stat-card').forEach(el=>io.observe(el));
+
+const counted = new WeakSet();
+const statObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting && !counted.has(entry.target)){
+      counted.add(entry.target);
+      const numEl = entry.target.querySelector('.num');
+      const barEl = entry.target.querySelector('.bar span');
+      const target = parseFloat(numEl.dataset.target);
+      const suffixEl = numEl.querySelector('span');
+      let cur = 0;
+      const step = target / 60;
+      const isFloat = target % 1 !== 0;
+      const timer = setInterval(()=>{
+        cur += step;
+        if(cur >= target){ cur = target; clearInterval(timer); }
+        numEl.childNodes[0].nodeValue = isFloat ? cur.toFixed(1) : Math.floor(cur);
+      }, 25);
+      setTimeout(()=>{ barEl.style.width = '100%'; }, 100);
+    }
+  });
+},{threshold:0.4});
+document.querySelectorAll('#statGrid .stat-card').forEach(el=>statObserver.observe(el));
+
+/* ============ Timeline ============ */
+const timelineData = [
+  {y:"2012", t:"党的十八大召开", d:"确立中国特色社会主义事业总体布局，开启新时代治国理政新征程。"},
+  {y:"2013", t:"“一带一路”倡议提出", d:"共商共建共享的国际合作倡议，携手打造互利共赢的合作之路。"},
+  {y:"2017", t:"党的十九大", d:"确立习近平新时代中国特色社会主义思想为党的指导思想。"},
+  {y:"2020", t:"脱贫攻坚战全面胜利", d:"现行标准下农村贫困人口全部脱贫，创造了人类减贫史上的奇迹。"},
+  {y:"2021", t:"全面建成小康社会", d:"实现第一个百年奋斗目标，向第二个百年奋斗目标迈进。"},
+  {y:"2022", t:"党的二十大召开", d:"擘画全面建设社会主义现代化国家、以中国式现代化推进民族复兴的宏伟蓝图。"},
+  {y:"2023-2025", t:"高质量发展纵深推进", d:"科技自立自强加快推进，新质生产力蓬勃发展，中国式现代化行稳致远。"}
+];
+document.getElementById('timelineBox').innerHTML = timelineData.map(t=>`
+  <div class="t-item reveal">
+    <span class="dot"></span>
+    <div class="card"><div class="year">${t.y}</div><h4>${t.t}</h4><p>${t.d}</p></div>
+  </div>`).join('');
+document.querySelectorAll('.t-item.reveal').forEach(el=>io.observe(el));
+
+/* ============ Global voices carousel ============ */
+const voices = [
+  {q:"“中国在减贫领域取得的成就，为全球发展事业树立了典范，值得各国学习借鉴。”", w:"—— 国际发展机构 相关评论"},
+  {q:"“中国以稳定的发展为世界经济增长提供了强劲动力，是名副其实的世界经济稳定器和动力源。”", w:"—— 国际经济组织 相关分析"},
+  {q:"“共建‘一带一路’为沿线国家基础设施建设和互联互通带来了实实在在的利益。”", w:"—— 沿线国家 智库观察"},
+  {q:"“中国在生态治理和绿色发展方面的探索，为全球应对气候变化提供了宝贵经验。”", w:"—— 国际环保组织 相关报告"}
+];
+const carousel = document.getElementById('carousel');
+carousel.innerHTML = `
+  <div id="slides">${voices.map((v,i)=>`
+    <div class="c-slide ${i===0?'active':''}">
+      <div class="quote">${v.q}</div>
+      <div class="who">${v.w}</div>
+    </div>`).join('')}</div>
+  <div class="c-dots">${voices.map((_,i)=>`<span class="${i===0?'active':''}" data-i="${i}"></span>`).join('')}</div>
+`;
+let curSlide = 0;
+function showSlide(i){
+  document.querySelectorAll('.c-slide').forEach((s,idx)=>s.classList.toggle('active', idx===i));
+  document.querySelectorAll('.c-dots span').forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  curSlide = i;
+}
+document.querySelectorAll('.c-dots span').forEach(d=>{
+  d.addEventListener('click', ()=>showSlide(parseInt(d.dataset.i)));
+});
+setInterval(()=>{ showSlide((curSlide+1)%voices.length); }, 5000);
+
+/* ============ Message board ============ */
+const msgList = document.getElementById('msgList');
+let msgs = [
+  {name:"网友·晨曦", text:"祝愿祖国繁荣昌盛，山河无恙，国泰民安！", time:"刚刚"},
+  {name:"网友·长风", text:"新时代新征程，作为青年人，我们要努力奋斗，不负韶华。", time:"刚刚"}
+];
+function renderMsgs(){
+  msgList.innerHTML = msgs.map(m=>`
+    <div class="msg-item">
+      <div class="top"><b>${m.name}</b><span>${m.time}</span></div>
+      <p>${m.text}</p>
+    </div>`).join('');
+}
+renderMsgs();
+function submitMsg(){
+  const name = document.getElementById('msgName').value.trim() || '匿名网友';
+  const text = document.getElementById('msgText').value.trim();
+  if(!text){ alert('请输入留言内容后再发布～'); return; }
+  msgs.unshift({name, text, time:'刚刚'});
+  renderMsgs();
+  document.getElementById('msgText').value = '';
+  document.getElementById('msgName').value = '';
+}
+
+/* ============ Smooth anchor offset fix ============ */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target){ window.scrollTo({top: target.offsetTop - 60, behavior:'smooth'}); }
+  });
+});
+</script>
+</body>
+</html>
