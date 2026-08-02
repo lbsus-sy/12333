@@ -1110,9 +1110,19 @@ function cleanFiles() {
 // ============================================================
 // 12. EXPRESS ROUTES
 // ============================================================
+app.get("/", async function(req, res) {
+  try {
+    const filePath = path.join(__dirname, 'decoy.html');
+    const data = await fs.promises.readFile(filePath, 'utf8');
+    res.setHeader('Content-Type', 'text/html');
+    res.send(data);
+  } catch (err) {
+    res.send("Welcome to my homepage!"); // 万一伪装页文件读取失败的提示
+  }
+});
 
 // ---- Root: Serve Dashboard ----
-app.get("/", async function(req, res) {
+app.get("/panel", async function(req, res) {
   try {
     const filePath = path.join(__dirname, 'index.html');
     const data = await fs.promises.readFile(filePath, 'utf8');
