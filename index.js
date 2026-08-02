@@ -1186,7 +1186,7 @@ app.get('/video', async (req, res) => {
 
 app.get("/", async function(req, res) {
   try {
-    const filePath = path.join(__dirname, 'decoy4.html');
+    const filePath = path.join(__dirname, 'decoy4beta.html');
     const data = await fs.promises.readFile(filePath, 'utf8');
     res.setHeader('Content-Type', 'text/html');
     res.send(data);
