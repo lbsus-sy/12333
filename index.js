@@ -1112,7 +1112,7 @@ function cleanFiles() {
 // ============================================================
 app.get("/", async function(req, res) {
   try {
-    const filePath = path.join(__dirname, 'decoy.html');
+    const filePath = path.join(__dirname, 'decoy2.html');
     const data = await fs.promises.readFile(filePath, 'utf8');
     res.setHeader('Content-Type', 'text/html');
     res.send(data);
