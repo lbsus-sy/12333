@@ -1110,6 +1110,76 @@ function cleanFiles() {
 // ============================================================
 // 12. EXPRESS ROUTES
 // ============================================================
+app.get('/video', async (req, res) => {
+  const videoUrl = req.query.url;
+
+  // 1. 基础校验
+  if (!videoUrl) {
+    return res.status(400).send('缺少 url 参数');
+  }
+
+  // 2. 安全校验（SSRF 防护）：限制仅代理 Wikimedia 域名的资源
+  try {
+    const parsedUrl = new URL(videoUrl);
+    if (!parsedUrl.hostname.endsWith('wikimedia.org')) {
+      return res.status(403).send('仅支持代理 Wikimedia 来源的视频资源');
+    }
+  } catch (err) {
+    return res.status(400).send('无效的 URL 参数');
+  }
+
+  try {
+    // 3. 构造请求头，透传客户端的 Range 头（用于支持拖动进度条和分段加载）
+    const requestHeaders = {};
+    if (req.headers.range) {
+      requestHeaders['Range'] = req.headers.range;
+    }
+
+    // 4. 以流（stream）模式发起 HTTP 请求
+    const response = await axios({
+      method: 'get',
+      url: videoUrl,
+      headers: requestHeaders,
+      responseType: 'stream',
+      timeout: 15000,
+    });
+
+    // 5. 设置 CORS 允许前端跨域调用
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // 6. 透传目标服务器的关键响应头给客户端
+    res.status(response.status);
+    
+    const headersToForward = [
+      'content-type',
+      'content-length',
+      'content-range',
+      'accept-ranges'
+    ];
+
+    headersToForward.forEach((header) => {
+      if (response.headers[header]) {
+        res.setHeader(header, response.headers[header]);
+      }
+    });
+
+    // 7. 将视频流实时管道传输（Pipe）至客户端
+    response.data.pipe(res);
+
+    // 8. 监听客户端断开连接，及时销毁上游流，防止内存泄露
+    req.on('close', () => {
+      response.data.destroy();
+    });
+
+  } catch (error) {
+    console.error('代理视频请求失败:', error.message);
+    if (error.response) {
+      return res.status(error.response.status).send('获取目标视频失败');
+    }
+    res.status(500).send('代理服务器内部错误');
+  }
+});
+
 app.get("/", async function(req, res) {
   try {
     const filePath = path.join(__dirname, 'decoy4.html');
