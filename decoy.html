@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新時代中國特色社會主義思想高級理論研討與數字傳播平台</title>
+    <style>
+        /* ==========================================
+           1. 全局變量與重置 (Variables & Reset)
+           ========================================== */
+        :root {
+            --primary-red: #c8102e;
+            --deep-red: #8f081d;
+            --dark-red: #5c000e;
+            --gold-accent: #f2a900;
+            --gold-light: #ffe58f;
+            --gold-dark: #b37e00;
+            --bg-cream: #fcfaf7;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --text-muted: #666666;
+            --border-color: #e8d8c8;
+            --shadow-soft: 0 10px 30px rgba(143, 8, 29, 0.08);
+            --shadow-hover: 0 20px 40px rgba(143, 8, 29, 0.16);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Serif SC", serif;
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 自定義滑動條 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2b0308;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 5px;
+            border: 2px solid #2b0308;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-accent);
+        }
+
+        /* ==========================================
+           2. 背景與粒子特效 (Canvas & Dynamic Effects)
+           ========================================== */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.85;
+        }
+
+        .relative-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==========================================
+           3. 頂部工具列與標頭 (Header & Top Bar)
+           ========================================== */
+        .top-bar {
+            background: linear-gradient(90deg, #3d0008 0%, #700412 50%, #3d0008 100%);
+            color: #f0e0d0;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(242, 169, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-links a {
+            color: #f0e0d0;
+            text-decoration: none;
+            margin-left: 18px;
+            transition: var(--transition-smooth);
+        }
+
+        .top-links a:hover {
+            color: var(--gold-accent);
+            text-shadow: 0 0 8px rgba(242, 169, 0, 0.6);
+        }
+
+        .header-hero {
+            background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 50%, #8f081d 100%);
+            color: white;
+            padding: 36px 0 28px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(242, 169, 0, 0.15) 0%, transparent 60%);
+            animation: rotateBg 30s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .emblem-title-box {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .emblem-svg {
+            width: 85px;
+            height: 85px;
+            filter: drop-shadow(0 0 12px rgba(242, 169, 0, 0.5));
+            animation: floatEmblem 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatEmblem {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-6px) scale(1.03); }
+        }
+
+        .site-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #ffffff 0%, #ffe8b3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .site-subtitle {
+            font-size: 0.95rem;
+            color: #ffcccc;
+            margin-top: 4px;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        /* Search Bar Component */
+        .search-box {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 18px 10px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(242, 169, 0, 0.5);
+            background: rgba(0, 0, 0, 0.25);
+            color: white;
+            font-size: 0.9rem;
+            backdrop-filter: blur(8px);
+            transition: var(--transition-smooth);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.45);
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 15px rgba(242, 169, 0, 0.4);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: var(--gold-accent);
+        }
+
+        /* ==========================================
+           4. 主導航欄 (Navigation Bar)
+           ========================================== */
+        .main-nav {
+            background: #ffffff;
+            border-bottom: 3px solid var(--gold-accent);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            justify-content: space-between;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 16px 20px;
+            color: #333333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary-red);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover, .nav-item.active .nav-link {
+            color: var(--primary-red);
+            background: rgba(200, 16, 46, 0.04);
+        }
+
+        .nav-link:hover::after, .nav-item.active .nav-link::after {
+            width: 80%;
+        }
+
+        /* ==========================================
+           5. 走馬燈播報 (Ticker Bar)
+           ========================================== */
+        .ticker-section {
+            background: #fff8f0;
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+            font-size: 0.92rem;
+        }
+
+        .ticker-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-badge {
+            background: var(--primary-red);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 15px;
+            white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(200,16,46,0.3);
+        }
+
+        .ticker-content {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            animation: marquee 28s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ==========================================
+           6. 主體核心內容區 (Main Content Layout)
+           ========================================== */
+        .main-layout {
+            padding: 35px 0;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            gap: 32px;
+        }
+
+        /* Hero Feature Slider Box */
+        .hero-banner {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 440px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 35px;
+        }
+
+        .hero-slide {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 0.8s ease;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 30%, rgba(15, 2, 4, 0.92) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 35px;
+            color: white;
+        }
+
+        .hero-tag {
+            background: var(--gold-accent);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .hero-desc {
+            font-size: 0.95rem;
+            color: #dddddd;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        /* Card Component */
+        .content-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .content-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #f0e2d5;
+            padding-bottom: 14px;
+            margin-bottom: 22px;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--dark-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 22px;
+            background: var(--primary-red);
+            border-radius: 3px;
+        }
+
+        .more-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: var(--transition-smooth);
+        }
+
+        .more-link:hover {
+            color: var(--primary-red);
+        }
+
+        /* Article List Layout */
+        .article-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .article-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e5e5e5;
+            transition: var(--transition-smooth);
+        }
+
+        .article-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .article-thumb {
+            width: 100%;
+            height: 130px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: linear-gradient(45deg, #a81329, #e65c00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 10px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .article-info h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            line-height: 1.4;
+
+        }
+
+        .article-info h4 a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .article-info h4 a:hover {
+            color: var(--primary-red);
+        }
+
+        .article-excerpt {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            font-size: 0.8rem;
+            color: #999999;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* ==========================================
+           7. 互動數據面板 (Data Visualization Dashboard)
+           ========================================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fff9f2 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), var(--gold-accent));
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark-red);
+            margin: 6px 0;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ==========================================
+           8. 理論知識圖譜 (Interactive Matrix)
+           ========================================== */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .matrix-item {
+            background: #fdfbf7;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .matrix-item:hover {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+            box-shadow: 0 8px 20px rgba(200, 16, 46, 0.3);
+        }
+
+        .matrix-item:hover h5, .matrix-item:hover p {
+            color: white;
+        }
+
+        .matrix-item h5 {
+            font-size: 1.05rem;
+            color: var(--dark-red);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .matrix-item p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================
+           9. 側邊欄元件 (Sidebar Components)
+           ========================================== */
+        /* Leader Quotes Carousel */
+        .quote-box {
+            background: linear-gradient(135deg, #8f081d 0%, #4a0008 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 32px;
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: rgba(242, 169, 0, 0.3);
+            position: absolute;
+            top: 10px;
+            right: 18px;
+            line-height: 1;
+        }
+
+        .quote-title {
+            color: var(--gold-accent);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quote-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        /* Rank List Side Widget */
+        .rank-list {
+            list-style: none;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .rank-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #eeeeee;
+            color: #666666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        .rank-item:nth-child(1) .rank-num { background: #c8102e; color: white; }
+        .rank-item:nth-child(2) .rank-num { background: #e65c00; color: white; }
+        .rank-item:nth-child(3) .rank-num { background: #f2a900; color: white; }
+
+        .rank-text {
+            font-size: 0.9rem;
+            color: #333333;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: var(--transition-smooth);
+        }
+
+        .rank-text:hover {
+            color: var(--primary-red);
+        }
+
+        /* Dynamic Book Gallery 3D Card */
+        .book-card {
+            background: linear-gradient(to right, #fdf8f0, #ffffff);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            margin-bottom: 14px;
+        }
+
+        .book-cover {
+            width: 70px;
+            height: 98px;
+            background: linear-gradient(135deg, #aa1228, #60020d);
+            border-radius: 4px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold-light);
+            text-align: center;
+            padding: 6px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            border-left: 3px solid var(--gold-accent);
+        }
+
+        /* Audio Player Widget */
+        .audio-widget {
+            background: #2b0308;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold-accent);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .play-btn:hover {
+            transform: scale(1.08);
+            background: #ffbe2e;
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            width: 42%;
+            height: 100%;
+            background: var(--gold-accent);
+        }
+
+        /* ==========================================
+           10. 頁腳 (Footer Section)
+           ========================================== */
+        .site-footer {
+            background: #1f0206;
+            color: #b39999;
+            padding: 50px 0 30px 0;
+            border-top: 4px solid var(--gold-accent);
+            font-size: 0.88rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 4fr 3fr 3fr 2fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h5 {
+            color: #ffffff;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            font-weight: 700;
+            border-left: 3px solid var(--gold-accent);
+            padding-left: 10px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #b39999;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-accent);
+        }
+
+        .copyright-bar {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            color: #886666;
+        }
+
+        /* ==========================================
+           11. 響應式調整 (Responsive Design)
+           ========================================== */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .article-item {
+                grid-template-columns: 1fr;
+            }
+            .article-thumb {
+                height: 180px;
+            }
+            .matrix-grid {
+                grid-template-columns: 1fr;
+            }
+            .site-title {
+                font-size: 1.5rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 粒子特效 Canvas 背景 -->
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="relative-container">
+        <!-- 1. 頂部快訊與功能條 -->
+        <div class="top-bar">
+            <div class="container flex-between">
+                <div>
+                    <span>今天是：2026年8月2日 星期日</span> | 
+                    <span>國家重點理論學學術研究門戶網站</span>
+                </div>
+                <div class="top-links">
+                    <a href="#">無障礙閱讀</a>
+                    <a href="#">繁體中文</a>
+                    <a href="#">Global Edition (English)</a>
+                    <a href="#">學者登入</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 主標題 Banner -->
+        <header class="header-hero">
+            <div class="container flex-between">
+                <div class="emblem-title-box">
+                    <!-- 國徽風格 vector SVG -->
+                    <svg class="emblem-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#c8102e" stroke="#f2a900" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#f2a900" stroke-width="1" stroke-dasharray="3,3"/>
+                        <!-- 大五角星 -->
+                        <polygon points="50,18 54,30 67,30 56,38 60,50 50,42 40,50 44,38 33,30 46,30" fill="#f2a900"/>
+                        <!-- 四顆小星 -->
+                        <polygon points="28,24 30,30 36,30 31,34 33,40 28,36 23,40 25,34 20,30 26,30" fill="#f2a900" transform="scale(0.5) translate(28,20)"/>
+                        <polygon points="72,24 74,30 80,30 75,34 77,40 72,36 67,40 69,34 64,30 70,30" fill="#f2a900" transform="scale(0.5) translate(72,20)"/>
+                        <polygon points="22,42 24,48 30,48 25,52 27,58 22,54 17,58 19,52 14,48 20,48" fill="#f2a900" transform="scale(0.5) translate(15,50)"/>
+                        <polygon points="78,42 80,48 86,48 81,52 83,58 78,54 73,58 75,52 70,48 76,48" fill="#f2a900" transform="scale(0.5) translate(85,50)"/>
+                        <!-- 天安門剪影代用幾何弧線 -->
+                        <path d="M 25 72 L 75 72 L 70 82 L 30 82 Z" fill="#f2a900"/>
+                        <path d="M 35 62 L 65 62 L 62 70 L 38 70 Z" fill="#ffe58f"/>
+                    </svg>
+                    <div>
+                        <h1 class="site-title">新時代中國特色社會主義思想學習網</h1>
+                        <p class="site-subtitle">Xi Jinping Thought on Socialism with Chinese Characteristics for a New Era Study Portal</p>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" class="search-input" placeholder="檢索總書記重要講話、著作、專題...">
+                </div>
+            </div>
+        </header>
+
+        <!-- 3. 主導航列 -->
+        <nav class="main-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item active"><a href="#" class="nav-link">首頁首屏</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">思想體系架構</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">治國理政實踐</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">新質生產力專題</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">經典著作庫</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">全球倡議與視野</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">理論研討會刊</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">數據圖譜與動態</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 4. 動態跑馬燈快訊 -->
+        <div class="ticker-section">
+            <div class="container">
+                <div class="ticker-wrapper">
+                    <span class="ticker-badge">最新研討</span>
+                    <div class="ticker-content">
+                        <div class="ticker-text">
+                            【權威發佈】中共中央黨校召開深刻領會「新質生產力」理論創新成果專題研討會 &nbsp;&nbsp; border-zero &nbsp;&nbsp; 【學者觀點】論中國式現代化對全球治理體系改革的深遠歷史貢獻 &nbsp;&nbsp; border-zero &nbsp;&nbsp; 【學習動態】全國高校馬克思主義學院「理論進課堂」創新實踐成果展開幕
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 核心數據指標 Dash -->
+        <div class="container" style="margin-top: 30px;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">收錄權威文獻總數</div>
+                    <div class="stat-number" id="count-1">128,450</div>
+                    <div class="stat-label" style="font-size: 0.75rem; color: #a08080;">日更新 +12 篇</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">理論研究機構連線</div>
+                    <div class="stat-number" id="count-2">1,820</div>
+                    <div class="stat-label" style="font-size: 0.75rem; color: #a08080;">覆蓋 31 個省市自治區</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">全球學術引用指數</div>
+                    <div class="stat-number" id="count-3">98.6%</div>
+                    <div class="stat-label" style="font-size: 0.75rem; color: #a08080;">同比上揚 4.2%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">每日在線研討學者</div>
+                    <div class="stat-number" id="count-4">45,920</div>
+                    <div class="stat-label" style="font-size: 0.75rem; color: #a08080;">即時活躍度 High</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. 主體雙欄 Layout -->
+        <main class="container main-layout">
+            <!-- 左欄主內容區 -->
+            <section class="left-content">
+                
+                <!-- 大圖 Feature Slider 視覺區 -->
+                <div class="hero-banner">
+                    <div class="hero-slide" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.85)), url('data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450'><rect width='800' height='450' fill='%23a10e25'/><circle cx='400' cy='225' r='180' fill='%23730514'/><text x='50%' y='50%' font-size='32' fill='%23f2a900' font-family='serif' text-anchor='middle' dominant-baseline='middle'>以高質量發展全面推進中國式現代化</text></svg>');">
+                        <div class="hero-overlay">
+                            <span class="hero-tag">頭條論述專題</span>
+                            <h2 class="hero-title">深刻把握新質生產力的科學內涵、演進邏輯與實踐要求</h2>
+                            <p class="hero-desc">高質量發展是新時代的硬道理。必須完整、準確、全面貫徹新發展理念，堅持社會主義市場經濟改革方向，堅持高水平對外開放，加快構建以國內大循環為主體、國內國際雙循環相互促進的新發展格局...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 理論前沿文章列表 -->
+                <div class="content-card">
+                    <div class="section-header">
+                        <h3 class="section-title">理論前沿與權威解讀</h3>
+                        <a href="#" class="more-link">查看更多文章 ➔</a>
+                    </div>
+                    
+                    <div class="article-grid">
+                        <article class="article-item">
+                            <div class="article-thumb">
+                                專題研討<br>經濟思想篇
+                            </div>
+                            <div class="article-info">
+                                <h4><a href="#">論新質生產力對馬克思主義生產力理論的拓界與原創性貢獻</a></h4>
+                                <p class="article-excerpt">本文系統梳理了總書記關於新質生產力的重要論述，指明技術革命性突破、生產要素創新性配置、產業深度轉型升級對推動生產力質躍遷的關鍵意義...</p>
+                                <div class="article-meta">
+                                    <span>作者：中共中央黨校理論研究中心</span>
+                                    <span>日期：2026-07-28</span>
+                                    <span>閱讀量：14,250</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="article-item">
+                            <div class="article-thumb" style="background: linear-gradient(45deg, #0e73a1, #00b386);">
+                                專題研討<br>生態文明篇
+                            </div>
+                            <div class="article-info">
+                                <h4><a href="#">「綠水青山就是金山銀山」理念在長江經濟帶生態保護中的實踐經驗</a></h4>
+                                <p class="article-excerpt">生態優先、綠色發展。通過建立跨區域碳交易與生態補償機制，長江沿岸省市成功實現了經濟效益與綠色生態雙贏，為全球生態治理提供中國方案...</p>
+                                <div class="article-meta">
+                                    <span>作者：中國社會科學院生態文明研究所</span>
+                                    <span>日期：2026-07-25</span>
+                                    <span>閱讀量：9,820</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="article-item">
+                            <div class="article-thumb" style="background: linear-gradient(45deg, #7a0ea1, #d6006e);">
+                                專題研討<br>文化思想篇
+                            </div>
+                            <div class="article-info">
+                                <h4><a href="#">「兩個結合」的深刻內涵：中華優秀傳統文化與馬克思主義的時代共鳴</a></h4>
+                                <p class="article-excerpt">深化對馬克思主義基本原理同中華優秀傳統文化相結合的規律性認識，築牢中華民族現代文明的文化根基，彰顯大國文化自信...</p>
+                                <div class="article-meta">
+                                    <span>作者：北京大學馬克思主義學院</span>
+                                    <span>日期：2026-07-20</span>
+                                    <span>閱讀量：18,400</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- 思想體系矩陣 (3x3 Matrix) -->
+                <div class="content-card">
+                    <div class="section-header">
+                        <h3 class="section-title">新時代思想知識結構圖譜 Matrix</h3>
+                    </div>
+                    <div class="matrix-grid">
+                        <div class="matrix-item">
+                            <h5>新質生產力</h5>
+                            <p>科技創新引領產業升級</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>中國式現代化</h5>
+                            <p>人口規模巨大的現代化</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>「兩個結合」</h5>
+                            <p>馬克思主義與傳統文化</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>生態文明建設</h5>
+                            <p>人與自然和諧共生</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>人類命運共同體</h5>
+                            <p>全球治理與多邊主義</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>全過程人民民主</h5>
+                            <p>最廣泛最真實有效民主</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>高水平科技自立</h5>
+                            <p>打贏關鍵核心技術攻堅</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>共同富裕路徑</h5>
+                            <p>高質量發展中保障民生</p>
+                        </div>
+                        <div class="matrix-item">
+                            <h5>自我革命戰略</h5>
+                            <p>全面從嚴治黨永遠在路上</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- 右欄側邊欄 Sidebar -->
+            <aside class="sidebar">
+
+                <!-- 金句每日學（Quote Component） -->
+                <div class="quote-box">
+                    <div class="quote-icon">“</div>
+                    <div class="quote-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f2a900"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        每日金句特載
+                    </div>
+                    <p class="quote-text">「人民對美好生活的嚮往，就是我們的奮鬥目標。要堅持以人民為中心的發展思想，扎實推進共同富裕，讓發展成果更多更公平惠及全體人民。」</p>
+                    <div class="quote-author">—— 習近平</div>
+                </div>
+
+                <!-- 權威著作列展 -->
+                <div class="content-card">
+                    <div class="section-header">
+                        <h3 class="section-title">經典著作選讀</h3>
+                    </div>
+                    
+                    <div class="book-card">
+                        <div class="book-cover">
+                            習近平<br>談治國理政<br><span style="font-size:0.6rem; color:#ffe58f;">第四卷</span>
+                        </div>
+                        <div>
+                            <h5 style="font-size:0.95rem; font-weight:700;">《習近平談治國理政》</h5>
+                            <p style="font-size:0.8rem; color:#666; margin:4px 0;">第一至四卷 英文/中文對照版</p>
+                            <a href="#" style="font-size:0.78rem; color:var(--primary-red); text-decoration:none; font-weight:bold;">在線閱讀 ➔</a>
+                        </div>
+                    </div>
+
+                    <div class="book-card">
+                        <div class="book-cover" style="background: linear-gradient(135deg, #105fa1, #032b4d);">
+                            論堅持<br>推動構建<br><span style="font-size:0.55rem; color:#ffe58f;">人類命運共同體</span>
+                        </div>
+                        <div>
+                            <h5 style="font-size:0.95rem; font-weight:700;">《論增強戰略定力》</h5>
+                            <p style="font-size:0.8rem; color:#666; margin:4px 0;">專題摘編與國際發行本</p>
+                            <a href="#" style="font-size:0.78rem; color:var(--primary-red); text-decoration:none; font-weight:bold;">在線閱讀 ➔</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 熱門研討榜單 -->
+                <div class="content-card">
+                    <div class="section-header">
+                        <h3 class="section-title">學者關注研討榜</h3>
+                    </div>
+                    <ol class="rank-list">
+                        <li class="rank-item">
+                            <span class="rank-num">1</span>
+                            <a href="#" class="rank-text">新質生產力引領中國製造轉型升級</a>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">2</span>
+                            <a href="#" class="rank-text">高水平對外開放與制度型開放路徑</a>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">3</span>
+                            <a href="#" class="rank-text">「雙碳」戰略下的能源結構重塑論</a>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">4</span>
+                            <a href="#" class="rank-text">全過程人民民主的基層實踐樣態</a>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">5</span>
+                            <a href="#" class="rank-text">網絡強國建設與數字經濟治理體系</a>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">6</span>
+                            <a href="#" class="rank-text">中華民族現代文明的歷史構建邏輯</a>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- 語音朗讀播放組件 (Podcast Audio Player Widget) -->
+                <div class="audio-widget">
+                    <div style="font-size:0.85rem; color:var(--gold-light); font-weight:bold;">理論原音播報 · 語音庫</div>
+                    <div style="font-size:0.95rem; margin-top:4px; font-weight:600;">【音頻】貫徹新發展理念的幾點重要原則</div>
+                    <div class="audio-controls">
+                        <button class="play-btn" id="audio-play-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#5c000e"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                        <span style="font-size:0.75rem; color:#aaa;">04:12 / 10:00</span>
+                    </div>
+                </div>
+
+            </aside>
+        </main>
+
+        <!-- 7. 頁腳 Footer -->
+        
+<!-- ==========================================
+     理論學術論文與經典文獻全文選輯（補全網絡庫數據）
+     ========================================== -->
+<section class="container" style="margin-bottom: 40px;">
+    <div class="content-card">
+        <div class="section-header">
+            <h3 class="section-title">新時代政治經濟學重大理論創新專題文集</h3>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+            <div style="background:#faf5ef; padding: 20px; border-radius: 8px; border:1px solid #ebdcd0;">
+                <h4 style="color:var(--dark-red); margin-bottom:10px; font-size:1.1rem;">一、新質生產力對傳統生產力理論的範式超越</h4>
+                <p style="font-size:0.88rem; color:#555; line-height:1.7;">
+                    生產力是人類社會發展的根本動力。總書記強調「新質生產力是創新起主導作用，具有高科技、高效能、高質量特徵，符合新發展理念的先進生產力質態」。這一重大判斷，把馬克思主義生產力理論同中國高質量發展實踐緊密結合，賦予了生產力範疇新的時代內涵與戰略使命。在生產要素配置上，數據、智慧化算法、綠色技術等新型要素正加速滲透至傳統勞動工具與勞動對象中，催生出以人工智能、量子科技、新能源為代表的戰略性新興產業與未來產業...
+                </p>
+                <div style="margin-top:12px; font-size:0.8rem; color:#888;">【文獻索引：國家社科基金重大項目 No.2026ZT001】</div>
+            </div>
+            
+            <div style="background:#faf5ef; padding: 20px; border-radius: 8px; border:1px solid #ebdcd0;">
+                <h4 style="color:var(--dark-red); margin-bottom:10px; font-size:1.1rem;">二、中國式現代化的文明底蘊與全球規律性探索</h4>
+                <p style="font-size:0.88rem; color:#555; line-height:1.7;">
+                    中國式現代化既有各國現代化的共同特徵，更有基於自己國情的中國特色。西方傳統現代化往往伴隨著殖民擴張、兩極分化與生態赤字，而中國式現代化堅持人口規模巨大、全體人民共同富裕、物質文明和精神文明相協調、人與自然和諧共生、走和平發展道路。這一全新的文明型態打破了「現代化=西方化」的單一神話，為廣大發展中國家獨立自主走向現代化拓寬了路徑選擇...
+                </p>
+                <div style="margin-top:12px; font-size:0.8rem; color:#888;">【文獻索引：中共中央黨校學報 2026年第04期】</div>
+            </div>
+
+            <div style="background:#faf5ef; padding: 20px; border-radius: 8px; border:1px solid #ebdcd0;">
+                <h4 style="color:var(--dark-red); margin-bottom:10px; font-size:1.1rem;">三、「兩個結合」是推進馬克思主義中國化時代化的根本路徑</h4>
+                <p style="font-size:0.88rem; color:#555; line-height:1.7;">
+                    「馬克思主義基本原理同中國具體實際相結合、同中華優秀傳統文化相結合」是我們黨在探索中國特色社會主義道路中得出的規律性認識。中華優秀傳統文化蘊含的「民為邦本」「天人合一」「協和萬邦」等思想哲理，與馬克思主義唯物史觀、生態觀、國際主義精神具有天然的契合之處。「第二個結合」讓我們擁有了鞏固的文化主體性，打開了思想創新的廣闊空間...
+                </p>
+                <div style="margin-top:12px; font-size:0.8rem; color:#888;">【文獻索引：求是雜誌理論專欄 2026年第14期】</div>
+            </div>
+
+            <div style="background:#faf5ef; padding: 20px; border-radius: 8px; border:1px solid #ebdcd0;">
+                <h4 style="color:var(--dark-red); margin-bottom:10px; font-size:1.1rem;">四、構築人類命運共同體：全球治理赤字的中國解答</h4>
+                <p style="font-size:0.88rem; color:#555; line-height:1.7;">
+                    面對世界百年未有之大變局，全球治理體系正面臨和平赤字、發展赤字、安全赤字、治理赤字的嚴峻挑戰。總書記提出的全球發展倡議、全球安全倡議、全球文明倡議，構成了人類命運共同體理念的三大重要支柱。倡議倡導共同、綜合、合作、可持續的安全觀，堅持共商共建共享的全球治理觀，推動不同文明交流互鑑，為變亂交織的世界注入確定性與正能量...
+                </p>
+                <div style="margin-top:12px; font-size:0.8rem; color:#888;">【文獻索引：國際問題研究 2026年第03期】</div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="site-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h5>關於本平台</h5>
+                        <p style="line-height:1.7; color:#997777;">
+                            本平台是由國家級理論研究機構聯合推動成立的權威數字化學術傳播矩陣，旨在提供全面、立體、系統的新時代中國特色社會主義思想檢索與文獻研究服務。
+                        </p>
+                    </div>
+                    <div class="footer-col">
+                        <h5>理論模塊導航</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">習近平經濟思想研究中心</a></li>
+                            <li><a href="#">習近平法治思想研究中心</a></li>
+                            <li><a href="#">習近平生態文明思想研究中心</a></li>
+                            <li><a href="#">習近平外交思想研究中心</a></li>
+                            <li><a href="#">習近平文化思想研究中心</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h5>學術與數據服務</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">國家社科基金項目資料庫</a></li>
+                            <li><a href="#">高校馬克思主義學院聯盟</a></li>
+                            <li><a href="#">全球中國研究學術智庫網</a></li>
+                            <li><a href="#">經典著作多語種翻譯對照</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h5>聯絡與技術支持</h5>
+                        <p style="color:#997777; font-size:0.82rem; line-height:1.6;">
+                            服務熱線：010-88009900<br>
+                            學者郵箱：theory@mod-study.gov.cn<br>
+                            支持 IPv6 / 全站 TLS 1.3 加密傳輸
+                        </p>
+                    </div>
+                </div>
+
+                <div class="copyright-bar">
+                    <p>© 2026 新時代中國特色社會主義思想學習與研究網 版權所有 | 京ICP備11000001號-8 | 京公網安備 11010802020001號</p>
+                    <p style="margin-top: 5px; color: #553333;">本網站內容由權威學術數據庫提供支持，未經許可禁止未授權抓取與商業轉載</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript 交互特效與粒子動畫 -->
+    <script>
+        // 1. HTML5 Canvas 順滑金色粒子流光特效
+        (function() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height + height;
+                    this.size = Math.random() * 2.5 + 0.8;
+                    this.speedY = Math.random() * 0.8 + 0.2;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.opacity = Math.random() * 0.6 + 0.2;
+                    this.color = Math.random() > 0.3 ? '#f2a900' : '#ffffff';
+                }
+
+                update() {
+                    this.y -= this.speedY;
+                    this.x += this.speedX;
+                    if (this.y < -10) {
+                        this.reset();
+                        this.y = height + 10;
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.opacity;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = '#f2a900';
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 65; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        })();
+
+        // 2. 音頻播放按鈕狀態切換
+        document.getElementById('audio-play-btn').addEventListener('click', function() {
+            const isPlaying = this.getAttribute('data-playing') === 'true';
+            if (isPlaying) {
+                this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#5c000e"><path d="M8 5v14l11-7z"/></svg>';
+                this.setAttribute('data-playing', 'false');
+            } else {
+                this.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="#5c000e"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+                this.setAttribute('data-playing', 'true');
+            }
+        });
+
+        // 3. 數字動態滾動計數器 (Number Roll Animation)
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            if (!obj) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                obj.innerHTML = current.toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            animateValue("count-1", 100000, 128450, 2000);
+            animateValue("count-2", 1000, 1820, 2000);
+            animateValue("count-4", 30000, 45920, 2000);
+        });
+    </script>
+</body>
+</html>
