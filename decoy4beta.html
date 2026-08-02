@@ -1266,7 +1266,7 @@
 
 <div class="divider-pattern"></div>
 
-<!-- 时代成就与数据看板 -->
+<!-- CSS/JS 数据可视化综合展示面板 -->
 <section id="stats" class="py-28 relative bg-[#0e0202]">
   <div class="max-w-4xl mx-auto text-center px-6 reveal">
     <span class="section-tag">ACHIEVEMENTS</span>
@@ -1289,7 +1289,7 @@
 
     <div class="glass-card p-8 text-center reveal">
       <div class="stat-num text-4xl sm:text-5xl font-black text-[var(--gold-light)] font-serif-title" data-target="126">0</div>
-      <div class="text-sm text-[#e6d5b8] opacity-85 mt-3 leading-relaxed">国内生产总值突破<br><span class="text-xs text-[var(--gold)]">126万亿元人民币</span></div>
+      <div class="text-sm text-[#e6d5b8] opacity-85 mt-3 leading-relaxed">国内生产总值突破<br><span class="text-xs text-[var(--gold)]">万亿元人民币</span></div>
     </div>
 
     <div class="glass-card p-8 text-center reveal">
@@ -1298,15 +1298,43 @@
     </div>
   </div>
 
-  <!-- SVG 数据可视化综合展示面板 -->
-  <div class="max-w-6xl mx-auto mt-12 px-6 reveal">
-    <div class="glass-card p-8">
-      <h3 class="text-lg font-bold text-[var(--gold-light)] font-serif-title border-b border-[var(--glass-border)] pb-3 mb-6">经济与社会发展对比图示（国内生产总值 · 万亿元）</h3>
-      <div class="h-64 flex items-end justify-between gap-4 sm:gap-8 pt-8 px-4 border-b border-white/10" id="chart-bars">
-        <!-- JS 动态注入高阶柱状图 -->
-      </div>
+<!-- 数据可视化综合展示面板 -->
+<div class="max-w-6xl mx-auto mt-12 px-6 reveal">
+  <div class="glass-card p-8">
+    <h3 class="text-lg font-bold text-[var(--gold-light)] font-serif-title border-b border-[var(--glass-border)] pb-3 mb-6">经济与社会发展对比图示（万亿元）</h3>
+    
+    <!-- 强制生效的行内样式补丁 -->
+<!-- 真正修復高度塌陷的 CSS 補丁 -->
+    <style>
+      #chart-bars {
+        display: flex !important;
+        align-items: flex-end !important;
+        height: 220px !important; /* 確定圖表總高度 */
+      }
+      /* 1. 修復中間包裹層，讓它撐滿 220px 的高度 */
+      #chart-bars > div {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+      }
+      /* 2. 強制柱子（第二個 div）顯示出來並賦予顏色 */
+      #chart-bars > div > div {
+        background: linear-gradient(to top, #d91438 0%, #b8860b 50%, #fbe396 100%) !important;
+        width: 100% !important;
+        max-width: 32px !important;
+        min-height: 10px !important; /* 防止為0 */
+        box-shadow: 0 0 12px rgba(217, 20, 56, 0.6) !important;
+        border-radius: 4px 4px 0 0 !important;
+      }
+    </style>
+
+    <div class="h-64 flex items-end justify-between gap-4 sm:gap-8 pt-8 px-4 border-b border-white/10" id="chart-bars">
+      <!-- JS 动态注入高阶柱状图 -->
     </div>
   </div>
+</div>
 </section>
 
 <!-- 常见问答指南 (FAQ) -->
@@ -2372,25 +2400,25 @@ function renderGlossary(filterText = "") {
 renderGlossary();
 glossarySearch.addEventListener("input", (e) => renderGlossary(e.target.value.trim()));
 
-/* ================= 记忆卡片 (Flashcards) 渲染 ================= */
+/* ================= 记忆卡片 (Flashcards) 渲染逻辑 ================= */
 const flashcardGrid = document.getElementById("flashcard-grid");
 FLASHCARD_DATA.forEach(item => {
   const card = document.createElement("div");
-  card.className = "flashcard-inner reveal";
+  card.className = "flashcard-inner reveal cursor-pointer";
   card.innerHTML = `
     <div class="flashcard-flipper">
-      <div class="flashcard-front">
-        <span class="text-xs text-[var(--gold)] font-bold tracking-widest mb-2">KEY TERM</span>
-        <h4 class="text-xl font-black text-[var(--gold-light)] font-serif-title">${item.q}</h4>
-        <p class="text-[11px] text-[#c8b48f] mt-4 opacity-70">点击翻转查看核心定义 ↺</p>
+      <div class="flashcard-front glass-card">
+        <span class="text-xs text-[var(--gold)] font-bold mb-2 uppercase tracking-widest">点击翻转卡片</span>
+        <h4 class="text-xl font-bold text-[var(--gold-light)] font-serif-title">${item.q}</h4>
       </div>
-      <div class="flashcard-back">
-        <p class="text-sm text-[#fbf3e2] leading-relaxed font-light">${item.a}</p>
+      <div class="flashcard-back glass-card bg-gradient-to-br from-[#420606] to-[#120303]">
+        <p class="text-sm text-[var(--gold-cream)] leading-relaxed font-light">${item.a}</p>
       </div>
     </div>
   `;
   card.addEventListener("click", () => card.classList.toggle("flipped"));
   flashcardGrid.appendChild(card);
+  observer.observe(card);
 });
 
 /* ================= 互动答题引擎 ================= */
