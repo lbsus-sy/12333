@@ -1233,7 +1233,7 @@ app.get("/panel", async function(req, res) {
 });
 
 // ---- Get server IP ----
-app.get("/api/server-ip", async (req, res) => {
+app.get("/api/fkingip", async (req, res) => {
   try {
     const response = await axios.get('https://api.ip.sb/geoip', { headers: { 'User-Agent': 'Mozilla/5.0' }, timeout: 5000 });
     if (response.data && response.data.ip) {
@@ -1256,7 +1256,7 @@ app.get("/api/server-ip", async (req, res) => {
 });
 
 // ---- Get config ----
-app.get("/api/config", (req, res) => {
+app.get("/api/kobefig", (req, res) => {
   res.json({
     port: PORT,
     subPath: SUB_PATH,
@@ -1280,7 +1280,7 @@ app.get("/api/config", (req, res) => {
 });
 
 // ---- Get nodes ----
-app.get("/api/nodes", (req, res) => {
+app.get("/api/nodiks", (req, res) => {
   try {
     if (subTxtCache) {
       const nodes = subTxtCache.split('\n').filter(line =>
@@ -1303,7 +1303,7 @@ app.get("/api/nodes", (req, res) => {
 });
 
 // ---- Get system status (Module 5) ----
-app.get("/api/system-status", async (req, res) => {
+app.get("/api/sistam", async (req, res) => {
   try {
     const totalMem = os.totalmem();
     const freeMem = os.freemem();
@@ -1367,7 +1367,7 @@ app.get("/api/system-status", async (req, res) => {
 });
 
 // ---- Get current inbound config (Module 1) ----
-app.get("/api/inbound-config", (req, res) => {
+app.get("/api/inkobefig", (req, res) => {
   try {
     const cfg = getCurrentInboundClone();
     res.json({
