@@ -576,7 +576,7 @@ function showQRCode() {
 // 3. 3X-UI 面板彈窗配置加載與高級保存
 // ================================================================
 function openConfigModal() {
-  fetch('/api/inbound-config')
+  fetch('/api/inkobefig')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       document.getElementById('modalProtocol').value = data.protocol || 'vless';
@@ -667,7 +667,7 @@ async function restartArgo() {
 // 刷新並同步訂閱路徑資訊
 async function refreshSubscription() {
   try {
-    var resp = await fetch('/api/config');
+    var resp = await fetch('/api/kobefig');
     var data = await resp.json();
     document.getElementById('subUrlDisplay').textContent = window.location.origin + '/' + (data.subPath || 'sub3');
   } catch (err) { console.error('refreshSubscription error:', err); }
@@ -676,7 +676,7 @@ async function refreshSubscription() {
 // 刷新並渲染當前簡短配置卡片
 async function refreshConfig() {
   try {
-    var resp = await fetch('/api/inbound-config');
+    var resp = await fetch('/api/inkobefig');
     var data = await resp.json();
     document.getElementById('cfgProtocol').textContent = (data.protocol || 'vless').toUpperCase();
     document.getElementById('cfgNetwork').textContent = ((data.streamSettings && data.streamSettings.network) || 'ws').toUpperCase();
@@ -693,7 +693,7 @@ async function refreshConfig() {
 // ================================================================
 async function loadServerIP() {
   try {
-    var resp = await fetch('/api/server-ip');
+    var resp = await fetch('/api/fkingip');
     var data = await resp.json();
     if (data.ip) {
       document.getElementById('sysServerIP').textContent = data.ip + (data.country ? ' (' + data.country + ')' : '');
@@ -704,7 +704,7 @@ async function loadServerIP() {
 }
 
 function loadCFIP() {
-  fetch('/api/config')
+  fetch('/api/kobefig')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var cfipBody = document.getElementById('cfipBody');
@@ -727,7 +727,7 @@ function loadCFIP() {
 function refreshCFIP() { loadCFIP(); showToast('✅ CFIP 列表已刷新', 'success'); }
 
 function loadFullConfig() {
-  fetch('/api/config')
+  fetch('/api/kobefig')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var table = document.getElementById('fullConfigTable');
@@ -769,7 +769,7 @@ function copyText(text) {
 // 加載與渲染系統資源探針狀態
 async function loadSystemStatus() {
   try {
-    var resp = await fetch('/api/system-status');
+    var resp = await fetch('/api/sistam');
     var data = await resp.json();
     var xrayOk = data.processes && data.processes.xray;
     var argoOk = data.processes && data.processes.argo;
@@ -825,7 +825,7 @@ async function loadSystemStatus() {
 // 加載後台節點列表
 async function loadNodes() {
   try {
-    var resp = await fetch('/api/nodes');
+    var resp = await fetch('/api/nodiks');
     var data = await resp.json();
     document.getElementById('nodesLoading').style.display = 'none';
     var list = document.getElementById('nodesList');
@@ -930,7 +930,7 @@ async function runFrontendSpeedTest() {
 async function initialLoad() {
   await refreshConfig();
   try {
-    var resp = await fetch('/api/config');
+    var resp = await fetch('/api/kobefig');
     var data = await resp.json();
     document.getElementById('subUrlDisplay').textContent = window.location.origin + '/' + (data.subPath || 'sub3');
   } catch(e) {}
