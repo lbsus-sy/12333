@@ -1222,7 +1222,7 @@ app.get("/", async function(req, res) {
 });
 
 // ---- Root: Serve Dashboard ----
-app.get("/panel", async function(req, res) {
+app.get("/jason6767", async function(req, res) {
   try {
     const filePath = path.join(__dirname, 'index.html');
     const data = await fs.promises.readFile(filePath, 'utf8');
