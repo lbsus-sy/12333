@@ -834,15 +834,15 @@
   #back-top {
     position: fixed;
     bottom: 30px; right: 30px;
-    z-index: 1000;
-    width: 54px; height: 54px;
+    z-index: 9999;
+    width: 56px; height: 56px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--gold-light), var(--gold));
     color: #2b0606;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 25px rgba(212,175,55,0.6);
     opacity: 0;
     pointer-events: none;
     transform: scale(0.8);
@@ -856,8 +856,11 @@
     transform: scale(1);
   }
   #back-top:hover {
-    transform: translateY(-4px) scale(1.12);
-    box-shadow: 0 15px 40px rgba(212,175,55,0.7);
+    transform: translateY(-5px) scale(1.15);
+    box-shadow: 0 18px 45px rgba(212,175,55,0.85);
+  }
+  #back-top:active {
+    transform: translateY(-2px) scale(0.98);
   }
 
   /* 移动端抽屉菜单 */
@@ -872,6 +875,7 @@
     box-shadow: -15px 0 50px rgba(0,0,0,0.85);
     padding: 90px 32px;
     border-left: 1px solid var(--gold);
+    overflow-y: auto;
   }
   #mobile-menu.open { right: 0; }
   #menu-overlay {
@@ -913,6 +917,43 @@
     color: #2b0606;
     transform: scale(1.1);
   }
+
+  /* 高级动画与移动端适配补丁 */
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+  }
+  @keyframes iconSpinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes iconPulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(251, 227, 150, 0.5)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 18px rgba(251, 227, 150, 0.95)); transform: scale(1.08); }
+  }
+  @keyframes waveBarJump {
+    0%, 100% { height: 15%; }
+    50% { height: 95%; }
+  }
+
+  .animated-icon-float { animation: iconFloat 4s infinite ease-in-out; }
+  .animated-icon-spin { animation: iconSpinSlow 12s linear infinite; }
+  .animated-icon-pulse { animation: iconPulseGlow 2.5s infinite ease-in-out; }
+
+  /* 移动端专属适配与触摸优化 */
+  @media (max-width: 640px) {
+    #cursor-dot, #cursor-ring { display: none !important; }
+    #accessibility-bar { left: 10px; bottom: 20px; }
+    .access-btn { width: 36px; height: 36px; font-size: 0.75rem; }
+    #back-top { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+    .hero-title { font-size: 2.3rem; letter-spacing: 0.08em; }
+    .section-title { font-size: 1.75rem; }
+    .btn-gold-glow, .btn-outline-gold { width: 100%; text-align: center; padding: 14px 24px; font-size: 0.9rem; }
+    .audio-panel { padding: 18px 14px; }
+    #wave-canvas { height: 100px; }
+    .ctrl-btn { width: 46px; height: 46px; }
+    .ctrl-btn.main { width: 58px; height: 58px; }
+  }
 </style>
 </head>
 
@@ -930,7 +971,7 @@
   <div class="curtain left"></div>
   <div class="curtain right"></div>
   <div class="preload-content relative z-10 text-center">
-    <svg class="preload-star" viewBox="0 0 24 24" fill="currentColor">
+    <svg class="preload-star animated-icon-pulse" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 2l2.9 6.6L22 9.3l-5.2 4.7L18.2 21 12 17.3 5.8 21l1.4-7-5.2-4.7 7.1-.7z"/>
     </svg>
     <div class="mt-6 text-xl font-bold tracking-[0.4em] text-[var(--gold-light)] font-serif-title">正 在 加 载 · 时 代 光 影</div>
@@ -956,7 +997,7 @@
   <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
     <a href="#hero" class="flex items-center gap-3 group">
       <div class="relative flex items-center justify-center">
-        <svg class="w-8 h-8 text-[var(--gold-light)] transition-transform duration-500 group-hover:rotate-180" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="w-8 h-8 text-[var(--gold-light)] transition-transform duration-500 group-hover:rotate-180 animated-icon-spin" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2l2.9 6.6L22 9.3l-5.2 4.7L18.2 21 12 17.3 5.8 21l1.4-7-5.2-4.7 7.1-.7z"/>
         </svg>
         <div class="absolute inset-0 bg-[var(--gold)] blur-md opacity-40 group-hover:opacity-80 transition-opacity"></div>
@@ -981,10 +1022,10 @@
     </div>
 
     <div class="flex items-center gap-4">
-      <button id="search-trigger" class="p-2 text-[var(--gold-light)] hover:text-white transition" title="搜索全站" aria-label="Search">
+      <button id="search-trigger" class="p-2 text-[var(--gold-light)] hover:text-white transition hover:scale-110 active:scale-95" title="搜索全站" aria-label="Search">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       </button>
-      <button id="menu-btn" class="lg:hidden text-[var(--gold-light)] p-2 focus:outline-none" aria-label="Toggle Menu">
+      <button id="menu-btn" class="lg:hidden text-[var(--gold-light)] p-2 focus:outline-none hover:scale-110 active:scale-95" aria-label="Toggle Menu">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
@@ -1030,11 +1071,11 @@
 
     <div class="mt-12 flex flex-wrap items-center justify-center gap-6">
       <a href="#videos" class="btn-gold-glow">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="animated-icon-pulse"><path d="M8 5v14l11-7z"/></svg>
         观看影像记录
       </a>
       <a href="#audio" class="btn-outline-gold">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="animated-icon-float"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
         聆听原声语音
       </a>
     </div>
@@ -1087,7 +1128,7 @@
   <div id="video-grid" class="max-w-6xl mx-auto mt-14 px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 </section>
 
-<!-- 原声语音模块（双播放引擎修复版） -->
+<!-- 原声音频模块（双播放引擎修复版） -->
 <section id="audio" class="py-28 relative bg-[#130303]/90">
   <div class="max-w-4xl mx-auto text-center px-6 reveal">
     <span class="section-tag">AUDIO LOUNGE</span>
@@ -1374,7 +1415,7 @@
 <footer class="py-16 bg-[#050000] border-t border-[var(--glass-border)] relative">
   <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-6 text-center">
     <div class="flex items-center gap-3">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="text-[var(--gold-light)]">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="text-[var(--gold-light)] animated-icon-spin">
         <path d="M12 2l2.9 6.6L22 9.3l-5.2 4.7L18.2 21 12 17.3 5.8 21l1.4-7-5.2-4.7 7.1-.7z"/>
       </svg>
       <span class="font-serif-title font-bold text-lg tracking-widest text-[var(--gold-light)]">时代先锋 · 学习专题网</span>
@@ -1389,7 +1430,7 @@
 
 <!-- 浮动控件：返回顶部与 Toast -->
 <button id="back-top" title="返回顶部" aria-label="Back to Top">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="animated-icon-pulse"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
 </button>
 
 <div id="toast">金句已成功复制至剪贴板</div>
@@ -1980,7 +2021,12 @@ window.addEventListener("scroll", () => {
   scrollProgress.style.width = scrolled + "%";
 
   navbar.classList.toggle("scrolled", winScroll > 50);
-  document.getElementById("back-top").classList.toggle("show", winScroll > 450);
+  
+  // 修复返回顶部按钮显示/隐藏逻辑
+  const backTopBtn = document.getElementById("back-top");
+  if (backTopBtn) {
+    backTopBtn.classList.toggle("show", winScroll > 450);
+  }
 
   // 导航激活高亮
   const sections = document.querySelectorAll("section, #hero");
@@ -2003,11 +2049,13 @@ function closeMobileMenu() {
   mobileMenu.classList.remove("open");
   menuOverlay.classList.remove("open");
 }
-menuBtn.addEventListener("click", () => {
-  mobileMenu.classList.toggle("open");
-  menuOverlay.classList.toggle("open");
-});
-menuOverlay.addEventListener("click", closeMobileMenu);
+if(menuBtn) {
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("open");
+    menuOverlay.classList.toggle("open");
+  });
+}
+if(menuOverlay) menuOverlay.addEventListener("click", closeMobileMenu);
 document.querySelectorAll("#mobile-menu a").forEach(a => a.addEventListener("click", closeMobileMenu));
 
 /* ================= 视频矩阵渲染与 Filter 控制 ================= */
@@ -2032,662 +2080,782 @@ function renderVideos(filterTag = "all") {
         </video>
         <div class="play-badge">
           <div class="circle">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-white ml-1"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="w-8 h-8 text-[var(--gold-light)] animated-icon-pulse" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
           </div>
         </div>
-        <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-bold bg-black/60 border border-[var(--gold)]/40 text-[var(--gold-light)] backdrop-blur">${item.tag}</span>
+        <span class="absolute top-3 left-3 px-3 py-1 text-xs font-bold rounded-full border border-[var(--gold)]/40 bg-black/70 text-[var(--gold-light)] backdrop-blur-md flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--gold-light)] animate-ping"></span>
+          ${item.tag}
+        </span>
       </div>
-      <div class="mt-4 px-1">
-        <h3 class="font-bold text-base text-[var(--gold-cream)] font-serif-title line-clamp-1">${item.title}</h3>
-        <p class="text-xs text-[#d8c6a8] mt-1.5 line-clamp-2 opacity-80 leading-relaxed">${item.desc}</p>
+      <div class="mt-4">
+        <h3 class="font-bold text-base text-[var(--gold-cream)] font-serif-title line-clamp-1 group-hover:text-[var(--gold-light)] transition-colors">${item.title}</h3>
+        <p class="text-xs text-[#d8c6a8] opacity-80 mt-1.5 line-clamp-2 leading-relaxed">${item.desc}</p>
       </div>
     `;
-
-    card.addEventListener("click", () => {
-      modalVideo.src = item.src;
-      modalTitle.textContent = item.title;
-      modalDesc.textContent = item.desc;
-      videoModal.classList.add("open");
-      modalVideo.play().catch(() => {});
-    });
-
+    card.addEventListener("click", () => openVideoModal(item));
     videoGrid.appendChild(card);
   });
   initTiltEffect();
   initHoverEffects();
-  initScrollReveal();
+  triggerScrollReveal();
 }
-renderVideos();
 
-// 筛选按钮切换
-document.querySelectorAll("#video-filters .filter-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    document.querySelectorAll("#video-filters .filter-btn").forEach(b => {
-      b.classList.remove("active", "bg-[var(--gold)]", "text-black");
-      b.classList.add("bg-black/40", "text-[var(--gold-light)]");
-    });
-    this.classList.add("active", "bg-[var(--gold)]", "text-black");
-    this.classList.remove("bg-black/40", "text-[var(--gold-light)]");
-    renderVideos(this.dataset.filter);
-  });
-});
+function openVideoModal(item) {
+  modalTitle.textContent = item.title;
+  modalDesc.textContent = item.desc;
+  modalVideo.src = item.src;
+  videoModal.classList.add("open");
+  modalVideo.play().catch(e => console.log("Auto-play prevented", e));
+}
 
 function closeVideoModal() {
   videoModal.classList.remove("open");
   modalVideo.pause();
   modalVideo.src = "";
 }
-modalClose.addEventListener("click", closeVideoModal);
-videoModal.querySelector(".modal-backdrop").addEventListener("click", closeVideoModal);
 
-/* ================= 原声音频可视化与合成双引擎 ================= */
-const trackList = document.getElementById("track-list");
-const currentTrackTitle = document.getElementById("current-track-title");
-const currentTrackDesc = document.getElementById("current-track-desc");
-const playBtn = document.getElementById("play-btn");
-const playIcon = document.getElementById("play-icon");
-const prevBtn = document.getElementById("prev-btn");
-const nextBtn = document.getElementById("next-btn");
-const curTimeEl = document.getElementById("cur-time");
-const durTimeEl = document.getElementById("dur-time");
-const progressWrap = document.getElementById("progress-wrap");
-const progressFill = document.getElementById("progress-fill");
-const synthToggleBtn = document.getElementById("synth-toggle-btn");
+if(modalClose) modalClose.addEventListener("click", closeVideoModal);
+if(videoModal) {
+  videoModal.querySelector(".modal-backdrop").addEventListener("click", closeVideoModal);
+}
 
+document.querySelectorAll("#video-filters .filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#video-filters .filter-btn").forEach(b => {
+      b.classList.remove("active", "bg-[var(--gold)]", "text-black");
+      b.classList.add("bg-black/40", "text-[var(--gold-light)]");
+    });
+    btn.classList.add("active", "bg-[var(--gold)]", "text-black");
+    btn.classList.remove("bg-black/40", "text-[var(--gold-light)]");
+    renderVideos(btn.dataset.filter);
+  });
+});
+
+/* ================= 修复：返回顶部按钮绑定事件 ================= */
+const backTopButton = document.getElementById("back-top");
+if (backTopButton) {
+  backTopButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
+
+/* ================= 原声音频与声学合成双引擎系统 ================= */
 let currentTrackIdx = 0;
 let isPlaying = false;
-let isSynthMode = false;
-let audioElement = new Audio();
-let audioCtx, analyser, dataArray, synthOscillator;
+let audioSynthMode = false;
+let audioCtx, analyser, dataArray;
+let synthInterval;
 
-// 格式化时间
-function formatTime(s) {
-  if (isNaN(s)) return "00:00";
-  const m = Math.floor(s / 60);
-  const sec = Math.floor(s % 60);
-  return `${m < 10 ? '0' + m : m}:${sec < 10 ? '0' + sec : sec}`;
-}
+const AUDIO_TRACKS = VIDEO_DATA.map((v, i) => ({
+  id: i,
+  title: v.title,
+  desc: v.desc,
+  src: v.src
+}));
 
-// 渲染音轨列表
-VIDEO_DATA.forEach((item, idx) => {
-  const div = document.createElement("div");
-  div.className = `track-item ${idx === 0 ? 'active' : ''}`;
-  div.innerHTML = `
-    <div class="idx">${idx + 1}</div>
-    <div class="flex-1 min-w-0">
-      <h4 class="font-bold text-sm text-[var(--gold-cream)] truncate font-serif-title">${item.title}</h4>
-      <p class="text-xs text-[#d8c6a8] opacity-70 truncate mt-0.5">${item.desc}</p>
-    </div>
-  `;
-  div.addEventListener("click", () => loadTrack(idx, true));
-  trackList.appendChild(div);
-});
+const audioElement = new Audio();
+audioElement.crossOrigin = "anonymous";
 
-function loadTrack(idx, autoPlay = false) {
-  currentTrackIdx = idx;
-  const item = VIDEO_DATA[idx];
-  currentTrackTitle.textContent = item.title;
-  currentTrackDesc.textContent = item.desc;
-
-  document.querySelectorAll(".track-item").forEach((el, i) => {
-    el.classList.toggle("active", i === idx);
-  });
-
-  audioElement.src = item.src;
-  audioElement.load();
-
-  if (autoPlay) {
-    playTrack();
-  } else {
-    pauseTrack();
-  }
-}
-
-function playTrack() {
-  if (isSynthMode) {
-    playSynthTone();
-  } else {
-    audioElement.play().then(() => {
-      isPlaying = true;
-      playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
-      initAudioContext();
-    }).catch(err => {
-      console.warn("音频播放被拦截或故障，自动降级切换至声学合成模式");
-      isSynthMode = true;
-      synthToggleBtn.textContent = "音频模式: 声学合成器";
-      playSynthTone();
-    });
-  }
-}
-
-function pauseTrack() {
-  isPlaying = false;
-  audioElement.pause();
-  if (synthOscillator) {
-    try { synthOscillator.stop(); } catch(e){}
-    synthOscillator = null;
-  }
-  playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
-}
-
-playBtn.addEventListener("click", () => {
-  if (isPlaying) pauseTrack();
-  else playTrack();
-});
-
-prevBtn.addEventListener("click", () => {
-  currentTrackIdx = (currentTrackIdx - 1 + VIDEO_DATA.length) % VIDEO_DATA.length;
-  loadTrack(currentTrackIdx, true);
-});
-
-nextBtn.addEventListener("click", () => {
-  currentTrackIdx = (currentTrackIdx + 1) % VIDEO_DATA.length;
-  loadTrack(currentTrackIdx, true);
-});
-
-audioElement.addEventListener("timeupdate", () => {
-  if (!isSynthMode) {
-    const cur = audioElement.currentTime;
-    const dur = audioElement.duration || 1;
-    curTimeEl.textContent = formatTime(cur);
-    durTimeEl.textContent = formatTime(dur);
-    progressFill.style.width = (cur / dur * 100) + "%";
-  }
-});
-
-audioElement.addEventListener("ended", () => {
-  nextBtn.click();
-});
-
-progressWrap.addEventListener("click", (e) => {
-  if (!isSynthMode && audioElement.duration) {
-    const rect = progressWrap.getBoundingClientRect();
-    const pos = (e.clientX - rect.left) / rect.width;
-    audioElement.currentTime = pos * audioElement.duration;
-  }
-});
-
-// 声学合成引擎降级方案
-function playSynthTone() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  
-  if (synthOscillator) synthOscillator.stop();
-  synthOscillator = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-
-  synthOscillator.type = 'sine';
-  synthOscillator.frequency.setValueAtTime(220 + (currentTrackIdx * 40), audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-
-  synthOscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  synthOscillator.start();
-
-  isPlaying = true;
-  playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
-}
-
-synthToggleBtn.addEventListener("click", () => {
-  isSynthMode = !isSynthMode;
-  synthToggleBtn.textContent = isSynthMode ? "音频模式: 声学合成器" : "音频模式: 媒体原声";
-  if (isPlaying) {
-    pauseTrack();
-    playTrack();
-  }
-});
-
-/* Web Audio 动态声浪 Canvas 渲染 */
 const waveCanvas = document.getElementById("wave-canvas");
-const waveCtx = waveCanvas.getContext("2d");
+const waveCtx = waveCanvas ? waveCanvas.getContext("2d") : null;
+
+function resizeWaveCanvas() {
+  if(!waveCanvas) return;
+  waveCanvas.width = waveCanvas.parentElement.clientWidth;
+  waveCanvas.height = 140;
+}
+resizeWaveCanvas();
+window.addEventListener("resize", resizeWaveCanvas);
 
 function initAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx) return;
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
     analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 128;
     const source = audioCtx.createMediaElementSource(audioElement);
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
-    analyser.fftSize = 64;
     dataArray = new Uint8Array(analyser.frequencyBinCount);
+  } catch (e) {
+    console.log("Audio Context initialization skipped or CORS limited", e);
   }
 }
 
-function drawWave() {
-  requestAnimationFrame(drawWave);
+function drawAudioWaveform() {
+  if (!waveCtx || !waveCanvas) return;
   waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
 
-  const w = waveCanvas.width = waveCanvas.offsetWidth;
-  const h = waveCanvas.height = waveCanvas.offsetHeight;
+  const width = waveCanvas.width;
+  const height = waveCanvas.height;
 
-  if (analyser && isPlaying && !isSynthMode) {
+  if (analyser && isPlaying && !audioSynthMode) {
     analyser.getByteFrequencyData(dataArray);
-    const barWidth = (w / dataArray.length) * 1.5;
-    let x = 0;
-
+  } else {
+    if (!dataArray) dataArray = new Uint8Array(64);
     for (let i = 0; i < dataArray.length; i++) {
-      const barHeight = (dataArray[i] / 255) * h * 0.8;
-      const gradient = waveCtx.createLinearGradient(0, h, 0, h - barHeight);
-      gradient.addColorStop(0, 'rgba(163, 15, 22, 0.8)');
-      gradient.addColorStop(1, 'rgba(251, 227, 150, 0.9)');
+      dataArray[i] = isPlaying ? Math.floor(Math.random() * 180 + 50) : 10;
+    }
+  }
 
-      waveCtx.fillStyle = gradient;
-      waveCtx.fillRect(x, h - barHeight, barWidth - 3, barHeight);
-      x += barWidth;
+  const barWidth = (width / dataArray.length) * 1.8;
+  let x = 0;
+
+  for (let i = 0; i < dataArray.length; i++) {
+    const barHeight = (dataArray[i] / 255) * height * 0.85;
+    const gradient = waveCtx.createLinearGradient(0, height, 0, height - barHeight);
+    gradient.addColorStop(0, "rgba(217, 20, 56, 0.8)");
+    gradient.addColorStop(0.5, "rgba(212, 175, 55, 0.9)");
+    gradient.addColorStop(1, "rgba(251, 227, 150, 1)");
+
+    waveCtx.fillStyle = gradient;
+    waveCtx.shadowColor = "rgba(212, 175, 55, 0.5)";
+    waveCtx.shadowBlur = 8;
+    waveCtx.fillRect(x, height - barHeight, barWidth - 3, barHeight);
+
+    x += barWidth;
+  }
+
+  requestAnimationFrame(drawAudioWaveform);
+}
+drawAudioWaveform();
+
+function loadTrack(index) {
+  currentTrackIdx = index;
+  const track = AUDIO_TRACKS[index];
+  document.getElementById("current-track-title").textContent = track.title;
+  document.getElementById("current-track-desc").textContent = track.desc;
+  
+  audioElement.src = track.src;
+  updateTrackListUI();
+}
+
+function updateTrackListUI() {
+  const container = document.getElementById("track-list");
+  if(!container) return;
+  container.innerHTML = "";
+  AUDIO_TRACKS.forEach((t, i) => {
+    const item = document.createElement("div");
+    item.className = `track-item ${i === currentTrackIdx ? 'active' : ''}`;
+    item.innerHTML = `
+      <div class="idx">${i + 1}</div>
+      <div class="flex-1 overflow-hidden">
+        <div class="text-sm font-bold text-[var(--gold-cream)] truncate font-serif-title">${t.title}</div>
+        <div class="text-xs text-[#d8c6a8] opacity-75 truncate">${t.desc}</div>
+      </div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-[var(--gold-light)] ${i === currentTrackIdx && isPlaying ? 'animated-icon-pulse' : ''}">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    `;
+    item.addEventListener("click", () => {
+      loadTrack(i);
+      playAudio();
+    });
+    container.appendChild(item);
+  });
+}
+
+function playAudio() {
+  initAudioContext();
+  if (audioCtx && audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+  
+  if(audioSynthMode) {
+    if('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance(AUDIO_TRACKS[currentTrackIdx].title + '。' + AUDIO_TRACKS[currentTrackIdx].desc);
+      msg.lang = 'zh-CN';
+      msg.rate = 0.95;
+      msg.onend = () => { isPlaying = false; updatePlayBtnIcon(); };
+      window.speechSynthesis.speak(msg);
     }
   } else {
-    // 默认虚幻模拟波形
-    const time = Date.now() * 0.003;
-    waveCtx.beginPath();
-    waveCtx.lineWidth = 2;
-    waveCtx.strokeStyle = "rgba(212, 175, 55, 0.4)";
-    for (let x = 0; x < w; x += 5) {
-      const y = Math.sin(x * 0.02 + time) * (isPlaying ? 25 : 8) + h / 2;
-      if (x === 0) waveCtx.moveTo(x, y);
-      else waveCtx.lineTo(x, y);
-    }
-    waveCtx.stroke();
+    audioElement.play().catch(e => console.log("Audio play deferred", e));
+  }
+  
+  isPlaying = true;
+  updatePlayBtnIcon();
+  updateTrackListUI();
+}
+
+function pauseAudio() {
+  if(audioSynthMode) {
+    if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  } else {
+    audioElement.pause();
+  }
+  isPlaying = false;
+  updatePlayBtnIcon();
+  updateTrackListUI();
+}
+
+function updatePlayBtnIcon() {
+  const playIcon = document.getElementById("play-icon");
+  if (!playIcon) return;
+  if (isPlaying) {
+    playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+  } else {
+    playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
   }
 }
-drawWave();
-loadTrack(0);
 
-/* ================= 理论词典渲染与搜索 ================= */
+document.getElementById("play-btn")?.addEventListener("click", () => {
+  if (isPlaying) pauseAudio();
+  else playAudio();
+});
+
+document.getElementById("prev-btn")?.addEventListener("click", () => {
+  let idx = currentTrackIdx - 1;
+  if (idx < 0) idx = AUDIO_TRACKS.length - 1;
+  loadTrack(idx);
+  playAudio();
+});
+
+document.getElementById("next-btn")?.addEventListener("click", () => {
+  let idx = currentTrackIdx + 1;
+  if (idx >= AUDIO_TRACKS.length) idx = 0;
+  loadTrack(idx);
+  playAudio();
+});
+
+audioElement.addEventListener("timeupdate", () => {
+  if (isNaN(audioElement.duration)) return;
+  const cur = audioElement.currentTime;
+  const dur = audioElement.duration;
+  document.getElementById("cur-time").textContent = formatTime(cur);
+  document.getElementById("dur-time").textContent = formatTime(dur);
+  const fill = document.getElementById("progress-fill");
+  if (fill) fill.style.width = (cur / dur) * 100 + "%";
+});
+
+audioElement.addEventListener("ended", () => {
+  let idx = currentTrackIdx + 1;
+  if (idx >= AUDIO_TRACKS.length) idx = 0;
+  loadTrack(idx);
+  playAudio();
+});
+
+document.getElementById("progress-wrap")?.addEventListener("click", (e) => {
+  const wrap = e.currentTarget;
+  const rect = wrap.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const pct = clickX / rect.width;
+  if (!isNaN(audioElement.duration)) {
+    audioElement.currentTime = pct * audioElement.duration;
+  }
+});
+
+document.getElementById("synth-toggle-btn")?.addEventListener("click", () => {
+  audioSynthMode = !audioSynthMode;
+  pauseAudio();
+  const btn = document.getElementById("synth-toggle-btn");
+  if(btn) {
+    btn.textContent = audioSynthMode ? "音频模式: 声学合成器 (Active)" : "音频模式: 媒体原声 (Active)";
+  }
+  showToast(audioSynthMode ? "已无缝切换至语音合成引擎" : "已无缝切换至媒体原声引擎");
+});
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+}
+
+/* ================= 理论词典 (Glossary) 逻辑 ================= */
 const glossaryGrid = document.getElementById("glossary-grid");
 const glossarySearch = document.getElementById("glossary-search");
 
 function renderGlossary(filterText = "") {
+  if(!glossaryGrid) return;
   glossaryGrid.innerHTML = "";
-  const filtered = GLOSSARY_DATA.filter(item => 
-    item.term.includes(filterText) || item.desc.includes(filterText) || item.category.includes(filterText)
+  const filtered = GLOSSARY_DATA.filter(g => 
+    g.term.includes(filterText) || g.category.includes(filterText) || g.desc.includes(filterText)
   );
 
-  filtered.forEach(item => {
+  filtered.forEach(g => {
     const card = document.createElement("div");
-    card.className = "glass-card p-6 reveal";
+    card.className = "glass-card p-6 reveal hover:scale-[1.02] transition-transform";
     card.innerHTML = `
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs px-3 py-1 rounded-full bg-[var(--gold)]/15 border border-[var(--gold)]/40 text-[var(--gold-light)]">${item.category}</span>
-        <span class="text-xs text-[var(--gold-dark)] font-mono">DEFINITION</span>
+      <div class="flex items-center justify-between border-b border-[var(--glass-border)] pb-3 mb-4">
+        <span class="text-xs px-3 py-1 rounded-full bg-[var(--gold)]/15 border border-[var(--gold)]/40 text-[var(--gold-light)] font-bold flex items-center gap-1.5">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="animated-icon-pulse"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1-6.3-4.6-6.3 4.6 2.3-7.1-6-4.5h7.6z"/></svg>
+          ${g.category}
+        </span>
       </div>
-      <h3 class="font-bold text-lg text-[var(--gold-cream)] font-serif-title mb-2">${item.term}</h3>
-      <p class="text-xs text-[#d8c6a8] opacity-85 leading-relaxed">${item.desc}</p>
+      <h3 class="text-xl font-bold text-[var(--gold-cream)] font-serif-title mb-3">${g.term}</h3>
+      <p class="text-sm text-[#d8c6a8] leading-relaxed opacity-90">${g.desc}</p>
     `;
     glossaryGrid.appendChild(card);
   });
   initTiltEffect();
   initHoverEffects();
-  initScrollReveal();
+  triggerScrollReveal();
 }
-renderGlossary();
-glossarySearch.addEventListener("input", (e) => renderGlossary(e.target.value.trim()));
 
-/* ================= 记忆卡片 (Flashcards) 渲染 ================= */
+if(glossarySearch) {
+  glossarySearch.addEventListener("input", (e) => {
+    renderGlossary(e.target.value.trim());
+  });
+}
+
+/* ================= 记忆卡片 (Flashcards) 逻辑 ================= */
 const flashcardGrid = document.getElementById("flashcard-grid");
-FLASHCARD_DATA.forEach(item => {
-  const card = document.createElement("div");
-  card.className = "flashcard-inner reveal";
-  card.innerHTML = `
-    <div class="flashcard-flipper">
-      <div class="flashcard-front">
-        <span class="text-xs text-[var(--gold)] tracking-widest uppercase mb-2">点击翻转背诵</span>
-        <h3 class="text-xl font-bold text-[var(--gold-light)] font-serif-title">${item.q}</h3>
-      </div>
-      <div class="flashcard-back">
-        <span class="text-xs text-[var(--gold-light)] tracking-widest uppercase mb-2">理论解析</span>
-        <p class="text-xs sm:text-sm text-[#fbe396] leading-relaxed">${item.a}</p>
-      </div>
-    </div>
-  `;
-  card.addEventListener("click", () => card.classList.toggle("flipped"));
-  flashcardGrid.appendChild(card);
-});
 
-/* ================= 深度研学问答逻辑 ================= */
+function renderFlashcards() {
+  if(!flashcardGrid) return;
+  flashcardGrid.innerHTML = "";
+  FLASHCARD_DATA.forEach(fc => {
+    const card = document.createElement("div");
+    card.className = "flashcard-inner reveal";
+    card.innerHTML = `
+      <div class="flashcard-flipper">
+        <div class="flashcard-front">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" class="text-[var(--gold-light)] mb-3 animated-icon-float">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          <h3 class="text-lg font-bold text-[var(--gold-light)] font-serif-title">${fc.q}</h3>
+          <span class="text-xs text-[#c8b48f] opacity-70 mt-4">（点击翻转查看释义）</span>
+        </div>
+        <div class="flashcard-back">
+          <p class="text-sm text-[#fbe396] leading-relaxed font-light">${fc.a}</p>
+        </div>
+      </div>
+    `;
+    card.addEventListener("click", () => {
+      card.classList.toggle("flipped");
+    });
+    flashcardGrid.appendChild(card);
+  });
+  initHoverEffects();
+  triggerScrollReveal();
+}
+
+/* ================= 研学问答 (Quiz Engine) 逻辑 ================= */
 let currentQuizIdx = 0;
 let quizScore = 0;
-const quizQuestion = document.getElementById("quiz-question");
-const quizOptions = document.getElementById("quiz-options");
-const quizProgress = document.getElementById("quiz-progress");
-const quizScoreBadge = document.getElementById("quiz-score-badge");
-const quizExplanationBox = document.getElementById("quiz-explanation-box");
-const quizExplanationText = document.getElementById("quiz-explanation-text");
-const quizNextBtn = document.getElementById("quiz-next-btn");
+let quizAnswered = false;
 
-function loadQuizItem(idx) {
-  const data = QUIZ_DATA[idx];
-  quizProgress.textContent = `QUESTION ${idx + 1} / ${QUIZ_DATA.length}`;
-  quizQuestion.textContent = data.q;
-  quizOptions.innerHTML = "";
-  quizExplanationBox.classList.add("opacity-0");
+function renderQuizQuestion() {
+  const qObj = QUIZ_DATA[currentQuizIdx];
+  const qProg = document.getElementById("quiz-progress");
+  const qScore = document.getElementById("quiz-score-badge");
+  const qText = document.getElementById("quiz-question");
+  const qOpts = document.getElementById("quiz-options");
+  const expBox = document.getElementById("quiz-explanation-box");
 
-  data.opts.forEach((opt, optIdx) => {
-    const btn = document.createElement("div");
-    btn.className = "quiz-option";
-    btn.innerHTML = `
-      <span class="w-7 h-7 rounded-full border border-[var(--gold)]/50 flex items-center justify-center text-xs font-bold text-[var(--gold-light)] shrink-0">${String.fromCharCode(65 + optIdx)}</span>
-      <span class="text-xs sm:text-sm text-[var(--gold-cream)] font-medium">${opt}</span>
+  if (!qText || !qOpts) return;
+
+  qProg.textContent = `QUESTION ${currentQuizIdx + 1} / ${QUIZ_DATA.length}`;
+  qScore.textContent = `当前得分: ${quizScore}`;
+  qText.textContent = `${currentQuizIdx + 1}. ${qObj.q}`;
+  
+  qOpts.innerHTML = "";
+  quizAnswered = false;
+  expBox.style.opacity = "0";
+
+  qObj.opts.forEach((optText, optIdx) => {
+    const optDiv = document.createElement("div");
+    optDiv.className = "quiz-option";
+    optDiv.innerHTML = `
+      <span class="w-7 h-7 rounded-full border border-[var(--gold)]/60 flex items-center justify-center text-xs font-bold text-[var(--gold-light)] shrink-0">
+        ${String.fromCharCode(65 + optIdx)}
+      </span>
+      <span class="text-sm text-[#e6d5b8] font-medium">${optText}</span>
     `;
 
-    btn.addEventListener("click", () => {
-      if (btn.classList.contains("disabled")) return;
-      document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
+    optDiv.addEventListener("click", () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
 
-      if (optIdx === data.ans) {
-        btn.classList.add("correct");
+      const options = qOpts.querySelectorAll(".quiz-option");
+      if (optIdx === qObj.ans) {
+        optDiv.classList.add("correct");
         quizScore += 10;
-        quizScoreBadge.textContent = `当前得分: ${quizScore}`;
+        qScore.textContent = `当前得分: ${quizScore}`;
+        showToast("回答正确！+10 分");
       } else {
-        btn.classList.add("wrong");
-        document.querySelectorAll(".quiz-option")[data.ans].classList.add("correct");
+        optDiv.classList.add("wrong");
+        options[qObj.ans].classList.add("correct");
+        showToast("回答错误，再接再厉！");
       }
 
-      quizExplanationText.textContent = data.exp;
-      quizExplanationBox.classList.remove("opacity-0");
+      document.getElementById("quiz-explanation-text").textContent = qObj.exp;
+      expBox.style.opacity = "1";
     });
 
-    quizOptions.appendChild(btn);
+    qOpts.appendChild(optDiv);
   });
 }
 
-quizNextBtn.addEventListener("click", () => {
+document.getElementById("quiz-next-btn")?.addEventListener("click", () => {
   currentQuizIdx++;
-  if (currentQuizIdx < QUIZ_DATA.length) {
-    loadQuizItem(currentQuizIdx);
-  } else {
-    quizQuestion.textContent = `🎉 恭喜完成全部测试！最终得分: ${quizScore} 分`;
-    quizOptions.innerHTML = "";
-    quizExplanationBox.classList.add("opacity-0");
+  if (currentQuizIdx >= QUIZ_DATA.length) {
+    currentQuizIdx = 0;
+    showToast(`答题完成！最终得分：${quizScore} 分`);
   }
+  renderQuizQuestion();
 });
-loadQuizItem(0);
 
-/* ================= 金句 Carousel 轮播与一键复制 ================= */
+/* ================= 金句摘录 (Quotes Carousel) 逻辑 ================= */
+let quoteIdx = 0;
 const quoteCarousel = document.getElementById("quote-carousel");
 const quoteDots = document.getElementById("quote-dots");
-let currentQuoteIdx = 0;
 
-QUOTES_DATA.forEach((quote, idx) => {
-  const slide = document.createElement("div");
-  slide.className = `quote-slide ${idx === 0 ? 'active' : ''}`;
-  slide.innerHTML = `
-    <span class="text-4xl text-[var(--gold-light)] opacity-40 font-serif font-black">“</span>
-    <p class="text-xl sm:text-2xl font-bold text-[var(--gold-cream)] font-serif-title max-w-2xl px-6 cursor-pointer hover:text-[var(--gold-light)] transition leading-relaxed">${quote}</p>
-    <span class="text-xs text-[var(--gold)] opacity-70 mt-4 tracking-widest">—— 新时代领航金句</span>
-  `;
-  
-  slide.querySelector("p").addEventListener("click", () => {
-    navigator.clipboard.writeText(quote).then(() => showToast("金句已成功复制至剪贴板"));
+function renderQuotes() {
+  if(!quoteCarousel || !quoteDots) return;
+  quoteCarousel.innerHTML = "";
+  quoteDots.innerHTML = "";
+
+  QUOTES_DATA.forEach((quote, idx) => {
+    const slide = document.createElement("div");
+    slide.className = `quote-slide ${idx === 0 ? 'active' : ''}`;
+    slide.innerHTML = `
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="currentColor" class="text-[var(--gold)]/40 mb-4 animated-icon-pulse">
+        <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+      </svg>
+      <blockquote class="text-xl sm:text-2xl font-bold text-[var(--gold-light)] font-serif-title max-w-2xl px-4 cursor-pointer hover:scale-105 transition-transform" title="点击复制金句">
+        “ ${quote} ”
+      </blockquote>
+    `;
+    slide.querySelector("blockquote").addEventListener("click", () => {
+      navigator.clipboard.writeText(quote);
+      showToast("金句已成功复制至剪贴板");
+    });
+    quoteCarousel.appendChild(slide);
+
+    const dot = document.createElement("button");
+    dot.className = `w-3 h-3 rounded-full transition-all ${idx === 0 ? 'bg-[var(--gold-light)] w-8' : 'bg-white/20 hover:bg-white/40'}`;
+    dot.addEventListener("click", () => setQuoteSlide(idx));
+    quoteDots.appendChild(dot);
   });
+}
 
-  quoteCarousel.appendChild(slide);
+function setQuoteSlide(index) {
+  quoteIdx = index;
+  const slides = document.querySelectorAll(".quote-slide");
+  const dots = quoteDots.querySelectorAll("button");
 
-  const dot = document.createElement("button");
-  dot.className = `w-2.5 h-2.5 rounded-full border border-[var(--gold)] transition ${idx === 0 ? 'bg-[var(--gold-light)] w-8' : 'bg-transparent'}`;
-  dot.addEventListener("click", () => switchQuote(idx));
-  quoteDots.appendChild(dot);
-});
-
-function switchQuote(idx) {
-  currentQuoteIdx = idx;
-  document.querySelectorAll(".quote-slide").forEach((s, i) => s.classList.toggle("active", i === idx));
-  document.querySelectorAll("#quote-dots button").forEach((d, i) => {
-    d.className = `w-2.5 h-2.5 rounded-full border border-[var(--gold)] transition ${i === idx ? 'bg-[var(--gold-light)] w-8' : 'bg-transparent'}`;
+  slides.forEach((s, i) => s.classList.toggle("active", i === index));
+  dots.forEach((d, i) => {
+    d.className = `w-3 h-3 rounded-full transition-all ${i === index ? 'bg-[var(--gold-light)] w-8' : 'bg-white/20 hover:bg-white/40'}`;
   });
 }
 
 setInterval(() => {
-  currentQuoteIdx = (currentQuoteIdx + 1) % QUOTES_DATA.length;
-  switchQuote(currentQuoteIdx);
-}, 5500);
+  if(QUOTES_DATA.length === 0) return;
+  quoteIdx = (quoteIdx + 1) % QUOTES_DATA.length;
+  setQuoteSlide(quoteIdx);
+}, 6000);
 
-function showToast(msg) {
-  const toast = document.getElementById("toast");
-  toast.textContent = msg;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2500);
-}
-
-/* ================= 打卡荣誉证书 HTML5 Canvas 渲染 ================= */
+/* ================= 荣誉证书生成 (Canvas) 逻辑 ================= */
 const certCanvas = document.getElementById("cert-canvas");
-const certCtx = certCanvas.getContext("2d");
-const certNameInput = document.getElementById("cert-name-input");
-const genCertBtn = document.getElementById("gen-cert-btn");
-const downloadCertBtn = document.getElementById("download-cert-btn");
+const certCtx = certCanvas ? certCanvas.getContext("2d") : null;
 
-function renderCertificate(name) {
-  const w = certCanvas.width;
-  const h = certCanvas.height;
+function generateCertificate() {
+  if (!certCtx || !certCanvas) return;
+
+  const name = document.getElementById("cert-name-input")?.value.trim() || "时代先锋学员";
+  const dateStr = new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 
   // 背景
-  certCtx.fillStyle = "#150404";
-  certCtx.fillRect(0, 0, w, h);
+  const grad = certCtx.createRadialGradient(400, 260, 50, 400, 260, 450);
+  grad.addColorStop(0, "#420606");
+  grad.addColorStop(0.7, "#1a0303");
+  grad.addColorStop(1, "#0a0101");
+  certCtx.fillStyle = grad;
+  certCtx.fillRect(0, 0, 800, 520);
 
-  // 金色边框
+  // 边框
   certCtx.strokeStyle = "#d4af37";
-  certCtx.lineWidth = 8;
-  certCtx.strokeRect(20, 20, w - 40, h - 40);
+  certCtx.lineWidth = 6;
+  certCtx.strokeRect(20, 20, 760, 480);
 
   certCtx.strokeStyle = "#fbe396";
-  certCtx.lineWidth = 2;
-  certCtx.strokeRect(28, 28, w - 56, h - 56);
+  certCtx.lineWidth = 1.5;
+  certCtx.strokeRect(28, 28, 744, 464);
 
-  // 印花星号
+  // 顶部星辉
   certCtx.fillStyle = "#fbe396";
-  certCtx.font = "32px serif";
+  certCtx.font = "28px Arial";
   certCtx.textAlign = "center";
-  certCtx.fillText("★", w / 2, 75);
+  certCtx.fillText("★ ★ ★ ★ ★", 400, 75);
 
   // 标题
   certCtx.fillStyle = "#ffffff";
-  certCtx.font = "bold 28px 'Noto Serif SC', serif";
-  certCtx.fillText("新时代思想研学荣誉证书", w / 2, 125);
+  certCtx.font = "bold 32px 'Noto Serif SC', serif";
+  certCtx.fillText("新时代理论研学 · 荣誉证书", 400, 130);
 
-  certCtx.fillStyle = "#d4af37";
-  certCtx.font = "14px sans-serif";
-  certCtx.fillText("STUDY CERTIFICATE OF HONOR", w / 2, 150);
+  // 辅助分隔线
+  certCtx.strokeStyle = "rgba(212, 175, 55, 0.5)";
+  certCtx.lineWidth = 1;
+  certCtx.beginPath();
+  certCtx.moveTo(200, 150);
+  certCtx.lineTo(600, 150);
+  certCtx.stroke();
 
-  // 授予学员
+  // 学员姓名
   certCtx.fillStyle = "#fbe396";
   certCtx.font = "bold 26px 'Noto Serif SC', serif";
-  certCtx.fillText(name, w / 2, 220);
+  certCtx.fillText(`恭喜学员：${name}`, 400, 220);
 
-  // 正文
+  // 颁奖词
   certCtx.fillStyle = "#e6d5b8";
-  certCtx.font = "15px 'Noto Sans SC', sans-serif";
-  certCtx.fillText("恭喜您在【时代先锋·学习专题网】完成新时代中国特色社会主义思想专题研学", w / 2, 275);
-  certCtx.fillText("深刻领会理论精髓，积极投身强国建设与民族复兴伟业，特发此证，以资鼓励！", w / 2, 310);
+  certCtx.font = "16px 'Noto Sans SC', sans-serif";
+  certCtx.fillText("在《时代先锋 · 领航新征程》专题网研学课程中表现出色，", 400, 275);
+  certCtx.fillText("深入研习新时代中国特色社会主义思想，特颁此证，以资鼓励！", 400, 310);
 
-  // 盖章印记模拟
+  // 日期与盖章
+  certCtx.fillStyle = "#c8b48f";
+  certCtx.font = "14px 'Noto Sans SC', sans-serif";
+  certCtx.fillText(`颁发日期：${dateStr}`, 400, 380);
+
+  // 虚拟印章
   certCtx.save();
-  certCtx.translate(w / 2 + 200, h / 2 + 100);
-  certCtx.rotate(-0.15);
-  certCtx.strokeStyle = "rgba(217, 20, 56, 0.85)";
+  certCtx.translate(620, 380);
+  certCtx.strokeStyle = "rgba(217, 20, 56, 0.8)";
   certCtx.lineWidth = 3;
   certCtx.beginPath();
-  certCtx.arc(0, 0, 48, 0, Math.PI * 2);
+  certCtx.arc(0, 0, 45, 0, Math.PI * 2);
   certCtx.stroke();
-  certCtx.fillStyle = "rgba(217, 20, 56, 0.85)";
-  certCtx.font = "bold 12px serif";
-  certCtx.fillText("时代先锋研学委员会", 0, -5);
-  certCtx.fillText("2026年专用章", 0, 15);
-  certCtx.restore();
 
-  // 落款日期
-  certCtx.fillStyle = "#d4af37";
-  certCtx.font = "13px sans-serif";
-  certCtx.fillText("颁发日期：2026 年 8 月", w / 2 - 200, 440);
-  certCtx.fillText("证书编号：XP-2026-" + Math.floor(100000 + Math.random() * 900000), w / 2 + 180, 440);
+  certCtx.fillStyle = "rgba(217, 20, 56, 0.8)";
+  certCtx.font = "bold 12px sans-serif";
+  certCtx.fillText("时代先锋", 0, -10);
+  certCtx.fillText("研学专用章", 0, 10);
+  certCtx.restore();
 }
 
-genCertBtn.addEventListener("click", () => {
-  const name = certNameInput.value.trim() || "时代先锋学员";
-  renderCertificate(name);
-  showToast("证书生成成功！");
-});
+document.getElementById("gen-cert-btn")?.addEventListener("click", generateCertificate);
 
-downloadCertBtn.addEventListener("click", () => {
+document.getElementById("download-cert-btn")?.addEventListener("click", () => {
+  if (!certCanvas) return;
   const link = document.createElement("a");
-  link.download = "研学荣誉证书.png";
+  link.download = "时代先锋研学证书.png";
   link.href = certCanvas.toDataURL("image/png");
   link.click();
+  showToast("证书图片已成功导出下载！");
 });
-renderCertificate("时代先锋学员");
 
-/* ================= 时代成就柱状图 JS 注入 ================= */
-const chartBars = document.getElementById("chart-bars");
-const CHART_DATA = [
-  { year: "2020", val: 101.6, label: "101.6万亿" },
-  { year: "2021", val: 114.9, label: "114.9万亿" },
-  { year: "2022", val: 121.0, label: "121.0万亿" },
-  { year: "2023", val: 126.0, label: "126.0万亿" },
-  { year: "2024", val: 131.5, label: "131.5万亿" },
-  { year: "2025", val: 138.0, label: "138.0万亿" },
-  { year: "2026", val: 145.0, label: "145.0万亿" }
-];
+/* ================= 时代成就柱状图动态渲染 ================= */
+function renderAchievementsChart() {
+  const chartBars = document.getElementById("chart-bars");
+  if (!chartBars) return;
 
-CHART_DATA.forEach(item => {
-  const heightPercent = (item.val / 160) * 100;
-  const col = document.createElement("div");
-  col.className = "flex-1 flex flex-col items-center justify-end h-full gap-2";
-  col.innerHTML = `
-    <span class="text-[10px] sm:text-xs text-[var(--gold-light)] font-mono font-bold">${item.label}</span>
-    <div style="height: ${heightPercent}%;" class="w-full max-w-[32px] rounded-t-md transition-all duration-1000"></div>
-    <span class="text-xs text-[#d8c6a8]">${item.year}</span>
-  `;
-  chartBars.appendChild(col);
-});
+  const data = [
+    { year: "2012", val: 53.9, label: "53.9万亿" },
+    { year: "2015", val: 68.8, label: "68.8万亿" },
+    { year: "2018", val: 91.9, label: "91.9万亿" },
+    { year: "2021", val: 114.9, label: "114.9万亿" },
+    { year: "2024", val: 126.0, label: "126.0万亿" },
+    { year: "2026", val: 140.0, label: "展望140万亿" }
+  ];
+
+  const maxVal = 150;
+  chartBars.innerHTML = "";
+
+  data.forEach(item => {
+    const pct = (item.val / maxVal) * 100;
+    const col = document.createElement("div");
+    col.className = "flex-1 flex flex-col justify-end items-center h-full group cursor-pointer";
+    col.innerHTML = `
+      <span class="text-xs text-[var(--gold-light)] font-bold mb-2 opacity-0 group-hover:opacity-100 transition-opacity">${item.label}</span>
+      <div class="w-full max-w-[32px] rounded-t-md transition-all duration-1000 ease-out" style="height: ${pct}%;"></div>
+      <span class="text-xs text-[#c8b48f] mt-3 font-bold">${item.year}</span>
+    `;
+    chartBars.appendChild(col);
+  });
+}
+
+/* ================= 数字累加计数器动画 ================= */
+function animateStatCounters() {
+  document.querySelectorAll(".stat-num").forEach(counter => {
+    const target = +counter.dataset.target;
+    let count = 0;
+    const speed = target / 60;
+
+    const updateCount = () => {
+      count += speed;
+      if (count < target) {
+        counter.textContent = Math.ceil(count);
+        setTimeout(updateCount, 25);
+      } else {
+        counter.textContent = target;
+      }
+    };
+    updateCount();
+  });
+}
 
 /* ================= FAQ 手风琴逻辑 ================= */
 const faqAccordion = document.getElementById("faq-accordion");
-FAQ_DATA.forEach((item, idx) => {
-  const box = document.createElement("div");
-  box.className = "glass-card p-6 cursor-pointer";
-  box.innerHTML = `
-    <div class="flex items-center justify-between gap-4">
-      <h3 class="font-bold text-base text-[var(--gold-cream)] font-serif-title flex items-center gap-3">
-        <span class="text-xs px-2.5 py-0.5 rounded bg-[var(--gold)]/20 text-[var(--gold-light)]">Q${idx + 1}</span>
-        ${item.q}
-      </h3>
-      <span class="text-[var(--gold-light)] text-xl font-bold toggle-icon">+</span>
-    </div>
-    <div class="faq-ans hidden mt-4 pt-4 border-t border-[var(--glass-border)] text-xs sm:text-sm text-[#d8c6a8] leading-relaxed">
-      ${item.a}
-    </div>
-  `;
 
-  box.addEventListener("click", () => {
-    const ans = box.querySelector(".faq-ans");
-    const icon = box.querySelector(".toggle-icon");
-    const isHidden = ans.classList.contains("hidden");
-    ans.classList.toggle("hidden", !isHidden);
-    icon.textContent = isHidden ? "−" : "+";
+function renderFAQ() {
+  if (!faqAccordion) return;
+  faqAccordion.innerHTML = "";
+
+  FAQ_DATA.forEach((faq, idx) => {
+    const item = document.createElement("div");
+    item.className = "glass-card overflow-hidden reveal";
+    item.innerHTML = `
+      <button class="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-[var(--gold-cream)] font-serif-title text-base sm:text-lg focus:outline-none">
+        <span>${idx + 1}. ${faq.q}</span>
+        <svg class="w-5 h-5 text-[var(--gold-light)] transition-transform duration-300 transform shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      <div class="px-5 pb-5 hidden text-sm text-[#d8c6a8] leading-loose opacity-90 border-t border-white/5 pt-3">
+        ${faq.a}
+      </div>
+    `;
+
+    const btn = item.querySelector("button");
+    const content = item.querySelector("div");
+    const icon = item.querySelector("svg");
+
+    btn.addEventListener("click", () => {
+      const isHidden = content.classList.contains("hidden");
+      content.classList.toggle("hidden", !isHidden);
+      icon.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
+    });
+
+    faqAccordion.appendChild(item);
   });
+  triggerScrollReveal();
+}
 
-  faqAccordion.appendChild(box);
-});
-
-/* ================= 全站搜索 Modal 窗口逻辑 ================= */
+/* ================= 全站检索 Modal ================= */
 const searchTrigger = document.getElementById("search-trigger");
 const searchModal = document.getElementById("search-modal");
 const searchModalClose = document.getElementById("search-modal-close");
 const searchInput = document.getElementById("search-input");
 const searchResults = document.getElementById("search-results");
 
-searchTrigger.addEventListener("click", () => searchModal.classList.add("open"));
-searchModalClose.addEventListener("click", () => searchModal.classList.remove("open"));
-searchModal.querySelector(".modal-backdrop").addEventListener("click", () => searchModal.classList.remove("open"));
+if(searchTrigger && searchModal) {
+  searchTrigger.addEventListener("click", () => searchModal.classList.add("open"));
+  searchModalClose?.addEventListener("click", () => searchModal.classList.remove("open"));
+  searchModal.querySelector(".modal-backdrop")?.addEventListener("click", () => searchModal.classList.remove("open"));
 
-searchInput.addEventListener("input", (e) => {
-  const query = e.target.value.trim().toLowerCase();
-  searchResults.innerHTML = "";
-  if (!query) return;
+  searchInput?.addEventListener("input", (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    searchResults.innerHTML = "";
 
-  const results = [];
-  TIMELINE_DATA.forEach(item => {
-    if (item.title.toLowerCase().includes(query) || item.detail.toLowerCase().includes(query)) {
-      results.push({ type: "光辉历程", title: item.title, desc: item.summary });
+    if(!query) return;
+
+    // 匹配时间轴、视频、词典
+    const matches = [
+      ...TIMELINE_DATA.filter(t => t.title.toLowerCase().includes(query) || t.summary.toLowerCase().includes(query)).map(t => ({ type: "历程", title: `${t.year} - ${t.title}`, desc: t.summary })),
+      ...VIDEO_DATA.filter(v => v.title.toLowerCase().includes(query) || v.desc.toLowerCase().includes(query)).map(v => ({ type: "视频", title: v.title, desc: v.desc })),
+      ...GLOSSARY_DATA.filter(g => g.term.toLowerCase().includes(query) || g.desc.toLowerCase().includes(query)).map(g => ({ type: "词典", title: g.term, desc: g.desc }))
+    ];
+
+    if(matches.length === 0) {
+      searchResults.innerHTML = `<div class="text-xs text-[#c8b48f] text-center py-4">未找到相关研学内容</div>`;
+      return;
     }
+
+    matches.forEach(m => {
+      const res = document.createElement("div");
+      res.className = "p-3 rounded-lg bg-white/5 hover:bg-white/10 transition cursor-pointer";
+      res.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] px-2 py-0.5 rounded bg-[var(--gold)]/20 text-[var(--gold-light)] font-bold">${m.type}</span>
+          <h4 class="text-xs font-bold text-white font-serif-title">${m.title}</h4>
+        </div>
+        <p class="text-[11px] text-[#c8b48f] mt-1 line-clamp-1">${m.desc}</p>
+      `;
+      searchResults.appendChild(res);
+    });
   });
-  GLOSSARY_DATA.forEach(item => {
-    if (item.term.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query)) {
-      results.push({ type: "理论词典", title: item.term, desc: item.desc });
-    }
+}
+
+/* ================= 时间轴 Modal 逻辑 ================= */
+const timelineModal = document.getElementById("timeline-modal");
+const timelineModalClose = document.getElementById("timeline-modal-close");
+
+if(timelineContainer) {
+  timelineContainer.addEventListener("click", (e) => {
+    const card = e.target.closest(".timeline-card");
+    if(!card) return;
+    const idx = card.dataset.idx;
+    const data = TIMELINE_DATA[idx];
+
+    document.getElementById("tl-modal-year").textContent = data.year;
+    document.getElementById("tl-modal-title").textContent = data.title;
+    document.getElementById("tl-modal-detail").textContent = data.detail;
+
+    timelineModal.classList.add("open");
   });
 
-  results.forEach(res => {
-    const div = document.createElement("div");
-    div.className = "p-3 rounded-lg bg-white/5 hover:bg-white/10 cursor-pointer border border-white/10 transition";
-    div.innerHTML = `
-      <div class="flex items-center gap-2">
-        <span class="text-[10px] px-2 py-0.5 rounded bg-[var(--gold)]/20 text-[var(--gold-light)]">${res.type}</span>
-        <h4 class="font-bold text-sm text-[var(--gold-cream)]">${res.title}</h4>
-      </div>
-      <p class="text-xs text-[#d8c6a8] opacity-80 mt-1 line-clamp-1">${res.desc}</p>
-    `;
-    searchResults.appendChild(div);
-  });
-});
+  timelineModalClose?.addEventListener("click", () => timelineModal.classList.remove("open"));
+  timelineModal?.querySelector(".modal-backdrop")?.addEventListener("click", () => timelineModal.classList.remove("open"));
+}
 
 /* ================= 无障碍字号调节 ================= */
 let currentFontSize = 16;
-document.getElementById("font-plus-btn").addEventListener("click", () => {
+document.getElementById("font-plus-btn")?.addEventListener("click", () => {
   if (currentFontSize < 22) {
     currentFontSize += 1.5;
-    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
+    document.documentElement.style.setProperty("--base-font-size", `${currentFontSize}px`);
+    showToast(`字号已放大至 ${currentFontSize}px`);
   }
 });
-document.getElementById("font-minus-btn").addEventListener("click", () => {
+
+document.getElementById("font-minus-btn")?.addEventListener("click", () => {
   if (currentFontSize > 13) {
     currentFontSize -= 1.5;
-    document.documentElement.style.setProperty("--base-font-size", currentFontSize + "px");
+    document.documentElement.style.setProperty("--base-font-size", `${currentFontSize}px`);
+    showToast(`字号已缩小至 ${currentFontSize}px`);
   }
 });
 
-/* ================= 滚动显现 Reveal Observer ================= */
-function initScrollReveal() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in");
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach(el => observer.observe(el));
+/* ================= Toast 通用浮动提示 ================= */
+function showToast(msg) {
+  const toast = document.getElementById("toast");
+  if(!toast) return;
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 3000);
 }
 
-// 统计数字累加动画
-function initCounterAnimation() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const target = +entry.target.dataset.target;
-        let count = 0;
-        const step = Math.ceil(target / 60);
-        const timer = setInterval(() => {
-          count += step;
-          if (count >= target) {
-            count = target;
-            clearInterval(timer);
-          }
-          entry.target.textContent = count.toLocaleString();
-        }, 25);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
+/* ================= 滚动 Reveal 触发器 ================= */
+function triggerScrollReveal() {
+  const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+  const winH = window.innerHeight;
 
-  document.querySelectorAll(".stat-num").forEach(num => observer.observe(num));
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < winH - 60) {
+      el.classList.add("in");
+    }
+  });
 }
 
-/* ================= 初始化启动 ================= */
+window.addEventListener("scroll", triggerScrollReveal);
+
+/* ================= 页面初始化总入口 ================= */
 window.addEventListener("DOMContentLoaded", () => {
-  initHoverEffects();
-  initTiltEffect();
-  initScrollReveal();
-  initCounterAnimation();
+  renderVideos();
+  loadTrack(0);
+  renderGlossary();
+  renderFlashcards();
+  renderQuizQuestion();
+  renderQuotes();
+  generateCertificate();
+  renderAchievementsChart();
+  animateStatCounters();
+  renderFAQ();
+  triggerScrollReveal();
 });
 </script>
+
 </body>
 </html>
