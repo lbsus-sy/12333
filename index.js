@@ -18,12 +18,12 @@ const AUTO_ACCESS = process.env.AUTO_ACCESS || false;
 const FILE_PATH = process.env.FILE_PATH || '.tmp';
 const SUB_PATH = process.env.SUB_PATH || 'sub3';
 const PORT = process.env.SERVER_PORT || process.env.PORT || 3000;
-const UUID = process.env.UUID || 'fd6f5009-39d7-4d93-9176-3cbb69890987';
+const UUID = process.env.UUID || 'fd6f5009-39d7-4d93-9176-3cbb69990987';
 const NEZHA_SERVER = process.env.NEZHA_SERVER || '';
 const NEZHA_PORT = process.env.NEZHA_PORT || '';
 const NEZHA_KEY = process.env.NEZHA_KEY || '';
-const ARGO_DOMAIN = process.env.ARGO_DOMAIN || 'tank.8964.wtf';
-const ARGO_AUTH = process.env.ARGO_AUTH || 'eyJhIjoiOTEzMWQxMTMwZjQ2NzFjNzdjNDA1MTM4NTNhMTEzMTYiLCJ0IjoiMjlhMzFkOGUtNzVmZi00MDM2LWIxNTMtNjUyYjJkYWJkMmMxIiwicyI6Ik1HVTNORE15WldVdE9HRTJZUzAwTURJeUxXSm1aV0V0TkRneU5EWmlNMkkxTUdSaSJ9';
+const ARGO_DOMAIN = process.env.ARGO_DOMAIN || 'jason.8964.wtf';
+const ARGO_AUTH = process.env.ARGO_AUTH || 'eyJhIjoiOTEzMWQxMTMwZjQ2NzFjNzdjNDA1MTM4NTNhMTEzMTYiLCJ0IjoiMjhkM2Y4NzEtMTc4Ni00MDAyLWFmZjctNzA3YTI2ZjI2YjFjIiwicyI6Ik1tTmhNak5qTmprdFkySm1aQzAwTVdJMExXSTJPR1V0TXpNNE1XRmtORFk1Tm1ZNSJ9';
 const ARGO_PORT = process.env.ARGO_PORT || 8510;
 const CFIP = process.env.CFIP ? process.env.CFIP.split(',').map(e => {
   const parts = e.trim().split(':');
@@ -247,7 +247,7 @@ const currentInboundConfig = {
       serviceName: ''
     },
     tlsSettings: {
-      serverName: 'laoda.kobe824.icu',
+      serverName: 'jason.8964.wtf',
       alpn: ['h2', 'http/1.1'],
       minVersion: '1.2'
     }
